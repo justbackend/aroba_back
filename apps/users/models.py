@@ -60,7 +60,7 @@ class User(AbstractBaseUser, PermissionsMixin, BaseModel):
         ),
     )
     date_joined = models.DateTimeField(_("date joined"), default=timezone.now)
-    role = models.ForeignKey('Role', on_delete=models.SET_NULL, null=True, blank=True, related_name='users')
+    roles = models.ManyToManyField('Role', blank=True, related_name='users')
 
     USERNAME_FIELD = 'username'
 

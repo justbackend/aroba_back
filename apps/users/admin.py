@@ -19,4 +19,4 @@ class ModuleAdmin(admin.ModelAdmin):
 
 @admin.register(models.User)
 class UserAdmin(admin.ModelAdmin):
-    list_display = ('id', 'username', 'role')
+    list_display = ('id', 'username',)

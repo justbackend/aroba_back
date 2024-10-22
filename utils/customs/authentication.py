@@ -61,11 +61,11 @@ class JWTAuthentication(jwt_authentication):
             .annotate(
                 api_list=ArrayAgg(
                     Func(
-                        Value('name'), 'role__modules__apis__name',
-                        Value('dynamic'), 'role__modules__apis__dynamic',
+                        Value('name'), 'roles__modules__apis__name',
+                        Value('dynamic'), 'roles__modules__apis__dynamic',
                         function='JSON_BUILD_OBJECT',
                     ),
-                    filter=Q(role__modules__apis__method=self.request.method, role__modules__apis__route=route)
+                    filter=Q(roles__modules__apis__method=self.request.method, roles__modules__apis__route=route)
                 ),
                 api_route_len=Value(len(route), output_field=IntegerField())
             )
