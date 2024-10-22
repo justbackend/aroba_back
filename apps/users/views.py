@@ -1,3 +1,7 @@
-from django.shortcuts import render
+from rest_framework import views, generics, viewsets, response
 
-# Create your views here.
+
+class SalomView(views.APIView):
+
+    def get(self, request):
+        return response.Response({})

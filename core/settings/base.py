@@ -57,8 +57,8 @@ THIRD_PARTY_APPS = [
 
 REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": (
-        "rest_framework.authentication.SessionAuthentication",
         'utils.customs.JWTAuthentication',
+        # "rest_framework.authentication.SessionAuthentication",
     ),
     "DEFAULT_FILTER_BACKENDS": (
         "django_filters.rest_framework.DjangoFilterBackend",
@@ -180,3 +180,18 @@ CELERY_TASK_TRACK_STARTED = True
 CELERY_TASK_TIME_LIMIT = 30 * 60
 
 AUTH_USER_MODEL = 'users.User'
+
+SPECTACULAR_SETTINGS = {
+    'TITLE': 'IMB',
+    'DESCRIPTION': 'Automation',
+    'VERSION': '1.0.0',
+    'SERVE_INCLUDE_SCHEMA': False,
+    "COMPONENT_SPLIT_REQUEST": True,  # ? for file fields.
+    "COMPONENT_SPLIT_RESPONSE": True,
+    "COMPONENT_SPLIT_PATH": True,
+    "COMPONENT_NO_REQUEST_RESPONSE_PATH": False,
+    "DISABLE_ERRORS_AND_WARNINGS": True,
+    'SERVE_AUTHENTICATION': None
+
+}
+
