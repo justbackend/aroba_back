@@ -33,7 +33,7 @@ class JWTAuthentication(jwt_authentication):
 
         if api_settings.CHECK_REVOKE_TOKEN:
             if validated_token.get(
-                api_settings.REVOKE_TOKEN_CLAIM
+                    api_settings.REVOKE_TOKEN_CLAIM
             ) != get_md5_hash_password(user.password):
                 raise AuthenticationFailed(
                     _("The user's password has been changed."), code="password_changed"
