@@ -1,3 +1,5 @@
+from django.contrib.postgres.aggregates import ArrayAgg
+from django.db.models.functions.comparison import Cast
 from django.utils.translation import gettext_lazy as _
 from rest_framework_simplejwt.authentication import JWTAuthentication as jwt_authentication
 from rest_framework_simplejwt.exceptions import InvalidToken, AuthenticationFailed
@@ -5,8 +7,8 @@ from rest_framework_simplejwt.settings import api_settings
 from rest_framework_simplejwt.tokens import Token
 from rest_framework_simplejwt.utils import get_md5_hash_password
 
-from apps.users.models import User as AuthUser, API
-from django.db.models import Prefetch
+from apps.users.models import User as AuthUser, API, Module
+from django.db.models import Prefetch, OuterRef, Func, Value, BooleanField, JSONField, CharField
 
 
 class JWTAuthentication(jwt_authentication):
@@ -25,14 +27,25 @@ class JWTAuthentication(jwt_authentication):
         except KeyError:
             raise InvalidToken(_("Token contained no recognizable user identification"))
 
-        api_qs = API.objects.filter(method=self.request.method)
-
         user = (
-            self.user_model.objects
-            .prefetch_related(
-                Prefetch('role__modules__apis', queryset=api_qs, to_attr='prefetched_apis'),
+            AuthUser.objects
+            .filter(id=user_id)
+            .annotate(
+                api_data=ArrayAgg(
+                    Cast(
+                        Func(
+                            Value('name'), 'role__modules__apis__name',
+                            Value('route'), 'role__modules__apis__route',
+                            Value('method'), 'role__modules__apis__method',
+                            Value('dynamic'), Cast('role__modules__apis__dynamic', output_field=BooleanField()),
+                            function='JSON_BUILD_OBJECT',
+                            output_field=JSONField()
+                        ),
+                        output_field=CharField()
+                    )
+                )
             )
-            .filter(**{api_settings.USER_ID_FIELD: user_id}).first()
+            .first()
         )
 
         if not user:

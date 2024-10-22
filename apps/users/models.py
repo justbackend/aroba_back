@@ -102,4 +102,4 @@ class API(models.Model):
     method = models.CharField(_("method"), max_length=100, choices=API_CHOICES)
 
     def __str__(self):
-        return f'{self.route} {self.name} {self.method}'
+        return f'{self.route}{self.name} {self.method}'
