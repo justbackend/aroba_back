@@ -1,7 +1,7 @@
 from django.utils.translation import gettext_lazy as _
-from rest_framework.settings import api_settings
 from rest_framework_simplejwt.authentication import JWTAuthentication as jwt_authentication
 from rest_framework_simplejwt.exceptions import InvalidToken, AuthenticationFailed
+from rest_framework_simplejwt.settings import api_settings
 from rest_framework_simplejwt.tokens import Token
 from rest_framework_simplejwt.utils import get_md5_hash_password
 

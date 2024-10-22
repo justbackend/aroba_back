@@ -4,6 +4,8 @@ from django.contrib.auth.models import UserManager as DjangoUserManager
 from django.db import models
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
+from rest_framework_simplejwt.tokens import RefreshToken
+
 from apps.common.models import BaseModel
 from utils import choices
 
@@ -63,6 +65,10 @@ class User(AbstractBaseUser, PermissionsMixin, BaseModel):
     USERNAME_FIELD = 'username'
 
     objects = UserManager()
+
+    def tokens(self):
+        refresh = RefreshToken.for_user(self)
+        return dict(refresh=str(refresh), accsess=str(refresh.access_token))
 
 
 class Role(BaseModel):
