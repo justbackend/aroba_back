@@ -9,6 +9,7 @@ https://docs.djangoproject.com/en/4.1/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.1/ref/settings/
 """
+from datetime import timedelta
 from pathlib import Path
 
 import environ
@@ -191,5 +192,11 @@ SPECTACULAR_SETTINGS = {
     "COMPONENT_SPLIT_PATH": True,
     "COMPONENT_NO_REQUEST_RESPONSE_PATH": False,
     "DISABLE_ERRORS_AND_WARNINGS": True,
+}
+
+
+SIMPLE_JWT = {
+    "ACCESS_TOKEN_LIFETIME": timedelta(hours=24),
+    "REFRESH_TOKEN_LIFETIME": timedelta(days=10),
 }
 
