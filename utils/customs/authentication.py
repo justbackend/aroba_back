@@ -34,9 +34,9 @@ class JWTAuthentication(jwt_authentication):
             user_id = validated_token[api_settings.USER_ID_CLAIM]
         except KeyError:
             raise InvalidToken(_("Token contained no recognizable user identification"))
-
-        user = self.user_query(user_id)
-        print(user.api_list)
+        route = self.route
+        user = self.user_query(user_id, route)
+        print(user.api_list, user.api_route)
 
         if not user:
             raise AuthenticationFailed(_("User not found"), code="user_not_found")
@@ -54,7 +54,7 @@ class JWTAuthentication(jwt_authentication):
 
         return user
 
-    def user_query(self, user_id) -> AuthUser:
+    def user_query(self, user_id, route) -> AuthUser:
 
         return (
             AuthUser.objects
@@ -64,15 +64,14 @@ class JWTAuthentication(jwt_authentication):
                     Cast(
                         Func(
                             Value('name'), 'role__modules__apis__name',
-                            Value('route'), 'role__modules__apis__route',
-                            Value('method'), 'role__modules__apis__method',
                             Value('dynamic'), Cast('role__modules__apis__dynamic', output_field=BooleanField()),
                             function='JSON_BUILD_OBJECT',
                             output_field=JSONField()
                         ),
                         output_field=CharField()
-                    ), filter=Q(role__modules__apis__method=self.request.method, role__modules__apis__route=self.route)
-                )
+                    ), filter=Q(role__modules__apis__method=self.request.method, role__modules__apis__route=route)
+                ),
+                api_route=Value(route)
             )
             .first()
         )
