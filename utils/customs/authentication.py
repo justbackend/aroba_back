@@ -1,5 +1,5 @@
 from django.contrib.postgres.aggregates import ArrayAgg
-from django.db.models import Func, Value, BooleanField, JSONField, CharField, Q
+from django.db.models import Func, Value, BooleanField, JSONField, CharField, Q, IntegerField
 from django.db.models.functions.comparison import Cast
 from django.utils.translation import gettext_lazy as _
 from rest_framework_simplejwt.authentication import JWTAuthentication as jwt_authentication
@@ -70,7 +70,7 @@ class JWTAuthentication(jwt_authentication):
                         output_field=CharField()
                     ), filter=Q(role__modules__apis__method=self.request.method, role__modules__apis__route=route)
                 ),
-                api_route=Value(route)
+                api_route_len=Value(len(route), output_field=IntegerField())
             )
             .first()
         )

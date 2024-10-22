@@ -6,7 +6,7 @@ import re
 class RolePermission(permissions.BasePermission):
     def has_permission(self, request, view):
         user = request.user
-        path = request.path[len(user.api_route):]
+        path = request.path[user.api_route_len:]
 
         if user.api_list:
             for api_data in user.api_list:
