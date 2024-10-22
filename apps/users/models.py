@@ -6,6 +6,7 @@ from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 
 from apps.common.models import BaseModel
+from utils import choices
 
 
 class UserManager(DjangoUserManager):
@@ -82,10 +83,19 @@ class Module(BaseModel):
 
 
 class API(models.Model):
-    route = models.CharField(_("route"), max_length=100, unique=True)
+
+    API_CHOICES = (
+        ('POST', 'POST'),
+        ('GET', 'GET'),
+        ('PUT', 'PUT'),
+        ('DELETE', 'DELETE'),
+        ('PATCH', 'PATCH'),
+    )
+
+    route = models.CharField(_("route"), max_length=100, unique=True, choices=choices.ROUTE_CHOICES)
     name = models.CharField(_("name"), max_length=100,)
     dynamic = models.BooleanField(_("dynamic"), default=False)
-    method = models.CharField(_("method"), max_length=100)
+    method = models.CharField(_("method"), max_length=100, choices=API_CHOICES)
 
     def __str__(self):
         return f'{self.route} {self.name} {self.method}'
