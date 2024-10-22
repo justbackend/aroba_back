@@ -1,15 +1,15 @@
 from django.contrib.postgres.aggregates import ArrayAgg
-from django.db.models import Func, Value, BooleanField, JSONField, CharField, Q, IntegerField
-from django.db.models.functions.comparison import Cast
+from django.db.models import Func, Value, Q, IntegerField
 from django.utils.translation import gettext_lazy as _
 from rest_framework_simplejwt.authentication import JWTAuthentication as jwt_authentication
 from rest_framework_simplejwt.exceptions import InvalidToken, AuthenticationFailed
 from rest_framework_simplejwt.settings import api_settings
 from rest_framework_simplejwt.tokens import Token
 from rest_framework_simplejwt.utils import get_md5_hash_password
-from utils.choices import API_ROUTE_CHOICES
+from typing import Union
 
 from apps.users.models import User as AuthUser
+from utils.choices import API_ROUTE_CHOICES
 
 
 class JWTAuthentication(jwt_authentication):
@@ -53,7 +53,11 @@ class JWTAuthentication(jwt_authentication):
 
         return user
 
-    def user_query(self, user_id, route) -> AuthUser:
+    def user_query(
+            self,
+            user_id: int,
+            route: str
+    ) -> Union['AuthUser', None]:
 
         return (
             AuthUser.objects
