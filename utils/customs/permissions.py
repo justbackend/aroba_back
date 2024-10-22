@@ -6,9 +6,9 @@ import re
 class RolePermission(permissions.BasePermission):
     def has_permission(self, request, view):
         user = request.user
-        path = request.path[user.api_route_len:]
 
-        if user.api_list:
+        if user and user.is_authenticated and getattr(user, 'api_list', None):
+            path = request.path[user.api_route_len:]
             for api_info in user.api_list:
 
                 if int(api_info['dynamic']):

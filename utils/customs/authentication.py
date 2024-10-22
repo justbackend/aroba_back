@@ -36,7 +36,6 @@ class JWTAuthentication(jwt_authentication):
             raise InvalidToken(_("Token contained no recognizable user identification"))
 
         user = self.user_query(user_id, self.route)
-        print(user.api_list)
 
         if not user:
             raise AuthenticationFailed(_("User not found"), code="user_not_found")
