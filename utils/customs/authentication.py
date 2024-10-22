@@ -10,12 +10,14 @@ from apps.users.models import User as AuthUser
 
 class JWTAuthentication(jwt_authentication):
 
+    def authenticate(self, request):
+        return super(JWTAuthentication, self).authenticate(request)
+
     def get_user(self, validated_token: Token) -> AuthUser:
         """
         Attempts to find and return a user using the given validated token.
         """
 
-        print(111)
         try:
             user_id = validated_token[api_settings.USER_ID_CLAIM]
         except KeyError:

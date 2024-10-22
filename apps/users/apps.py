@@ -6,4 +6,4 @@ class UsersConfig(AppConfig):
     name = "apps.users"
 
     def ready(self):
-        from utils.customs.schemas import CustomJWTAuthenticationScheme
+        from utils.customs.schemas import JWTAuthenticationScheme

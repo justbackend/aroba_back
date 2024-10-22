@@ -1,8 +1,8 @@
 from drf_spectacular.extensions import OpenApiAuthenticationExtension
 
 
-class CustomJWTAuthenticationScheme(OpenApiAuthenticationExtension):
-    target_class = 'utils.customs.JWTAuthentication'  # To'liq yo'lni tekshiring
+class JWTAuthenticationScheme(OpenApiAuthenticationExtension):
+    target_class = 'utils.customs.JWTAuthentication'
     name = 'JWTAuthentication'
     priority = 1
 
