@@ -34,9 +34,8 @@ class JWTAuthentication(jwt_authentication):
             user_id = validated_token[api_settings.USER_ID_CLAIM]
         except KeyError:
             raise InvalidToken(_("Token contained no recognizable user identification"))
-        route = self.route
-        user = self.user_query(user_id, route)
-        print(user.api_list, user.api_route)
+
+        user = self.user_query(user_id, self.route)
 
         if not user:
             raise AuthenticationFailed(_("User not found"), code="user_not_found")

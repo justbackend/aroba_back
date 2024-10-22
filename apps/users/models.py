@@ -96,7 +96,7 @@ class API(models.Model):
         ('PATCH', 'PATCH'),
     )
 
-    route = models.CharField(_("route"), max_length=100, unique=True, choices=choices.ROUTE_CHOICES)
+    route = models.CharField(_("route"), max_length=50, choices=choices.ROUTE_CHOICES)
     name = models.CharField(_("name"), max_length=100, )
     dynamic = models.BooleanField(_("dynamic"), default=False)
     method = models.CharField(_("method"), max_length=100, choices=API_CHOICES)
