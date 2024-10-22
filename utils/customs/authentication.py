@@ -7,7 +7,7 @@ from rest_framework_simplejwt.exceptions import InvalidToken, AuthenticationFail
 from rest_framework_simplejwt.settings import api_settings
 from rest_framework_simplejwt.tokens import Token
 from rest_framework_simplejwt.utils import get_md5_hash_password
-from utils.choices import ROUTE_CHOICES
+from utils.choices import API_ROUTE_CHOICES
 
 from apps.users.models import User as AuthUser
 
@@ -21,7 +21,7 @@ class JWTAuthentication(jwt_authentication):
     @property
     def route(self):
         path = self.request.path
-        for route in ROUTE_CHOICES:
+        for route in API_ROUTE_CHOICES:
             if path.startswith(route[0]):
                 return route[0]
 
@@ -36,6 +36,7 @@ class JWTAuthentication(jwt_authentication):
             raise InvalidToken(_("Token contained no recognizable user identification"))
 
         user = self.user_query(user_id, self.route)
+        print(user.api_list)
 
         if not user:
             raise AuthenticationFailed(_("User not found"), code="user_not_found")
@@ -60,15 +61,12 @@ class JWTAuthentication(jwt_authentication):
             .filter(id=user_id)
             .annotate(
                 api_list=ArrayAgg(
-                    Cast(
-                        Func(
-                            Value('name'), 'role__modules__apis__name',
-                            Value('dynamic'), Cast('role__modules__apis__dynamic', output_field=BooleanField()),
-                            function='JSON_BUILD_OBJECT',
-                            output_field=JSONField()
-                        ),
-                        output_field=CharField()
-                    ), filter=Q(role__modules__apis__method=self.request.method, role__modules__apis__route=route)
+                    Func(
+                        Value('name'), 'role__modules__apis__name',
+                        Value('dynamic'), 'role__modules__apis__dynamic',
+                        function='JSON_BUILD_OBJECT',
+                    ),
+                    filter=Q(role__modules__apis__method=self.request.method, role__modules__apis__route=route)
                 ),
                 api_route_len=Value(len(route), output_field=IntegerField())
             )

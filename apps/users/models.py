@@ -88,7 +88,7 @@ class Module(BaseModel):
 
 
 class API(models.Model):
-    API_CHOICES = (
+    API_METHOD_CHOICES = (
         ('POST', 'POST'),
         ('GET', 'GET'),
         ('PUT', 'PUT'),
@@ -96,10 +96,10 @@ class API(models.Model):
         ('PATCH', 'PATCH'),
     )
 
-    route = models.CharField(_("route"), max_length=50, choices=choices.ROUTE_CHOICES)
+    route = models.CharField(_("route"), max_length=50, choices=choices.API_ROUTE_CHOICES)
     name = models.CharField(_("name"), max_length=100, )
-    dynamic = models.BooleanField(_("dynamic"), default=False)
-    method = models.CharField(_("method"), max_length=100, choices=API_CHOICES)
+    dynamic = models.CharField(_("dynamic"), choices=choices.API_DYNAMIC_CHOICES)
+    method = models.CharField(_("method"), max_length=100, choices=API_METHOD_CHOICES)
 
     def __str__(self):
         return f'{self.route}{self.name} {self.method}'

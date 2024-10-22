@@ -9,10 +9,9 @@ class RolePermission(permissions.BasePermission):
         path = request.path[user.api_route_len:]
 
         if user.api_list:
-            for api_data in user.api_list:
-                api_info = json.loads(api_data)
+            for api_info in user.api_list:
 
-                if api_info['dynamic']:
+                if int(api_info['dynamic']):
                     pattern = f"^{api_info['name'].replace('<id>', '[^/]+')}$"
                     if re.match(pattern, path):
                         return True
