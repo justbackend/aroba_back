@@ -58,8 +58,34 @@ class User(AbstractBaseUser, PermissionsMixin, BaseModel):
         ),
     )
     date_joined = models.DateTimeField(_("date joined"), default=timezone.now)
+    role = models.ForeignKey('Role', on_delete=models.SET_NULL, null=True, blank=True)
 
     USERNAME_FIELD = 'username'
 
     objects = UserManager()
 
+
+class Role(BaseModel):
+    name = models.CharField(_("name"), max_length=150, unique=True)
+    modules = models.ManyToManyField('Module', related_name='roles', blank=True)
+
+    def __str__(self):
+        return self.name
+
+
+class Module(BaseModel):
+    name = models.CharField(_("name"), max_length=150, unique=True)
+    apis = models.ManyToManyField('API', related_name='modules', blank=True)
+
+    def __str__(self):
+        return self.name
+
+
+class API(models.Model):
+    route = models.CharField(_("route"), max_length=100, unique=True)
+    name = models.CharField(_("name"), max_length=100,)
+    dynamic = models.BooleanField(_("dynamic"), default=False)
+    method = models.CharField(_("method"), max_length=100)
+
+    def __str__(self):
+        return f'{self.route} {self.name} {self.method}'
