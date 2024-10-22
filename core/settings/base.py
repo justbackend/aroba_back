@@ -54,6 +54,7 @@ THIRD_PARTY_APPS = [
     "rest_framework",
     "corsheaders",
     'drf_spectacular',
+    'debug_toolbar',
 ]
 
 REST_FRAMEWORK = {
