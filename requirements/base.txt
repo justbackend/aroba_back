@@ -6,3 +6,4 @@ django-jazzmin
 djangorestframework
 drf-spectacular
 django-filter
+djangorestframework-simplejwt

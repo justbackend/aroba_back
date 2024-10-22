@@ -4,7 +4,6 @@ from django.contrib.auth.models import UserManager as DjangoUserManager
 from django.db import models
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
-
 from apps.common.models import BaseModel
 from utils import choices
 
@@ -83,7 +82,6 @@ class Module(BaseModel):
 
 
 class API(models.Model):
-
     API_CHOICES = (
         ('POST', 'POST'),
         ('GET', 'GET'),
@@ -93,7 +91,7 @@ class API(models.Model):
     )
 
     route = models.CharField(_("route"), max_length=100, unique=True, choices=choices.ROUTE_CHOICES)
-    name = models.CharField(_("name"), max_length=100,)
+    name = models.CharField(_("name"), max_length=100, )
     dynamic = models.BooleanField(_("dynamic"), default=False)
     method = models.CharField(_("method"), max_length=100, choices=API_CHOICES)
 
