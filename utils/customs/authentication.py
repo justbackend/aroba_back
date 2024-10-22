@@ -5,12 +5,14 @@ from rest_framework_simplejwt.exceptions import InvalidToken, AuthenticationFail
 from rest_framework_simplejwt.tokens import Token
 from rest_framework_simplejwt.utils import get_md5_hash_password
 
-from apps.users.models import User as AuthUser
+from apps.users.models import User as AuthUser, API
+from django.db.models import Prefetch
 
 
 class JWTAuthentication(jwt_authentication):
 
     def authenticate(self, request):
+        self.request = request
         return super(JWTAuthentication, self).authenticate(request)
 
     def get_user(self, validated_token: Token) -> AuthUser:
@@ -23,9 +25,17 @@ class JWTAuthentication(jwt_authentication):
         except KeyError:
             raise InvalidToken(_("Token contained no recognizable user identification"))
 
-        try:
-            user = self.user_model.objects.get(**{api_settings.USER_ID_FIELD: user_id})
-        except self.user_model.DoesNotExist:
+        api_qs = API.objects.filter(method=self.request.method)
+
+        user = (
+            self.user_model.objects
+            .prefetch_related(
+                Prefetch('role__modules__apis', queryset=api_qs, to_attr='prefetched_apis'),
+            )
+            .filter(**{api_settings.USER_ID_FIELD: user_id}).first()
+        )
+
+        if not user:
             raise AuthenticationFailed(_("User not found"), code="user_not_found")
 
         if not user.is_active:
