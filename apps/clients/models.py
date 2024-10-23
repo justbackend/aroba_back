@@ -1,4 +1,5 @@
 from django.db import models
+
 from apps.common.models import BaseModel
 
 
@@ -16,10 +17,25 @@ class Client(BaseModel):
 
 
 class ClientRoute(BaseModel):
-    amount = ...
-    loading = ...
-    unloading = ...
-    client = ...
+    amount = models.DecimalField(max_digits=10, decimal_places=2, verbose_name="Amount")
+    loading = models.ForeignKey(
+        'common.Point',
+        on_delete=models.PROTECT,
+        verbose_name="Loading",
+        related_name="client_routes_loading",
+    )
+    unloading = models.ForeignKey(
+        'common.Point',
+        on_delete=models.PROTECT,
+        verbose_name="Loading",
+        related_name="client_routes_unloading",
+    )
+    client = models.ForeignKey(
+        Client,
+        on_delete=models.CASCADE,
+        verbose_name="Client",
+        related_name="routes",
+    )
 
     class Meta:
         verbose_name = "Client route"
