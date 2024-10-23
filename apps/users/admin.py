@@ -2,7 +2,7 @@ from django.contrib import admin
 from . import models
 
 
-@admin.register(models.API)
+@admin.register(models.APIRoute)
 class APIAdmin(admin.ModelAdmin):
     list_display = ('id', 'name')
 

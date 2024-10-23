@@ -66,14 +66,25 @@ class User(AbstractBaseUser, PermissionsMixin, BaseModel):
 
     objects = UserManager()
 
+    class Meta:
+        verbose_name = _("user")
+        verbose_name_plural = _("users")
+        db_table = "users"
+
     def tokens(self):
         refresh = RefreshToken.for_user(self)
         return dict(refresh=str(refresh), accsess=str(refresh.access_token))
+
+    def __str__(self):
+        return str(self.username)
 
 
 class Role(BaseModel):
     name = models.CharField(_("name"), max_length=150, unique=True)
     modules = models.ManyToManyField('Module', related_name='roles', blank=True)
+
+    class Meta:
+        db_table = "roles"
 
     def __str__(self):
         return self.name
@@ -81,13 +92,16 @@ class Role(BaseModel):
 
 class Module(BaseModel):
     name = models.CharField(_("name"), max_length=150, unique=True)
-    apis = models.ManyToManyField('API', related_name='modules', blank=True)
+    apis = models.ManyToManyField('APIRoute', related_name='modules', blank=True)
+
+    class Meta:
+        db_table = "modules"
 
     def __str__(self):
         return self.name
 
 
-class API(models.Model):
+class APIRoute(models.Model):
     API_METHOD_CHOICES = (
         ('POST', 'POST'),
         ('GET', 'GET'),
