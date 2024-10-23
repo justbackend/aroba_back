@@ -13,18 +13,18 @@ class OrderStatus(models.IntegerChoices):
     FINISHED = 9, 'Finished'
 
 
-class OrderPaymentType(models.TextChoices):
+class OrderPaymentTypes(models.TextChoices):
     TRANSFER = 'transfer', 'Transfer'
     CASH = 'cash', 'Cash'
 
 
-class PaymentType(models.TextChoices):
+class PaymentTypes(models.TextChoices):
     TRANSFER = 'transfer', 'Transfer'
     CASH = 'cash', 'Cash'
     EXTRA = 'extra', 'Extra'
 
 
-class APIMethod(models.TextChoices):
+class APIMethods(models.TextChoices):
     POST = 'POST', 'POST'
     PUT = 'PUT', 'PUT'
     DELETE = 'DELETE', 'DELETE'
@@ -32,7 +32,7 @@ class APIMethod(models.TextChoices):
     GET = 'GET', 'GET'
 
 
-class APIRoute(models.TextChoices):
+class APIRoutes(models.TextChoices):
     USERS = '/api/v1/users/', 'Users'
     COMMON = '/api/v1/common/', 'Common'
 
