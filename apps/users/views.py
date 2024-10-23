@@ -1,8 +1,8 @@
-from rest_framework import views, viewsets, generics, status
+from rest_framework import views, generics, status
 from rest_framework.response import Response
 
 from utils.customs import RolePermission
-from . import serializers, models
+from . import serializers
 
 
 class LoginView(generics.GenericAPIView):
