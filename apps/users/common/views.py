@@ -14,11 +14,10 @@ class SalomView(views.APIView):
 
 
 class RoleViewSet(viewsets.ModelViewSet):
-    queryset = models.Role.objects.all()
+    queryset = models.Role.objects.all().order_by('-id')
     serializer_class = serializers.RoleSerializer
 
 
-
 class ModuleViewSet(viewsets.ModelViewSet):
-    queryset = models.Module.objects.all()
+    queryset = models.Module.objects.all().order_by('-id')
     serializer_class = serializers.ModuleSerializer

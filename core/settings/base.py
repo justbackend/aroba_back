@@ -69,8 +69,8 @@ REST_FRAMEWORK = {
     "DEFAULT_PERMISSION_CLASSES": (
         'utils.customs.RolePermission',
     ),
-    "DEFAULT_PAGINATION_CLASS": "utils.PageNumber25Pagination",
-    "PAGE_SIZE": 10,
+    "DEFAULT_PAGINATION_CLASS": "utils.PageNumberPagination",
+    "PAGE_SIZE": 25,
     'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
 }
 

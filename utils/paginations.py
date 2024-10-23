@@ -1,9 +1,8 @@
-from rest_framework.pagination import PageNumberPagination
+from rest_framework.pagination import PageNumberPagination as DRFPageNumberPagination
 from rest_framework.response import Response
 
 
-class PageNumber25Pagination(PageNumberPagination):
-    page_size = 25
+class PageNumberPagination(DRFPageNumberPagination):
     page_size_query_param = 'page_size'
     max_page_size = 1000
 

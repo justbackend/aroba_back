@@ -1,7 +1,7 @@
 __all__ = (
     'APIException',
-    'PageNumber25Pagination',
+    'PageNumberPagination',
 )
 
 from .exceptions import APIException
-from .paginations import PageNumber25Pagination
+from .paginations import PageNumberPagination
