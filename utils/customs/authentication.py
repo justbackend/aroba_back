@@ -9,7 +9,7 @@ from rest_framework_simplejwt.utils import get_md5_hash_password
 from typing import Union
 
 from apps.users.models import User as AuthUser
-from utils.choices import API_ROUTE_CHOICES
+from utils.choices import APIRoute
 
 
 class JWTAuthentication(jwt_authentication):
@@ -21,7 +21,7 @@ class JWTAuthentication(jwt_authentication):
     @property
     def route(self):
         path = self.request.path
-        for route in API_ROUTE_CHOICES:
+        for route in APIRoute.choices:
             if path.startswith(route[0]):
                 return route[0]
 

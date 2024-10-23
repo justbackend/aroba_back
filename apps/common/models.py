@@ -20,7 +20,7 @@ class Point(models.Model):
     name = models.CharField(max_length=255, verbose_name="Name")
     lon = models.DecimalField(max_digits=9, decimal_places=6, null=True, verbose_name='Longitude')
     lat = models.DecimalField(max_digits=9, decimal_places=6, null=True, verbose_name='Latitude')
-    region = models.ForeignKey(Region, verbose_name="Region", on_delete=models.SET_NULL)
+    region = models.ForeignKey(Region, verbose_name="Region", on_delete=models.SET_NULL, null=True)
 
     class Meta:
         db_table = 'points'
