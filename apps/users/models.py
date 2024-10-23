@@ -102,17 +102,14 @@ class Module(BaseModel):
 
 
 class APIRoute(models.Model):
-    API_METHOD_CHOICES = (
-        ('POST', 'POST'),
-        ('GET', 'GET'),
-        ('PUT', 'PUT'),
-        ('DELETE', 'DELETE'),
-        ('PATCH', 'PATCH'),
+    API_DYNAMIC_CHOICES = (
+        ('1', 'Yes'),
+        ('0', 'No'),
     )
 
-    route = models.CharField(_("route"), max_length=50, choices=choices.API_ROUTE_CHOICES)
+    route = models.CharField(_("route"), max_length=50, choices=choices.APIRoute.choices)
     name = models.CharField(_("name"), max_length=100, )
-    dynamic = models.CharField(_("dynamic"), choices=choices.API_DYNAMIC_CHOICES)
+    dynamic = models.CharField(_("dynamic"), choices=API_DYNAMIC_CHOICES)
     method = models.CharField(
         _("method"), max_length=100,
         choices=choices.APIMethod.choices,

@@ -32,12 +32,7 @@ class APIMethod(models.TextChoices):
     GET = 'GET', 'GET'
 
 
-API_ROUTE_CHOICES = (
-    ('/api/v1/users/', 'Users'),
-    ('/api/v1/common/', 'Common'),
-)
+class APIRoute(models.TextChoices):
+    USERS = '/api/v1/users/', 'Users'
+    COMMON = '/api/v1/common/', 'Common'
 
-API_DYNAMIC_CHOICES = (
-    ('1', 'Yes'),
-    ('0', 'No'),
-)
