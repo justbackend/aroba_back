@@ -1,16 +1,24 @@
-from enum import IntEnum
+from django.db import models
 
 
-class OrderStatus(IntEnum):
-    DELETED = 0
-    NEW = 1
-    IN_PROGRESS = 2
-    STARTED = 3
-    AT_FACTORY = 4
-    DISPATCHED = 5
-    LOCATION_ASSIGNED = 6
-    FINISHED = 7
-    REJECTED = 8
+class OrderStatus(models.IntegerChoices):
+    REJECTED = -1, "Rejected"
+    DELETED = 0, "Deleted"
+    NEW = 1, "New"
+    FILLING = 2, "Filling"
+    STARTED = 3, "Started"
+    AT_FACTORY = 4, 'At Factory'
+    LOADED = 5, "Dispatched"
+    LOCATION_ASSIGNED = 6, 'Location assigned'
+    FINISHED = 9, 'Finished'
+
+
+class OrderPaymentStatus(models.TextChoices):
+    pass
+
+
+class PaymentStatus(models.TextChoices):
+    pass
 
 
 API_ROUTE_CHOICES = (
