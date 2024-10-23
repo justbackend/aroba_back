@@ -1,6 +1,9 @@
 from django.urls import path
 from . import views
 
+app_name = 'users'
+
+
 # roles
 role_lc = views.RoleViewSet.as_view({'get': 'list', 'post': 'create'})
 role_udd = views.RoleViewSet.as_view({'get': 'retrieve', 'patch': 'partial_update', 'delete': 'destroy'})
