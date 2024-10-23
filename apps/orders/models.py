@@ -1,4 +1,5 @@
 from django.db import models
+
 from apps.common.models import BaseModel
 from utils import choices
 
@@ -18,10 +19,18 @@ class Order(BaseModel):
         verbose_name="Total Amount", null=True,
         blank=True
     )
-    loading = ...
-    unloading = ...
-    client = ...
-    creator = ...
+    loading = models.ForeignKey(
+        'common.Point', on_delete=models.PROTECT, related_name='orders_loading', verbose_name="Loading",
+    )
+    unloading = models.ForeignKey(
+        'common.Point', on_delete=models.PROTECT, related_name='orders_unloading', verbose_name="Un Loading",
+    )
+    client = models.ForeignKey(
+        'clients.Client', on_delete=models.PROTECT, related_name='orders', verbose_name="Client",
+    )
+    creator = models.ForeignKey(
+        'users.User', on_delete=models.PROTECT, related_name='orders', verbose_name="Creator",
+    )
 
 
 class OrderPayment(BaseModel):
