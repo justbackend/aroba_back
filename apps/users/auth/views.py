@@ -1,8 +1,7 @@
-from rest_framework import views, generics, status
+from rest_framework import generics, status
 from rest_framework.response import Response
 
-from utils.customs import RolePermission
-from . import serializers
+from ..auth import serializers
 
 
 class LoginView(generics.GenericAPIView):
@@ -15,9 +14,3 @@ class LoginView(generics.GenericAPIView):
         serializer.is_valid(raise_exception=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
-
-class SalomView(views.APIView):
-    permission_classes = (RolePermission,)
-
-    def get(self, request, *args, **kwargs):
-        return Response({})
