@@ -32,10 +32,21 @@ class Order(BaseModel):
         'users.User', on_delete=models.PROTECT, related_name='orders', verbose_name="Creator",
     )
 
+    class Meta:
+        verbose_name = 'Order'
+        verbose_name_plural = 'Orders'
+        db_table = 'orders'
+
 
 class OrderPayment(BaseModel):
     amount = models.DecimalField(max_digits=10, decimal_places=2, verbose_name="Amount", null=True, blank=True)
-    type = ...
+    type = models.CharField(max_length=15, choices=choices.PaymentType.choices, verbose_name="Type")
     comment = models.TextField(verbose_name="Comment", null=True, blank=True)
     file = models.FileField(verbose_name="File", null=True, blank=True, upload_to="payments/")
     order = models.ForeignKey(Order, verbose_name="Order", on_delete=models.PROTECT, related_name="payments", )
+
+    class Meta:
+        verbose_name = 'Order Payment'
+        verbose_name_plural = 'Order Payments'
+        db_table = 'order_payments'
+        unique_together = (('order', 'type'),)
