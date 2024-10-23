@@ -13,12 +13,15 @@ class OrderStatus(models.IntegerChoices):
     FINISHED = 9, 'Finished'
 
 
-class OrderPaymentStatus(models.TextChoices):
-    pass
+class OrderPaymentType(models.TextChoices):
+    TRANSFER = 'transfer', 'Transfer'
+    CASH = 'cash', 'Cash'
 
 
-class PaymentStatus(models.TextChoices):
-    pass
+class PaymentType(models.TextChoices):
+    TRANSFER = 'transfer', 'Transfer'
+    CASH = 'cash', 'Cash'
+    EXTRA = 'extra', 'Extra'
 
 
 API_ROUTE_CHOICES = (
