@@ -1,6 +1,6 @@
-import json
-from rest_framework import permissions
 import re
+
+from rest_framework import permissions
 
 
 class RolePermission(permissions.BasePermission):
