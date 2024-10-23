@@ -39,7 +39,7 @@ class Order(BaseModel):
 
 
 class OrderPayment(BaseModel):
-    amount = models.DecimalField(max_digits=10, decimal_places=2, verbose_name="Amount", null=True, blank=True)
+    amount = models.DecimalField(max_digits=10, decimal_places=2, verbose_name="Amount")
     type = models.CharField(max_length=15, choices=choices.PaymentType.choices, verbose_name="Type")
     comment = models.TextField(verbose_name="Comment", null=True, blank=True)
     file = models.FileField(verbose_name="File", null=True, blank=True, upload_to="payments/")
@@ -49,4 +49,6 @@ class OrderPayment(BaseModel):
         verbose_name = 'Order Payment'
         verbose_name_plural = 'Order Payments'
         db_table = 'order_payments'
-        unique_together = (('order', 'type'),)
+        constraints = [
+            models.UniqueConstraint(fields=['order', 'type'], name='unique_order_type')
+        ]
