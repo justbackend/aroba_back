@@ -1,5 +1,6 @@
 from django.contrib.auth import authenticate
 from rest_framework import serializers
+import utils
 
 
 class LoginSerializer(serializers.Serializer):
@@ -12,14 +13,10 @@ class LoginSerializer(serializers.Serializer):
 
         user = authenticate(username=username, password=password)
         if not user:
-            raise serializers.ValidationError("Invalid username or password")
+            raise utils.APIException("Invalid username or password")
 
         data['user'] = user
         return data
 
     def to_representation(self, instance):
         return self.validated_data['user'].tokens()
-
-
-
-
