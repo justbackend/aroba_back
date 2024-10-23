@@ -34,3 +34,4 @@ API_DYNAMIC_CHOICES = (
     ('0', 'No'),
 )
 
+
