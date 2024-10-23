@@ -1,10 +1,9 @@
-from drf_spectacular.utils import extend_schema_view, extend_schema
-from rest_framework import views, generics, status, viewsets
+from rest_framework import views, viewsets
 from rest_framework.response import Response
 
 from utils.customs import RolePermission
-from .. import models
 from . import serializers
+from .. import models
 
 
 class SalomView(views.APIView):
