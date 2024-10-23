@@ -113,7 +113,11 @@ class APIRoute(models.Model):
     route = models.CharField(_("route"), max_length=50, choices=choices.API_ROUTE_CHOICES)
     name = models.CharField(_("name"), max_length=100, )
     dynamic = models.CharField(_("dynamic"), choices=choices.API_DYNAMIC_CHOICES)
-    method = models.CharField(_("method"), max_length=100, choices=API_METHOD_CHOICES)
+    method = models.CharField(
+        _("method"), max_length=100,
+        choices=choices.APIMethod.choices,
+        default=choices.APIMethod.GET
+    )
 
     def __str__(self):
         return f'{self.route}{self.name} {self.method}'
