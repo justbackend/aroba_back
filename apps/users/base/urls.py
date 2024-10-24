@@ -13,8 +13,6 @@ module_lc = views.ModuleViewSet.as_view({'get': 'list', 'post': 'create'})
 module_udd = views.ModuleViewSet.as_view({'get': 'retrieve', 'patch': 'partial_update', 'delete': 'destroy'})
 
 urlpatterns = [
-    path('salom/', views.SalomView.as_view(), name='salom'),
-    path('salom/<int:pk>/', views.SalomView.as_view(), name='salom'),
 
     # roles view set
     path('roles/', role_lc, name='roles'),
