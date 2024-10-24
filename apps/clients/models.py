@@ -13,7 +13,7 @@ class Client(BaseModel):
     requisite_file = models.FileField(upload_to="clients/", verbose_name="Requisite file")
     deleted = models.BooleanField(default=False, verbose_name="Deleted")
     accounting_phone = models.CharField(
-        max_length=20, verbose_name="Account phone number",
+        max_length=20, verbose_name="Accounting phone number",
         validators=[utils.PhoneValidator()]
     )
 
