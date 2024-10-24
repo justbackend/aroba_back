@@ -8,4 +8,4 @@ class Manager(models.Manager):
 
 class ActivePointManager(models.Manager):
     def get_queryset(self):
-        return super().get_queryset().filter(deleted=False)
+        return super(ActivePointManager, self).get_queryset().filter(deleted=False)
