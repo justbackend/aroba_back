@@ -72,6 +72,9 @@ REST_FRAMEWORK = {
     "DEFAULT_PAGINATION_CLASS": "utils.PageNumberPagination",
     "PAGE_SIZE": 25,
     'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
+    'DEFAULT_RENDERER_CLASSES': (
+        'rest_framework.renderers.JSONRenderer',
+    )
 }
 
 INSTALLED_APPS = DJANGO_APPS + CUSTOM_APPS + THIRD_PARTY_APPS
