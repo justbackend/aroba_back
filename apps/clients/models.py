@@ -13,6 +13,7 @@ class Client(BaseModel):
     accounting_phone = models.CharField(max_length=20, verbose_name="Account phone number")
     deleted = models.BooleanField(default=False, verbose_name="Deleted")
 
+    objects = models.Manager()
     active_objects = managers.ActiveClientManager()
 
     class Meta:
