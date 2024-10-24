@@ -11,7 +11,7 @@ class Order(BaseModel):
     driver_phone = models.CharField(max_length=20, verbose_name="Driver Phone", null=True, blank=True)
     paid = models.BooleanField(default=False, verbose_name="Is Paid")
     comment = models.TextField(verbose_name="Comment", null=True, blank=True)
-    payment_type = models.CharField(max_length=15, choices=choices.OrderPaymentType.choices)
+    payment_type = models.CharField(max_length=15, choices=choices.OrderPaymentTypes.choices)
     income = models.DecimalField(max_digits=10, decimal_places=2, verbose_name="Income", null=True, blank=True)
     status = models.IntegerField(choices=choices.OrderStatus.choices, default=choices.OrderStatus.NEW)
     total_amount = models.DecimalField(
@@ -40,7 +40,7 @@ class Order(BaseModel):
 
 class OrderPayment(BaseModel):
     amount = models.DecimalField(max_digits=10, decimal_places=2, verbose_name="Amount")
-    type = models.CharField(max_length=15, choices=choices.PaymentType.choices, verbose_name="Type")
+    type = models.CharField(max_length=15, choices=choices.PaymentTypes.choices, verbose_name="Type")
     comment = models.TextField(verbose_name="Comment", null=True, blank=True)
     file = models.FileField(verbose_name="File", null=True, blank=True, upload_to="payments/")
     order = models.ForeignKey(Order, verbose_name="Order", on_delete=models.PROTECT, related_name="payments", )
