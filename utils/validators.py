@@ -29,7 +29,19 @@ class VehicleNumberValidator:
 
     def __call__(self, value: str):
         cleaned = self.clean(value)
-        if not all(x.isdigit() or x.isupper() for x in cleaned):
+        digit = False
+        upper = False
+
+        checking = []
+        for char in cleaned:
+            isdigit = char.isdigit()
+            isupper = char.isupper()
+            digit = digit or isdigit
+            upper = upper or isupper
+
+            checking.append(isupper or isdigit)
+
+        if not (digit and upper) or not all(checking):
             raise ValidationError(message=self.message, code=self.code)
 
     @classmethod
