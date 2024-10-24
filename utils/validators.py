@@ -2,6 +2,7 @@ import re
 
 from django.core.exceptions import ValidationError
 from django.utils.deconstruct import deconstructible
+from django.core.validators import RegexValidator
 
 
 @deconstructible
@@ -14,15 +15,10 @@ class PhoneValidator:
         self.example = example
 
     def __call__(self, value):
-        if self.compare(value):
+        if not re.match(self.pattern, value):
             raise ValidationError(
                 self.message.format(self.example),
                 code=self.code,
                 params={'value': value}
             )
 
-    def compare(self, value):
-        return not re.match(self.pattern, value)
-
-    def clean(self, value):
-        return value

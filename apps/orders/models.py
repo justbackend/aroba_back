@@ -2,6 +2,7 @@ from django.db import models
 
 from apps.common.models import BaseModel
 from utils import choices
+import utils
 
 
 class Order(BaseModel):

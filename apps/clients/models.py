@@ -11,8 +11,11 @@ class Client(BaseModel):
     phone = models.CharField(max_length=20, verbose_name="Client phone", validators=[utils.PhoneValidator()])
     requisite = models.CharField(max_length=255, verbose_name="Requisite comment")
     requisite_file = models.FileField(upload_to="clients/", verbose_name="Requisite file")
-    accounting_phone = models.CharField(max_length=20, verbose_name="Account phone number")
     deleted = models.BooleanField(default=False, verbose_name="Deleted")
+    accounting_phone = models.CharField(
+        max_length=20, verbose_name="Account phone number",
+        validators=[utils.PhoneValidator()]
+    )
 
     objects = models.Manager()
     active_objects = managers.ActiveClientManager()
