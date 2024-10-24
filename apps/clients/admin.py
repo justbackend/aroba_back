@@ -9,6 +9,7 @@ class ClientAdmin(admin.ModelAdmin):
         extra = 1
 
     list_display = ('id', 'name', 'phone', 'accounting_phone')
+    list_display_links = ('id', 'name', 'phone')
     inlines = (ClientRouteInline,)
 
 

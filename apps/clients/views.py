@@ -5,7 +5,7 @@ from . import models, serializers
 
 class ClientViewSet(viewsets.ModelViewSet):
     serializer_class = serializers.ClientSerializer
-    queryset = models.Client.objects.all()
+    queryset = models.Client.active_objects.all()
 
     def perform_destroy(self, instance):
         instance.deleted = True
