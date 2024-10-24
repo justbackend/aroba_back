@@ -28,7 +28,17 @@ class VehicleNumberValidator:
     code = 'vehicle_number'
 
     def __call__(self, value: str):
+
         cleaned = self.clean(value)
+        if not self.compare(cleaned):
+            raise ValidationError(message=self.message, code=self.code)
+
+    @classmethod
+    def clean(cls, value) -> list:
+        return re.split(r'\s+', value)
+
+    @classmethod
+    def compare(cls, cleaned):
         digit = False
         upper = False
 
@@ -40,10 +50,5 @@ class VehicleNumberValidator:
             upper = upper or isupper
 
             checking.append(isupper or isdigit)
+        return digit and upper and all(checking)
 
-        if not (digit and upper) or not all(checking):
-            raise ValidationError(message=self.message, code=self.code)
-
-    @classmethod
-    def clean(cls, value) -> list:
-        return re.split(r'\s+', value)

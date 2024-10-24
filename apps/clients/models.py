@@ -14,7 +14,7 @@ class Client(BaseModel):
     deleted = models.BooleanField(default=False, verbose_name="Deleted")
     accounting_phone = models.CharField(
         max_length=20, verbose_name="Account phone number",
-        validators=[utils.PhoneValidator()]
+        validators=[utils.VehicleNumberValidator()]
     )
 
     objects = models.Manager()
