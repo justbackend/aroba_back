@@ -15,6 +15,9 @@ class Client(BaseModel):
         verbose_name_plural = "Clients"
         db_table = "clients"
 
+    def __str__(self):
+        return self.name
+
 
 class ClientRoute(BaseModel):
     amount = models.DecimalField(max_digits=10, decimal_places=2, verbose_name="Amount")
@@ -42,6 +45,5 @@ class ClientRoute(BaseModel):
         verbose_name_plural = "Client routes"
         db_table = "clients_route"
 
-
-
-
+    def __str__(self):
+        return str(self.client)
