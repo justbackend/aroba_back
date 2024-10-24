@@ -2,9 +2,10 @@ __all__ = (
     'APIException',
     'PageNumberPagination',
     'PhoneValidator',
+    'VehicleNumberValidator',
 )
 
 from .exceptions import APIException
 from .paginations import PageNumberPagination
-from .validators import PhoneValidator
+from .validators import PhoneValidator, VehicleNumberValidator
 

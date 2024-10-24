@@ -27,11 +27,12 @@ class PhoneValidator:
 class VehicleNumberValidator:
     message = 'Car number must be entered in the format: 75 A 777 AA'
     code = 'vehicle_number'
-    pattern = r'^(?=.*[A-Za-z])(?=.*\d)(?:[A-Za-z]+\s\d+|\d+\s[A-Za-z]+)+$'
 
-    def __call__(self, value):
-        if not re.match(self.pattern, value):
+    def __call__(self, value: str):
+        cleaned = self.clean(value)
+        if not all(x.isdigit() or x.isupper() for x in cleaned):
             raise ValidationError(message=self.message, code=self.code)
 
-
-
+    @classmethod
+    def clean(cls, value) -> list:
+        return re.split(r'\s+', value)
