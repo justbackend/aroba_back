@@ -3,11 +3,12 @@ from django.db import models
 from apps.common.models import BaseModel
 from . import managers
 from utils import choices
+import utils
 
 
 class Client(BaseModel):
     name = models.CharField(max_length=255, verbose_name="Client name")
-    phone = models.CharField(max_length=20, verbose_name="Client phone")
+    phone = models.CharField(max_length=20, verbose_name="Client phone", validators=[utils.PhoneValidator()])
     requisite = models.CharField(max_length=255, verbose_name="Requisite comment")
     requisite_file = models.FileField(upload_to="clients/", verbose_name="Requisite file")
     accounting_phone = models.CharField(max_length=20, verbose_name="Account phone number")
