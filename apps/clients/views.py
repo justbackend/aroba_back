@@ -1,8 +1,10 @@
-from rest_framework import views
+from rest_framework import views, viewsets
 from rest_framework.response import Response
+from . import models, serializers
 
 
-class ClientListView(views.APIView):
+class ClientViewSet(viewsets.ModelViewSet):
+    serializer_class = serializers.ClientSerializer
+    queryset = models.Client.active_objects.all()
 
-    def get(self, request, *args, **kwargs):
-        return Response({})
+

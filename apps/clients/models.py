@@ -1,6 +1,7 @@
 from django.db import models
 
 from apps.common.models import BaseModel
+from . import managers
 
 
 class Client(BaseModel):
@@ -9,6 +10,9 @@ class Client(BaseModel):
     requisite = models.CharField(max_length=255, verbose_name="Requisite comment")
     requisite_file = models.FileField(upload_to="clients/", verbose_name="Requisite file")
     accounting_phone = models.CharField(max_length=20, verbose_name="Account phone number")
+    deleted = models.BooleanField(default=False, verbose_name="Deleted")
+
+    active_objects = managers.ActiveClientManager()
 
     class Meta:
         verbose_name = "Client"

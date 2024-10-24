@@ -1,8 +1,13 @@
 from django.urls import path
 from . import views
 
+
+# clients view set
+clients_lc = views.ClientViewSet.as_view({'get': 'list', 'post': 'create'})
+clients_udd = views.ClientViewSet.as_view({'patch': 'partial_update', 'delete': 'destroy'})
+
 urlpatterns = [
-    path('', views.ClientListView.as_view(), name='client-list'),
-    path('<int:pk>/', views.ClientListView.as_view(), name='client-list'),
+    path('', clients_lc, name='client_lc'),
+    path('<int:pk>/', clients_udd, name='client_udd'),
 ]
 
