@@ -35,4 +35,6 @@ class APIMethods(models.TextChoices):
 class APIRoutes(models.TextChoices):
     USERS = '/api/v1/users/', 'Users'
     COMMON = '/api/v1/common/', 'Common'
+    CLIENTS = '/api/v1/clients/', 'Clients'
+    ORDERS = '/api/v1/orders/', 'Orders'
 

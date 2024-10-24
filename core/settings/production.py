@@ -27,3 +27,10 @@ CSRF_TRUSTED_ORIGINS = [
 CORS_ORIGIN_ALLOW_ALL = True
 CORS_ALLOW_CREDENTIALS = True
 CORS_ALLOW_HEADERS = ["*"]
+
+
+REST_FRAMEWORK.update(
+    DEFAULT_RENDERER_CLASSES=(
+        'rest_framework.renderers.JSONRenderer',
+    ),
+)

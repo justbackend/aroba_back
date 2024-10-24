@@ -9,7 +9,9 @@ class RolePermission(permissions.BasePermission):
 
         if (api_list := getattr(user, 'api_list', None)) and user.is_authenticated:
             path = request.path[user.api_route_len:]
+
             for api_info in api_list:
+                api_info['name'] = api_info['name'] or ''
 
                 if int(api_info['dynamic']):
                     pattern = f"^{api_info['name'].replace('$', '[^/]+')}$"

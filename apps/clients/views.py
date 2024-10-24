@@ -4,5 +4,5 @@ from rest_framework import views, generics
 
 class ClientListView(views.APIView):
 
-    def get(self, request):
+    def get(self, request, *args, **kwargs):
         return Response({})
