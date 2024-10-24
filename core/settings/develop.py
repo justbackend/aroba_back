@@ -8,7 +8,10 @@ INSTALLED_APPS += ['debug_toolbar', ]
 MIDDLEWARE += ['debug_toolbar.middleware.DebugToolbarMiddleware']
 REST_FRAMEWORK.update(
     DEFAULT_PERMISSION_CLASSES=('rest_framework.permissions.AllowAny',),
-    DEFAULT_RENDERER_CLASSES=('rest_framework.renderers.BrowsableAPIRenderer',),
+    DEFAULT_RENDERER_CLASSES=(
+        'rest_framework.renderers.BrowsableAPIRenderer',
+        'rest_framework.renderers.JSONRenderer',
+    ),
 )
 
 DEBUG_TOOLBAR_CONFIG = {
