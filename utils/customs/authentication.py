@@ -17,9 +17,11 @@ class JWTAuthentication(jwt_authentication):
         An authentication plugin that authenticates requests through a JSON web
         token provided in a request header.
     """
+    def __init__(self, **kwargs):
+        self.request = None
 
     def authenticate(self, request):
-        self.request = request
+        setattr(self, 'request', request)
         return super(JWTAuthentication, self).authenticate(request)
 
     @property
