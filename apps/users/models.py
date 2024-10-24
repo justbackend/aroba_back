@@ -42,10 +42,15 @@ class UserManager(DjangoUserManager):
 
 
 class User(AbstractBaseUser, PermissionsMixin, BaseModel):
-    username = models.CharField(max_length=50, unique=True, verbose_name='Username')
+    """
+    User model that supports username, and password.
+    """
 
+    username = models.CharField(max_length=50, unique=True, verbose_name='Username')
     first_name = models.CharField(_("first name"), max_length=150, blank=True)
     last_name = models.CharField(_("last name"), max_length=150, blank=True)
+    date_joined = models.DateTimeField(_("date joined"), default=timezone.now)
+    roles = models.ManyToManyField('Role', blank=True, related_name='users')
     is_staff = models.BooleanField(
         _("staff status"),
         default=False,
@@ -59,8 +64,6 @@ class User(AbstractBaseUser, PermissionsMixin, BaseModel):
             "Unselect this instead of deleting accounts."
         ),
     )
-    date_joined = models.DateTimeField(_("date joined"), default=timezone.now)
-    roles = models.ManyToManyField('Role', blank=True, related_name='users')
 
     USERNAME_FIELD = 'username'
 
