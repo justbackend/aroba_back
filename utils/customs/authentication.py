@@ -13,6 +13,10 @@ from utils.choices import APIRoutes
 
 
 class JWTAuthentication(jwt_authentication):
+    """
+        An authentication plugin that authenticates requests through a JSON web
+        token provided in a request header.
+    """
 
     def authenticate(self, request):
         self.request = request
