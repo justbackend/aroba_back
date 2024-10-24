@@ -86,12 +86,12 @@ class User(AbstractBaseUser, PermissionsMixin, BaseModel):
         verbose_name_plural = _("users")
         db_table = "users"
 
+    def __str__(self):
+        return str(self.username)
+
     def tokens(self):
         refresh = RefreshToken.for_user(self)
         return dict(refresh=str(refresh), accsess=str(refresh.access_token))
-
-    def __str__(self):
-        return str(self.username)
 
 
 class Role(BaseModel):
