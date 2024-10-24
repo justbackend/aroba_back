@@ -10,5 +10,8 @@ class RegionViewSet(viewsets.ModelViewSet):
 
 class PointViewSet(viewsets.ModelViewSet):
     serializer_class = serializers.PointSerializer
-    queryset = models.Point.objects.all()
+    queryset = models.Point.active_objects.all()
 
+    def perform_destroy(self, instance):
+        instance.deleted = True
+        instance.save()
