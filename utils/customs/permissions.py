@@ -7,7 +7,7 @@ class RolePermission(permissions.BasePermission):
     def has_permission(self, request, view):
         user = request.user
 
-        if (api_list := getattr(user, 'api_list', None)) and user.is_authenticated:
+        if user and (api_list := getattr(user, 'api_list', None)) and user.is_authenticated:
             path = request.path[user.api_route_len:]
 
             for api_info in api_list:
