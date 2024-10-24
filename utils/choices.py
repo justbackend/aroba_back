@@ -38,3 +38,7 @@ class APIRoutes(models.TextChoices):
     CLIENTS = '/api/v1/clients/', 'Clients'
     ORDERS = '/api/v1/orders/', 'Orders'
 
+
+class ClientRouteTypes(models.TextChoices):
+    TRANSFER = 'transfer', 'Transfer'
+    CASH = 'cash', 'Cash'

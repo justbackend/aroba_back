@@ -2,6 +2,7 @@ from django.db import models
 
 from apps.common.models import BaseModel
 from . import managers
+from utils import choices
 
 
 class Client(BaseModel):
@@ -25,6 +26,12 @@ class Client(BaseModel):
 
 class ClientRoute(BaseModel):
     amount = models.DecimalField(max_digits=10, decimal_places=2, verbose_name="Amount")
+    type = models.CharField(
+        max_length=15,
+        verbose_name="Route type",
+        choices=choices.ClientRouteTypes.choices,
+        default=choices.ClientRouteTypes.CASH
+    )
     loading = models.ForeignKey(
         'common.Point',
         on_delete=models.PROTECT,
