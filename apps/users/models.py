@@ -43,7 +43,19 @@ class UserManager(DjangoUserManager):
 
 class User(AbstractBaseUser, PermissionsMixin, BaseModel):
     """
-    User model that supports username, and password.
+    Custom user model that supports username authentication.
+
+    Attributes:
+        username (str): Unique identifier for the user.
+        first_name (str): User's first name.
+        last_name (str): User's last name.
+        date_joined (datetime): Timestamp of when the user joined.
+        roles (ManyToManyField): Roles assigned to the user for permissions.
+        is_staff (bool): Indicates if the user can access the admin site.
+        is_active (bool): Indicates if the user is active or disabled.
+
+    Methods:
+        tokens(): Generates JWT tokens for the user.
     """
 
     username = models.CharField(max_length=50, unique=True, verbose_name='Username')
@@ -83,6 +95,17 @@ class User(AbstractBaseUser, PermissionsMixin, BaseModel):
 
 
 class Role(BaseModel):
+    """
+    Model representing user roles within the application.
+
+    Attributes:
+        name (str): Unique name of the role.
+        modules (ManyToManyField): Modules associated with the role.
+
+    Methods:
+        __str__(): Returns the name of the role.
+    """
+
     name = models.CharField(_("name"), max_length=150, unique=True)
     modules = models.ManyToManyField('Module', related_name='roles', blank=True)
 
@@ -94,6 +117,17 @@ class Role(BaseModel):
 
 
 class Module(BaseModel):
+    """
+    Model representing application modules to which roles can be assigned.
+
+    Attributes:
+        name (str): Unique name of the module.
+        apis (ManyToManyField): API routes associated with the module.
+
+    Methods:
+        __str__(): Returns the name of the module.
+    """
+
     name = models.CharField(_("name"), max_length=150, unique=True)
     apis = models.ManyToManyField('APIRoute', related_name='modules', blank=True)
 
@@ -105,6 +139,19 @@ class Module(BaseModel):
 
 
 class APIRoute(models.Model):
+    """
+    Model representing API routes available in the application.
+
+    Attributes:
+        route (str): The actual API route.
+        name (str): Descriptive name of the API route.
+        dynamic (str): Indicates whether the route is dynamic (Yes/No).
+        method (str): HTTP method used for the route (GET, POST, etc.).
+
+    Methods:
+        __str__(): Returns a string representation of the API route.
+    """
+
     API_DYNAMIC_CHOICES = (
         ('1', 'Yes'),
         ('0', 'No'),
