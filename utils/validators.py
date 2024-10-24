@@ -30,7 +30,7 @@ class VehicleNumberValidator:
     def __call__(self, value: str):
 
         cleaned = self.clean(value)
-        if not self.compare(cleaned):
+        if not cleaned or not self.compare(cleaned):
             raise ValidationError(message=self.message, code=self.code)
 
     @classmethod
@@ -38,7 +38,7 @@ class VehicleNumberValidator:
         return re.split(r'\s+', value)
 
     @classmethod
-    def compare(cls, cleaned):
+    def compare(cls, cleaned) -> bool:
         digit = False
         upper = False
 
