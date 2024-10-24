@@ -22,3 +22,16 @@ class PhoneValidator:
                 params={'value': value}
             )
 
+
+@deconstructible
+class VehicleNumberValidator:
+    message = 'Car number must be entered in the format: 75 A 777 AA'
+    code = 'vehicle_number'
+    pattern = r'^(?=.*[A-Za-z])(?=.*\d)(?:[A-Za-z]+\s\d+|\d+\s[A-Za-z]+)+$'
+
+    def __call__(self, value):
+        if not re.match(self.pattern, value):
+            raise ValidationError(message=self.message, code=self.code)
+
+
+
