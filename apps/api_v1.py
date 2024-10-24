@@ -11,6 +11,21 @@ urlpatterns = [
         include('apps.users.auth.urls'),
         name='auth'
     ),
+    path(
+        'orders/',
+        include('apps.orders.urls'),
+        name='orders'
+        ),
+    path(
+        'clients/',
+        include('apps.clients.urls'),
+        name='clients'
+        ),
+    path(
+        'common/',
+        include('apps.common.urls'),
+        name='common'
+    ),
 
 ]
 
