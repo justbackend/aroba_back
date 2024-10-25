@@ -164,6 +164,8 @@ class APIRoute(models.Model):
         _("method"), max_length=100,
         choices=choices.APIMethods.choices,
         default=choices.APIMethods.GET
+
+
     )
 
     def __str__(self):
