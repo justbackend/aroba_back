@@ -1,4 +1,10 @@
+# from django.urls import path, include
+# from core.urls import urlpatterns
+
 from .base import *  # noqa
+
+# urlpatterns.append(path("__debug__/", include("debug_toolbar.urls")))
+
 
 DEBUG = True
 CELERY_TASK_ALWAYS_EAGER = True
@@ -12,3 +18,4 @@ REST_FRAMEWORK.update(
 DEBUG_TOOLBAR_CONFIG = {
     "SHOW_TOOLBAR_CALLBACK": lambda request: True,
 }
+ROOT_URLCONF = "core.urls.develop"
