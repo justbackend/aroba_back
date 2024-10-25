@@ -155,6 +155,7 @@ class APIRoute(models.Model):
     API_DYNAMIC_CHOICES = (
         ('1', 'Yes'),
         ('0', 'No'),
+
     )
 
     route = models.CharField(_("route"), max_length=50, choices=choices.APIRoutes.choices)
