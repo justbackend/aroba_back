@@ -34,3 +34,5 @@ REST_FRAMEWORK.update(
         'rest_framework.renderers.JSONRenderer',
     ),
 )
+
+ROOT_URLCONF = "core.urls.production"
