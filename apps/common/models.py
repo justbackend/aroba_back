@@ -31,3 +31,6 @@ class Point(models.Model):
 
     class Meta:
         db_table = 'points'
+
+    def __str__(self):
+        return self.name
