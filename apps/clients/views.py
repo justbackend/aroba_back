@@ -5,7 +5,7 @@ import utils
 from . import models, serializers
 
 
-@utils.permission_required_multiple(permissions=('clients.view_client',), methods=('list',))
+@utils.permission_required_multiple(perm='test.test_view', methods=('list',))
 class ClientViewSet(viewsets.ModelViewSet):
     serializer_class = serializers.ClientSerializer
     queryset = models.Client.active_objects.all()
