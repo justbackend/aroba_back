@@ -8,4 +8,5 @@ __all__ = (
 from .exceptions import APIException
 from .paginations import PageNumberPagination
 from .validators import PhoneValidator, VehicleNumberValidator
+from .decorators import permission_required_multiple
 
