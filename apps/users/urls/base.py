@@ -9,8 +9,8 @@ role_lc = views.RoleViewSet.as_view({'get': 'list', 'post': 'create'})
 role_udd = views.RoleViewSet.as_view({'get': 'retrieve', 'patch': 'partial_update', 'delete': 'destroy'})
 
 # modules
-module_lc = views.ModuleViewSet.as_view({'get': 'list', 'post': 'create'})
-module_udd = views.ModuleViewSet.as_view({'get': 'retrieve', 'patch': 'partial_update', 'delete': 'destroy'})
+module_lc = views.ContentTypeViewSet.as_view({'get': 'list', 'post': 'create'})
+module_udd = views.ContentTypeViewSet.as_view({'get': 'retrieve', 'patch': 'partial_update', 'delete': 'destroy'})
 
 urlpatterns = [
 

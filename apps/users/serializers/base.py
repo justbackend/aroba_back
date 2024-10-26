@@ -4,7 +4,7 @@ from .. import models
 
 class ContentTypeSerializer(serializers.ModelSerializer):
     class Meta:
-        model = models.Module
+        model = models.ContentType
         fields = '__all__'
 
 
