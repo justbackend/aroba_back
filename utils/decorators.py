@@ -2,7 +2,7 @@ from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import permission_required
 
 
-def permission_required_multiple(perm: str, methods: tuple):
+def permission_required_cls(perm: str, methods: tuple):
     def decorator(cls):
         for method in methods:
             if hasattr(cls, method):
