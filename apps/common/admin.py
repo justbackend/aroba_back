@@ -1,6 +1,8 @@
 from django.contrib import admin
 from . import models
 from django.contrib.auth.models import Permission, ContentType
+# from django.contrib.auth.decorators import permission_required
+# from django.utils.decorators import method_decorator
 
 
 @admin.register(models.Region)
