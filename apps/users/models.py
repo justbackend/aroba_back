@@ -1,5 +1,5 @@
 from django.contrib.auth.hashers import make_password
-from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin
+from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin, Permission
 from django.contrib.auth.models import UserManager as DjangoUserManager
 from django.db import models
 from django.utils import timezone
@@ -100,14 +100,16 @@ class Role(BaseModel):
 
     Attributes:
         name (str): Unique name of the role.
-        modules (ManyToManyField): Modules associated with the role.
+        permissions (ManyToManyField): Modules associated with the role.
 
     Methods:
         __str__(): Returns the name of the role.
     """
 
     name = models.CharField(_("name"), max_length=150, unique=True)
-    modules = models.ManyToManyField('Module', related_name='roles', blank=True)
+    permissions = models.ManyToManyField(
+        Permission, blank=True, related_name='roles', verbose_name='Permissions'
+    )
 
     class Meta:
         db_table = "roles"
