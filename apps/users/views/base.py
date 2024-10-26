@@ -1,6 +1,6 @@
 from rest_framework import viewsets
 
-from . import serializers
+from apps.users.serializers import base as serializers
 from .. import models
 
 

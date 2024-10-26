@@ -3,12 +3,12 @@ from django.urls import path, include
 urlpatterns = [
     path(
         'users/',
-        include('apps.users.base.urls'),
+        include('apps.users.urls.base'),
         name='users'
     ),
     path(
         'auth/',
-        include('apps.users.auth.urls'),
+        include('apps.users.urls.auth'),
         name='auth'
     ),
     path(
