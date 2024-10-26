@@ -37,6 +37,7 @@ class APIRoutes(models.TextChoices):
     COMMON = '/api/v1/common/', 'Common'
     CLIENTS = '/api/v1/clients/', 'Clients'
     ORDERS = '/api/v1/orders/', 'Orders'
+    AUTH = '/api/v1/auth/', 'Auth'
 
 
 class ClientRouteTypes(models.TextChoices):
