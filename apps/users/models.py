@@ -92,6 +92,14 @@ class Role(BaseModel):
 
 
 class ExtendedContentType(models.Model):
+    """
+    The ExtendedContentType model is designed to add additional fields to Django's default ContentType model.
+
+       Attributes:
+       content_type (OneToOneField): A field linking to Django's ContentType model, establishing a one-to-one
+       relationship. custom (BooleanField): Indicates whether the ContentType entry is custom-defined,
+       with True signifying custom content.
+    """
     content_type = models.OneToOneField(BaseContentType, on_delete=models.CASCADE, related_name="extended")
     custom = models.BooleanField(default=False, verbose_name='Custom type')
 
