@@ -5,46 +5,14 @@ __all__ = (
     'Role',
 )
 
-from django.contrib.auth.hashers import make_password
-from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin, Permission, ContentType
-from django.contrib.auth.models import UserManager as DjangoUserManager
+from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin, Permission, ContentType as BaseContentType
 from django.db import models
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 from rest_framework_simplejwt.tokens import RefreshToken
 
 from apps.common.models import BaseModel
-
-
-class UserManager(DjangoUserManager):
-    def _create_user(self, username, password, **extra_fields):
-        """
-        Create and save a user with the given username, and password.
-        """
-        if not username:
-            raise ValueError("The given username must be set")
-
-        username = User.normalize_username(username)
-        user = self.model(username=username, **extra_fields)
-        user.password = make_password(password)
-        user.save(using=self._db)
-        return user
-
-    def create_user(self, username, password=None, **extra_fields):
-        extra_fields.setdefault("is_staff", False)
-        extra_fields.setdefault("is_superuser", False)
-        return self._create_user(username, password, **extra_fields)
-
-    def create_superuser(self, username, password=None, **extra_fields):
-        extra_fields.setdefault("is_staff", True)
-        extra_fields.setdefault("is_superuser", True)
-
-        if extra_fields.get("is_staff") is not True:
-            raise ValueError("Superuser must have is_staff=True.")
-        if extra_fields.get("is_superuser") is not True:
-            raise ValueError("Superuser must have is_superuser=True.")
-
-        return self._create_user(username, password, **extra_fields)
+from . import managers
 
 
 class User(AbstractBaseUser, PermissionsMixin, BaseModel):
@@ -85,7 +53,7 @@ class User(AbstractBaseUser, PermissionsMixin, BaseModel):
 
     USERNAME_FIELD = 'username'
 
-    objects = UserManager()
+    objects = managers.UserManager()
 
     class Meta:
         verbose_name = _("user")
@@ -123,3 +91,22 @@ class Role(BaseModel):
     def __str__(self):
         return self.name
 
+
+class ExtendedContentType(models.Model):
+    content_type = models.OneToOneField(BaseContentType, on_delete=models.CASCADE, related_name="extended")
+    custom = models.BooleanField(default=False, verbose_name='Custom type')
+
+    class Meta:
+        db_table = "extended_content_types"
+
+
+class ContentType(BaseContentType):
+    objects = managers.ContentTypeManager()
+
+    class Meta:
+        proxy = True
+
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)
+        if not hasattr(self, 'extended'):
+            ExtendedContentType.objects.create(content_type=self, custom=True)
