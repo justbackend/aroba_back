@@ -5,7 +5,6 @@ __all__ = (
     'Role',
 )
 
-
 from django.contrib.auth.hashers import make_password
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin, Permission, ContentType
 from django.contrib.auth.models import UserManager as DjangoUserManager
@@ -15,7 +14,6 @@ from django.utils.translation import gettext_lazy as _
 from rest_framework_simplejwt.tokens import RefreshToken
 
 from apps.common.models import BaseModel
-from utils import choices
 
 
 class UserManager(DjangoUserManager):
