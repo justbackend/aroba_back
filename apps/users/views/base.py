@@ -9,5 +9,5 @@ class RoleViewSet(viewsets.ModelViewSet):
 
 
 class ContentTypeViewSet(viewsets.ModelViewSet):
-    queryset = models.ContentType.objects.all().order_by('-id')
+    queryset = models.ContentType.objects.prefetch_related('permission_set').all().order_by('-id')
     serializer_class = serializers.ContentTypeSerializer
