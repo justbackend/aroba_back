@@ -24,3 +24,8 @@ class ContentTypeAdmin(admin.ModelAdmin):
 
     list_display = ('id', 'app_label', 'model')
     inlines = (ExtendedContentTypeInline, PermissionsInline)
+
+
+@admin.register(models.Permission)
+class PermissionAdmin(admin.ModelAdmin):
+    list_display = ('id', 'codename', 'name',)
