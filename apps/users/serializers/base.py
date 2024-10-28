@@ -12,7 +12,7 @@ class ContentTypeSerializer(serializers.ModelSerializer):
     permission_set = PermissionSerializer(many=True, read_only=True)
 
     class Meta:
-        model = models.ContentType
+        model = models.Module
         fields = '__all__'
 
 

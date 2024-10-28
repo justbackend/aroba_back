@@ -26,7 +26,7 @@ class Migration(migrations.Migration):
             },
             bases=("contenttypes.contenttype",),
             managers=[
-                ("objects", apps.users.managers.ContentTypeManager()),
+                ("objects", apps.users.managers.ModuleManager()),
             ],
         ),
         migrations.CreateModel(

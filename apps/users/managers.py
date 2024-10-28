@@ -34,7 +34,7 @@ class UserManager(DjangoUserManager):
         return self._create_user(username, password, **extra_fields)
 
 
-class ContentTypeManager(DjangoContentTypeManager):
+class ModuleManager(DjangoContentTypeManager):
 
     def get_queryset(self):
         return super().get_queryset().filter(extended__isnull=False)

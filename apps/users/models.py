@@ -1,6 +1,6 @@
 __all__ = (
     'Permission',
-    'ContentType',
+    'Module',
     'User',
     'Role',
 )
@@ -91,9 +91,9 @@ class Role(BaseModel):
         return self.name
 
 
-class ExtendedContentType(models.Model):
+class ExtendedModule(models.Model):
     """
-    The ExtendedContentType model is designed to add additional fields to Django's default ContentType model.
+    The ExtendedModule model is designed to add additional fields to Django's default ContentType model.
 
        Attributes:
        content_type (OneToOneField): A field linking to Django's ContentType model, establishing a one-to-one
@@ -107,8 +107,8 @@ class ExtendedContentType(models.Model):
         db_table = "extended_content_types"
 
 
-class ContentType(BaseContentType):
-    objects = managers.ContentTypeManager()
+class Module(BaseContentType):
+    objects = managers.ModuleManager()
 
     class Meta:
         proxy = True
@@ -116,4 +116,4 @@ class ContentType(BaseContentType):
     def save(self, *args, **kwargs):
         super().save(*args, **kwargs)
         if not hasattr(self, 'extended'):
-            ExtendedContentType.objects.create(content_type=self, custom=True)
+            ExtendedModule.objects.create(content_type=self, custom=True)
