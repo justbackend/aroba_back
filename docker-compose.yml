@@ -16,11 +16,14 @@ services:
   db:
     image: postgres:14
     volumes:
-      - postgres_data:/var/lib/postgresql/data/
+#      - postgres_data:/var/lib/postgresql/data/
+      - ./dump.sql:/docker-entrypoint-initdb.d/dump.sql
     environment:
-      POSTGRES_DB: aroba
-      POSTGRES_USER: aroba
-      POSTGRES_PASSWORD: aroba
+      DB_NAME: aroba
+      DB_USER: aroba
+      DB_PASSWORD: aroba
+      DB_HOST: db
+      DB_PORT: 5432
 
 volumes:
   postgres_data:

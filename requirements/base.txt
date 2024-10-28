@@ -7,3 +7,4 @@ djangorestframework
 drf-spectacular
 django-filter
 djangorestframework-simplejwt
+django-debug-toolbar
