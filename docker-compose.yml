@@ -31,20 +31,20 @@ services:
       - POSTGRES_USER=${DB_USER}
       - POSTGRES_PASSWORD=${DB_PASSWORD}
 
-  nginx:
-    build:
-      context: ./nginx
-      dockerfile: ./Dockerfile
-    container_name: aroba_nginx
-    env_file:
-      - .env
-    volumes:
-      - ./static:/aroba/static
-      - ./media:/aroba/media
-    ports:
-      - "${NGINX_EXTERNAL_PORT}:80"
-    depends_on:
-      - aroba_web
+#  nginx:
+#    build:
+#      context: ./nginx
+#      dockerfile: ./Dockerfile
+#    container_name: aroba_nginx
+#    env_file:
+#      - .env
+#    volumes:
+#      - ./static:/aroba/static
+#      - ./media:/aroba/media
+#    ports:
+#      - "${NGINX_EXTERNAL_PORT}:80"
+#    depends_on:
+#      - aroba_web
 
 
 
