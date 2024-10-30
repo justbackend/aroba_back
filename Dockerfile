@@ -26,7 +26,9 @@ RUN useradd -rms /bin/bash aroba && chmod 777 /opt/run
 WORKDIR /aroba
 
 # Create directories for media and static files
-RUN mkdir /aroba/media/ && mkdir /aroba/static && chown -R aroba:aroba /aroba && chmod 755 /aroba
+RUN mkdir -p /aroba/media/ /aroba/static && \
+    chmod -R 775 /aroba/media /aroba/static && \
+    chown -R aroba:aroba /aroba/media /aroba/static
 
 # Copy only the requirements directory and install dependencies
 COPY --chown=aroba:aroba requirements /aroba/requirements
