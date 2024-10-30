@@ -8,11 +8,10 @@ from utils import customs
 
 
 class LoginView(generics.GenericAPIView):
-    authentication_classes = (customs.JWTAuthentication,)
-    # permission_classes = ()
+    authentication_classes = ()
+    permission_classes = ()
     serializer_class = serializers.LoginSerializer
 
-    # @method_decorator(permission_required('users.view_role', raise_exception=True))
     def post(self, request):
         print(request.user)
         serializer = self.serializer_class(data=request.data)
