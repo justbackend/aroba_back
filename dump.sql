@@ -2,8 +2,8 @@
 -- PostgreSQL database dump
 --
 
--- Dumped from database version 14.11 (Homebrew)
--- Dumped by pg_dump version 14.11 (Homebrew)
+-- Dumped from database version 14.13 (Debian 14.13-1.pgdg120+1)
+-- Dumped by pg_dump version 14.13 (Debian 14.13-1.pgdg120+1)
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -676,6 +676,14 @@ COPY public.auth_permission (id, name, content_type_id, codename) FROM stdin;
 58	Can change Order Payment	15	change_orderpayment
 59	Can delete Order Payment	15	delete_orderpayment
 60	Can view Order Payment	15	view_orderpayment
+61	Can add extended module	10	add_extendedmodule
+62	Can change extended module	10	change_extendedmodule
+63	Can delete extended module	10	delete_extendedmodule
+64	Can view extended module	10	view_extendedmodule
+65	Can add module	16	add_module
+66	Can change module	16	change_module
+67	Can delete module	16	delete_module
+68	Can view module	16	view_module
 \.
 
 
@@ -700,8 +708,10 @@ COPY public.clients_route (id, created_at, updated_at, amount, type, client_id, 
 --
 
 COPY public.django_admin_log (id, action_time, object_id, object_repr, action_flag, change_message, content_type_id, user_id) FROM stdin;
-1	2024-10-30 10:52:20.437255+05	1	Region object (1)	1	[{"added": {}}]	6	1
-2	2024-10-30 10:52:30.172669+05	1	vfudsygbhjckdscdsa	1	[{"added": {}}]	7	1
+1	2024-10-30 05:52:20.437255+00	1	Region object (1)	1	[{"added": {}}]	6	1
+2	2024-10-30 05:52:30.172669+00	1	vfudsygbhjckdscdsa	1	[{"added": {}}]	7	1
+3	2024-10-30 05:59:24.570279+00	2	vhdjlsfdsfdsferg	1	[{"added": {}}]	7	1
+4	2024-10-30 09:32:51.718245+00	3	Salom	1	[{"added": {}}]	7	1
 \.
 
 
@@ -719,12 +729,13 @@ COPY public.django_content_type (id, app_label, model) FROM stdin;
 7	common	point
 8	users	contenttype
 9	users	role
-10	users	extendedcontenttype
 11	users	user
 12	clients	client
 13	clients	clientroute
 14	orders	order
 15	orders	orderpayment
+10	users	extendedmodule
+16	users	module
 \.
 
 
@@ -733,29 +744,31 @@ COPY public.django_content_type (id, app_label, model) FROM stdin;
 --
 
 COPY public.django_migrations (id, app, name, applied) FROM stdin;
-1	contenttypes	0001_initial	2024-10-28 06:56:29.390876+05
-2	contenttypes	0002_remove_content_type_name	2024-10-28 06:56:29.397241+05
-3	auth	0001_initial	2024-10-28 06:56:29.431069+05
-4	auth	0002_alter_permission_name_max_length	2024-10-28 06:56:29.434594+05
-5	auth	0003_alter_user_email_max_length	2024-10-28 06:56:29.438411+05
-6	auth	0004_alter_user_username_opts	2024-10-28 06:56:29.441992+05
-7	auth	0005_alter_user_last_login_null	2024-10-28 06:56:29.44552+05
-8	auth	0006_require_contenttypes_0002	2024-10-28 06:56:29.447792+05
-9	auth	0007_alter_validators_add_error_messages	2024-10-28 06:56:29.451966+05
-10	auth	0008_alter_user_username_max_length	2024-10-28 06:56:29.455909+05
-11	auth	0009_alter_user_last_name_max_length	2024-10-28 06:56:29.45974+05
-12	auth	0010_alter_group_name_max_length	2024-10-28 06:56:29.465464+05
-13	auth	0011_update_proxy_permissions	2024-10-28 06:56:29.469738+05
-14	auth	0012_alter_user_first_name_max_length	2024-10-28 06:56:29.474465+05
-15	users	0001_initial	2024-10-28 06:56:29.558558+05
-16	admin	0001_initial	2024-10-28 06:56:29.578719+05
-17	admin	0002_logentry_remove_auto_add	2024-10-28 06:56:29.586363+05
-18	admin	0003_logentry_add_action_flag_choices	2024-10-28 06:56:29.595121+05
-19	common	0001_initial	2024-10-28 06:56:29.611348+05
-20	clients	0001_initial	2024-10-28 06:56:29.641114+05
-21	orders	0001_initial	2024-10-28 06:56:29.673039+05
-22	orders	0002_initial	2024-10-28 06:56:29.715636+05
-23	sessions	0001_initial	2024-10-28 06:56:29.727932+05
+1	contenttypes	0001_initial	2024-10-28 01:56:29.390876+00
+2	contenttypes	0002_remove_content_type_name	2024-10-28 01:56:29.397241+00
+3	auth	0001_initial	2024-10-28 01:56:29.431069+00
+4	auth	0002_alter_permission_name_max_length	2024-10-28 01:56:29.434594+00
+5	auth	0003_alter_user_email_max_length	2024-10-28 01:56:29.438411+00
+6	auth	0004_alter_user_username_opts	2024-10-28 01:56:29.441992+00
+7	auth	0005_alter_user_last_login_null	2024-10-28 01:56:29.44552+00
+8	auth	0006_require_contenttypes_0002	2024-10-28 01:56:29.447792+00
+9	auth	0007_alter_validators_add_error_messages	2024-10-28 01:56:29.451966+00
+10	auth	0008_alter_user_username_max_length	2024-10-28 01:56:29.455909+00
+11	auth	0009_alter_user_last_name_max_length	2024-10-28 01:56:29.45974+00
+12	auth	0010_alter_group_name_max_length	2024-10-28 01:56:29.465464+00
+13	auth	0011_update_proxy_permissions	2024-10-28 01:56:29.469738+00
+14	auth	0012_alter_user_first_name_max_length	2024-10-28 01:56:29.474465+00
+15	users	0001_initial	2024-10-28 01:56:29.558558+00
+16	admin	0001_initial	2024-10-28 01:56:29.578719+00
+17	admin	0002_logentry_remove_auto_add	2024-10-28 01:56:29.586363+00
+18	admin	0003_logentry_add_action_flag_choices	2024-10-28 01:56:29.595121+00
+19	common	0001_initial	2024-10-28 01:56:29.611348+00
+20	clients	0001_initial	2024-10-28 01:56:29.641114+00
+21	orders	0001_initial	2024-10-28 01:56:29.673039+00
+22	orders	0002_initial	2024-10-28 01:56:29.715636+00
+23	sessions	0001_initial	2024-10-28 01:56:29.727932+00
+24	common	0002_alter_point_managers	2024-10-30 08:54:42.362402+00
+25	users	0002_rename_extendedcontenttype_extendedmodule_and_more	2024-10-30 08:54:42.411587+00
 \.
 
 
@@ -764,10 +777,12 @@ COPY public.django_migrations (id, app, name, applied) FROM stdin;
 --
 
 COPY public.django_session (session_key, session_data, expire_date) FROM stdin;
-vzu4oelvljpjkyoialml8el8nvs68u89	.eJxVjEEOwiAQAP_C2RCg0IJH730DWZZFqgaS0p6Mf7ckPeh1ZjJv5mHfst8brX6J7Moku_yyAPik0kV8QLlXjrVs6xJ4T_hpG59rpNftbP8GGVruWxTGoAWnpZ0UphQkOGtsQKTjMiSUNACFJHQEAJUgBTWNygltjmpkny8M0TkR:1t5Ezz:NEqPNOJcaiuKCLpTIRPkjUe4SvPTCnqGiLt8Zy7fxWM	2024-11-11 06:56:51.676969+05
-aqsw372urfw3obrl17zsm5i2lv040tom	.eJxVjEEOwiAQAP_C2RCg0IJH730DWZZFqgaS0p6Mf7ckPeh1ZjJv5mHfst8brX6J7Moku_yyAPik0kV8QLlXjrVs6xJ4T_hpG59rpNftbP8GGVruWxTGoAWnpZ0UphQkOGtsQKTjMiSUNACFJHQEAJUgBTWNygltjmpkny8M0TkR:1t5HWP:mgVVnThqOMV-pL0y5bjyeEoFfJtYpGGAM090-Cl5Mjg	2024-11-11 09:38:29.430726+05
-4e31h7xdcm0hroelrl34azxafkvsit88	.eJxVjEEOwiAQAP_C2RCg0IJH730DWZZFqgaS0p6Mf7ckPeh1ZjJv5mHfst8brX6J7Moku_yyAPik0kV8QLlXjrVs6xJ4T_hpG59rpNftbP8GGVruWxTGoAWnpZ0UphQkOGtsQKTjMiSUNACFJHQEAJUgBTWNygltjmpkny8M0TkR:1t5lND:hXx17yiIXU222sVfj60yHxdmamatyguYR37QGHxgaHY	2024-11-12 17:30:59.11352+05
-mqtg5pubawkyyu8wi2xay6atr0pexvep	.eJxVjEEOwiAQAP_C2RCg0IJH730DWZZFqgaS0p6Mf7ckPeh1ZjJv5mHfst8brX6J7Moku_yyAPik0kV8QLlXjrVs6xJ4T_hpG59rpNftbP8GGVruWxTGoAWnpZ0UphQkOGtsQKTjMiSUNACFJHQEAJUgBTWNygltjmpkny8M0TkR:1t61cn:DqQoENdyZ4qYYffAaUrmo0RgCxkBp1NEtN8goHzpZSY	2024-11-13 10:52:09.470387+05
+vzu4oelvljpjkyoialml8el8nvs68u89	.eJxVjEEOwiAQAP_C2RCg0IJH730DWZZFqgaS0p6Mf7ckPeh1ZjJv5mHfst8brX6J7Moku_yyAPik0kV8QLlXjrVs6xJ4T_hpG59rpNftbP8GGVruWxTGoAWnpZ0UphQkOGtsQKTjMiSUNACFJHQEAJUgBTWNygltjmpkny8M0TkR:1t5Ezz:NEqPNOJcaiuKCLpTIRPkjUe4SvPTCnqGiLt8Zy7fxWM	2024-11-11 01:56:51.676969+00
+aqsw372urfw3obrl17zsm5i2lv040tom	.eJxVjEEOwiAQAP_C2RCg0IJH730DWZZFqgaS0p6Mf7ckPeh1ZjJv5mHfst8brX6J7Moku_yyAPik0kV8QLlXjrVs6xJ4T_hpG59rpNftbP8GGVruWxTGoAWnpZ0UphQkOGtsQKTjMiSUNACFJHQEAJUgBTWNygltjmpkny8M0TkR:1t5HWP:mgVVnThqOMV-pL0y5bjyeEoFfJtYpGGAM090-Cl5Mjg	2024-11-11 04:38:29.430726+00
+4e31h7xdcm0hroelrl34azxafkvsit88	.eJxVjEEOwiAQAP_C2RCg0IJH730DWZZFqgaS0p6Mf7ckPeh1ZjJv5mHfst8brX6J7Moku_yyAPik0kV8QLlXjrVs6xJ4T_hpG59rpNftbP8GGVruWxTGoAWnpZ0UphQkOGtsQKTjMiSUNACFJHQEAJUgBTWNygltjmpkny8M0TkR:1t5lND:hXx17yiIXU222sVfj60yHxdmamatyguYR37QGHxgaHY	2024-11-12 12:30:59.11352+00
+mqtg5pubawkyyu8wi2xay6atr0pexvep	.eJxVjEEOwiAQAP_C2RCg0IJH730DWZZFqgaS0p6Mf7ckPeh1ZjJv5mHfst8brX6J7Moku_yyAPik0kV8QLlXjrVs6xJ4T_hpG59rpNftbP8GGVruWxTGoAWnpZ0UphQkOGtsQKTjMiSUNACFJHQEAJUgBTWNygltjmpkny8M0TkR:1t61cn:DqQoENdyZ4qYYffAaUrmo0RgCxkBp1NEtN8goHzpZSY	2024-11-13 05:52:09.470387+00
+mjblkoyj9x180wj7uz2ptypyg2cyiij8	.eJxVjEEOwiAQRe_C2hBoERiX7nsGMgyMVA0kpV0Z765NutDtf-_9lwi4rSVsPS9hTuIitDj9bhHpkesO0h3rrUlqdV3mKHdFHrTLqaX8vB7u30HBXr41Wm08aWezMvpMaUQeHWsYrGdGdGlgBcYAoAIdcYwA1ntO1kYiRyzeH9lqOBk:1t64jR:ge5w9ms379HbmrMsIRwukt22ZObSXVaW16Cx8g1ZYHo	2024-11-13 09:11:13.289216+00
+isovl35kxln0327i9fkwiulyjvff27um	.eJxVjEEOwiAQRe_C2hBoERiX7nsGMgyMVA0kpV0Z765NutDtf-_9lwi4rSVsPS9hTuIitDj9bhHpkesO0h3rrUlqdV3mKHdFHrTLqaX8vB7u30HBXr41Wm08aWezMvpMaUQeHWsYrGdGdGlgBcYAoAIdcYwA1ntO1kYiRyzeH9lqOBk:1t6541:jQDHkwcNySb5HNsBTjVZXRFw9y6nLtLOQaKMDmkzeBg	2024-11-13 09:32:29.736032+00
 \.
 
 
@@ -801,6 +816,8 @@ COPY public.orders (id, created_at, updated_at, code, date, paid, comment, payme
 
 COPY public.points (id, name, lon, lat, deleted, region_id) FROM stdin;
 1	vfudsygbhjckdscdsa	45.231232	45.320000	t	1
+2	vhdjlsfdsfdsferg	45.231232	45.320000	f	1
+3	Salom	132.320000	132.320000	t	1
 \.
 
 
@@ -834,7 +851,7 @@ COPY public.roles_permissions (id, role_id, permission_id) FROM stdin;
 --
 
 COPY public.users (id, password, last_login, is_superuser, created_at, updated_at, username, first_name, last_name, date_joined, is_staff, is_active) FROM stdin;
-1	pbkdf2_sha256$600000$saxXXGPjfAgcYi5wVlpFrY$T/wBYuXAOsnDD4dTjbZiEPc/leALxQFOvurt/HkUNLU=	2024-10-30 10:52:09.448342+05	t	2024-10-28 06:56:39.046436+05	2024-10-28 06:56:39.046443+05	a			2024-10-28 06:56:38.845568+05	t	t
+1	pbkdf2_sha256$870000$EXWvYfbLP9Bl9nkNylTCoz$YTL1BaJB01oSSX3Upbwx6qUPMIz+sbC2jgA8iRPaJDA=	2024-10-30 09:32:29.732053+00	t	2024-10-28 01:56:39.046436+00	2024-10-28 01:56:39.046443+00	a			2024-10-28 01:56:38.845568+00	t	t
 \.
 
 
@@ -880,7 +897,7 @@ SELECT pg_catalog.setval('public.auth_group_permissions_id_seq', 1, false);
 -- Name: auth_permission_id_seq; Type: SEQUENCE SET; Schema: public; Owner: aroba
 --
 
-SELECT pg_catalog.setval('public.auth_permission_id_seq', 60, true);
+SELECT pg_catalog.setval('public.auth_permission_id_seq', 68, true);
 
 
 --
@@ -901,21 +918,21 @@ SELECT pg_catalog.setval('public.clients_route_id_seq', 1, false);
 -- Name: django_admin_log_id_seq; Type: SEQUENCE SET; Schema: public; Owner: aroba
 --
 
-SELECT pg_catalog.setval('public.django_admin_log_id_seq', 2, true);
+SELECT pg_catalog.setval('public.django_admin_log_id_seq', 4, true);
 
 
 --
 -- Name: django_content_type_id_seq; Type: SEQUENCE SET; Schema: public; Owner: aroba
 --
 
-SELECT pg_catalog.setval('public.django_content_type_id_seq', 15, true);
+SELECT pg_catalog.setval('public.django_content_type_id_seq', 16, true);
 
 
 --
 -- Name: django_migrations_id_seq; Type: SEQUENCE SET; Schema: public; Owner: aroba
 --
 
-SELECT pg_catalog.setval('public.django_migrations_id_seq', 23, true);
+SELECT pg_catalog.setval('public.django_migrations_id_seq', 25, true);
 
 
 --
@@ -943,7 +960,7 @@ SELECT pg_catalog.setval('public.orders_id_seq', 1, false);
 -- Name: points_id_seq; Type: SEQUENCE SET; Schema: public; Owner: aroba
 --
 
-SELECT pg_catalog.setval('public.points_id_seq', 1, true);
+SELECT pg_catalog.setval('public.points_id_seq', 3, true);
 
 
 --
