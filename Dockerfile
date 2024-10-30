@@ -12,14 +12,14 @@ ENV PYTHONUNBUFFERED=1
 WORKDIR /app
 
 RUN apt-get update &&  apt-get -qy install gcc libjpeg-dev libxslt-dev libpq-dev libmariadb-dev \
-    libmariadb-dev-compat gettext cron openssh-client flake8 locales vim
+    libmariadb-dev-compat gettext cron openssh-client flake8 locales vim \
 
-# Install dependencies
-COPY requirements/production.txt requirements.txt
 RUN pip install --upgrade pip
-RUN pip install -r requirements.txt
 
 # Copy project files
 COPY . .
+
+# Install dependencies
+RUN pip install -r requirements/production.txt
 
 # Run migrations and start the server
