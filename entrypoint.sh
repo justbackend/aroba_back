@@ -1,6 +1,10 @@
 #!/bin/sh
 set -e
 
+
+# Static va media kataloglariga ruxsatlarni o'rnatish
+chmod -R 775 /aroba/static /aroba/media
+
 python manage.py collectstatic --noinput
 python manage.py migrate --noinput
 

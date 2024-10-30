@@ -39,4 +39,4 @@ COPY --chown=aroba:aroba . .
 USER aroba
 
 # Run migrations and start the server
-CMD ["gunicorn", "-b", "0.0.0.0:8000", "core.wsgi:application"]
+CMD ["gunicorn", "-b", "0.0.0.0:8001", "core.wsgi:application"]
