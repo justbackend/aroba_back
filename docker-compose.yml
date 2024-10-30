@@ -31,11 +31,14 @@ services:
 
   nginx:
     build:
-      context: ./nginx  # NGINX Dockerfile joylashgan joy
+      context: ./nginx
     env_file:
       - .env
+    volumes:
+      - ./static:/aroba/static
+      - ./media:/aroba/media
     ports:
-      - "${NGINX_EXTERNAL_PORT}:80"  # NGINX portini oching
+      - "${NGINX_EXTERNAL_PORT}:80"
     depends_on:
       - aroba_web
 
