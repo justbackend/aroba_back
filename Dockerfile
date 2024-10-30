@@ -27,7 +27,7 @@ WORKDIR /aroba
 
 # Create directories for media and static files
 RUN mkdir -p /aroba/media/ /aroba/static /aroba/staticfiles && \
-    chmod -R 775 /aroba/media /aroba/static && \
+    chmod -R 777 /aroba/media /aroba/static /aroba/staticfiles && \
     chown -R aroba:aroba /aroba/media /aroba/static /aroba/staticfiles
 
 # Copy only the requirements directory and install dependencies
