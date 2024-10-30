@@ -31,6 +31,10 @@ RUN mkdir /aroba/media/ && mkdir /aroba/static && chown -R aroba:aroba /aroba &&
 # Copy project files
 COPY --chown=aroba:aroba . .
 
+
+# Copy the requirements directory
+COPY --chown=aroba:aroba requirements /aroba/requirements
+
 # Install dependencies
 RUN pip install -r requirements/production.txt
 
