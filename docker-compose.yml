@@ -32,6 +32,7 @@ services:
   nginx:
     build:
       context: ./nginx
+      dockerfile: ./Dockerfile
     env_file:
       - .env
     volumes:
