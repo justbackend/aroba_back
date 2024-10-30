@@ -28,15 +28,12 @@ WORKDIR /aroba
 # Create directories for media and static files
 RUN mkdir /aroba/media/ && mkdir /aroba/static && chown -R aroba:aroba /aroba && chmod 755 /aroba
 
-# Copy project files
-COPY --chown=aroba:aroba . .
-
-
-# Copy the requirements directory
+# Copy only the requirements directory and install dependencies
 COPY --chown=aroba:aroba requirements /aroba/requirements
-
-# Install dependencies
 RUN pip install -r requirements/production.txt
+
+# Copy the rest of the project files
+COPY --chown=aroba:aroba . .
 
 # Switch to the created user
 USER aroba
