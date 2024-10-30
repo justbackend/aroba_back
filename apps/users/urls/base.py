@@ -9,8 +9,8 @@ role_lc = views.RoleViewSet.as_view({'get': 'list', 'post': 'create'})
 role_udd = views.RoleViewSet.as_view({'get': 'retrieve', 'patch': 'partial_update', 'delete': 'destroy'})
 
 # content type
-content_type_lc = views.ContentTypeViewSet.as_view({'get': 'list', 'post': 'create'})
-content_type_udd = views.ContentTypeViewSet.as_view({'get': 'retrieve', 'patch': 'partial_update', 'delete': 'destroy'})
+modules_lc = views.ModuleViewSet.as_view({'get': 'list', 'post': 'create'})
+modules_udd = views.ModuleViewSet.as_view({'get': 'retrieve', 'patch': 'partial_update', 'delete': 'destroy'})
 
 urlpatterns = [
 
@@ -19,7 +19,7 @@ urlpatterns = [
     path('roles/<int:pk>/', role_udd, name='roles'),
 
     # module view set
-    path('content-types/', content_type_lc, name='modules'),
-    path('content-types/<int:pk>/', content_type_udd, name='modules'),
+    path('modules/', modules_lc, name='modules'),
+    path('modules/<int:pk>/', modules_udd, name='modules'),
 
 ]

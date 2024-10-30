@@ -8,6 +8,6 @@ class RoleViewSet(viewsets.ModelViewSet):
     serializer_class = serializers.RoleSerializer
 
 
-class ContentTypeViewSet(viewsets.ModelViewSet):
+class ModuleViewSet(viewsets.ModelViewSet):
     queryset = models.Module.objects.prefetch_related('permission_set').all().order_by('-id')
     serializer_class = serializers.ContentTypeSerializer
