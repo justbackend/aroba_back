@@ -700,6 +700,8 @@ COPY public.clients_route (id, created_at, updated_at, amount, type, client_id, 
 --
 
 COPY public.django_admin_log (id, action_time, object_id, object_repr, action_flag, change_message, content_type_id, user_id) FROM stdin;
+1	2024-10-30 10:52:20.437255+05	1	Region object (1)	1	[{"added": {}}]	6	1
+2	2024-10-30 10:52:30.172669+05	1	vfudsygbhjckdscdsa	1	[{"added": {}}]	7	1
 \.
 
 
@@ -765,6 +767,7 @@ COPY public.django_session (session_key, session_data, expire_date) FROM stdin;
 vzu4oelvljpjkyoialml8el8nvs68u89	.eJxVjEEOwiAQAP_C2RCg0IJH730DWZZFqgaS0p6Mf7ckPeh1ZjJv5mHfst8brX6J7Moku_yyAPik0kV8QLlXjrVs6xJ4T_hpG59rpNftbP8GGVruWxTGoAWnpZ0UphQkOGtsQKTjMiSUNACFJHQEAJUgBTWNygltjmpkny8M0TkR:1t5Ezz:NEqPNOJcaiuKCLpTIRPkjUe4SvPTCnqGiLt8Zy7fxWM	2024-11-11 06:56:51.676969+05
 aqsw372urfw3obrl17zsm5i2lv040tom	.eJxVjEEOwiAQAP_C2RCg0IJH730DWZZFqgaS0p6Mf7ckPeh1ZjJv5mHfst8brX6J7Moku_yyAPik0kV8QLlXjrVs6xJ4T_hpG59rpNftbP8GGVruWxTGoAWnpZ0UphQkOGtsQKTjMiSUNACFJHQEAJUgBTWNygltjmpkny8M0TkR:1t5HWP:mgVVnThqOMV-pL0y5bjyeEoFfJtYpGGAM090-Cl5Mjg	2024-11-11 09:38:29.430726+05
 4e31h7xdcm0hroelrl34azxafkvsit88	.eJxVjEEOwiAQAP_C2RCg0IJH730DWZZFqgaS0p6Mf7ckPeh1ZjJv5mHfst8brX6J7Moku_yyAPik0kV8QLlXjrVs6xJ4T_hpG59rpNftbP8GGVruWxTGoAWnpZ0UphQkOGtsQKTjMiSUNACFJHQEAJUgBTWNygltjmpkny8M0TkR:1t5lND:hXx17yiIXU222sVfj60yHxdmamatyguYR37QGHxgaHY	2024-11-12 17:30:59.11352+05
+mqtg5pubawkyyu8wi2xay6atr0pexvep	.eJxVjEEOwiAQAP_C2RCg0IJH730DWZZFqgaS0p6Mf7ckPeh1ZjJv5mHfst8brX6J7Moku_yyAPik0kV8QLlXjrVs6xJ4T_hpG59rpNftbP8GGVruWxTGoAWnpZ0UphQkOGtsQKTjMiSUNACFJHQEAJUgBTWNygltjmpkny8M0TkR:1t61cn:DqQoENdyZ4qYYffAaUrmo0RgCxkBp1NEtN8goHzpZSY	2024-11-13 10:52:09.470387+05
 \.
 
 
@@ -797,6 +800,7 @@ COPY public.orders (id, created_at, updated_at, code, date, paid, comment, payme
 --
 
 COPY public.points (id, name, lon, lat, deleted, region_id) FROM stdin;
+1	vfudsygbhjckdscdsa	45.231232	45.320000	t	1
 \.
 
 
@@ -805,6 +809,7 @@ COPY public.points (id, name, lon, lat, deleted, region_id) FROM stdin;
 --
 
 COPY public.regions (id, name) FROM stdin;
+1	dsvgyfhubjcksdadsaas
 \.
 
 
@@ -829,7 +834,7 @@ COPY public.roles_permissions (id, role_id, permission_id) FROM stdin;
 --
 
 COPY public.users (id, password, last_login, is_superuser, created_at, updated_at, username, first_name, last_name, date_joined, is_staff, is_active) FROM stdin;
-1	pbkdf2_sha256$600000$saxXXGPjfAgcYi5wVlpFrY$T/wBYuXAOsnDD4dTjbZiEPc/leALxQFOvurt/HkUNLU=	2024-10-29 17:30:59.092453+05	t	2024-10-28 06:56:39.046436+05	2024-10-28 06:56:39.046443+05	a			2024-10-28 06:56:38.845568+05	t	t
+1	pbkdf2_sha256$600000$saxXXGPjfAgcYi5wVlpFrY$T/wBYuXAOsnDD4dTjbZiEPc/leALxQFOvurt/HkUNLU=	2024-10-30 10:52:09.448342+05	t	2024-10-28 06:56:39.046436+05	2024-10-28 06:56:39.046443+05	a			2024-10-28 06:56:38.845568+05	t	t
 \.
 
 
@@ -896,7 +901,7 @@ SELECT pg_catalog.setval('public.clients_route_id_seq', 1, false);
 -- Name: django_admin_log_id_seq; Type: SEQUENCE SET; Schema: public; Owner: aroba
 --
 
-SELECT pg_catalog.setval('public.django_admin_log_id_seq', 1, false);
+SELECT pg_catalog.setval('public.django_admin_log_id_seq', 2, true);
 
 
 --
@@ -938,14 +943,14 @@ SELECT pg_catalog.setval('public.orders_id_seq', 1, false);
 -- Name: points_id_seq; Type: SEQUENCE SET; Schema: public; Owner: aroba
 --
 
-SELECT pg_catalog.setval('public.points_id_seq', 1, false);
+SELECT pg_catalog.setval('public.points_id_seq', 1, true);
 
 
 --
 -- Name: regions_id_seq; Type: SEQUENCE SET; Schema: public; Owner: aroba
 --
 
-SELECT pg_catalog.setval('public.regions_id_seq', 1, false);
+SELECT pg_catalog.setval('public.regions_id_seq', 1, true);
 
 
 --

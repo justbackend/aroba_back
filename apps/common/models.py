@@ -26,8 +26,8 @@ class Point(models.Model):
     region = models.ForeignKey(Region, verbose_name="Region", on_delete=models.SET_NULL, null=True)
     deleted = models.BooleanField(default=False, verbose_name="Active")
 
-    active_objects = managers.ActivePointManager()
     objects = models.Manager()
+    active_objects = managers.ActivePointManager()
 
     class Meta:
         db_table = 'points'
