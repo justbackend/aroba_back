@@ -16,6 +16,9 @@ RUN apt-get update && \
 # Upgrade pip
 RUN pip install --upgrade pip
 
+# Create the /opt/run directory
+RUN mkdir -p /opt/run
+
 # Create a user
 RUN useradd -rms /bin/bash aroba && chmod 777 /opt/run
 
