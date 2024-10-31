@@ -2,7 +2,7 @@ from django.contrib.postgres.aggregates import ArrayAgg
 from django.db.models import Func, Value, Q, TextField
 from django.db.models.functions import Concat
 from django_filters.rest_framework import DjangoFilterBackend
-from rest_framework import generics, views
+from rest_framework import generics, views, status
 from rest_framework.response import Response
 
 from utils import *
@@ -77,5 +77,6 @@ class ConfirmationFilledView(views.APIView):
         order = get_object(models.Order, id=order_id, status=OrderStatus.FILLING)
         order.status = OrderStatus.STARTED
         order.save()
+        order.create_payment(user=request.user, amount=order.total_amount, _type=order.payment_type)
+        return Response({'msg': "Successfully filled order."}, status=status.HTTP_200_OK)
 
-    pass
