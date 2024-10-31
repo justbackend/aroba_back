@@ -50,4 +50,5 @@ class OrderLogActions(models.TextChoices):
     UPDATE = 'update', 'Update'
     DELETE = 'delete', 'Delete'
     AMOUNT = 'amount', 'Amount'
+    ADDITIONAL_AMOUNT = 'additional_amount', 'Additional Amount'
 

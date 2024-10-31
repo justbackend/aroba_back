@@ -21,9 +21,9 @@ class CreateOrderSerializer(serializers.Serializer):
         return attrs
 
     def create(self, validated_data):
+
         car_count = validated_data.pop('car_count')
         self.codes: list = models.Order.generate_codes(car_count)
-
         order_objs = list(map(lambda code: models.Order(code=code, **validated_data), self.codes))
         orders = models.Order.objects.bulk_create(order_objs)
         self.create_logs(orders)
