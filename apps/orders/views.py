@@ -1,4 +1,6 @@
 from rest_framework import viewsets, status, views, generics
+from rest_framework.response import Response
+
 from . import models, serializers
 from utils import choices
 from utils import *
@@ -17,6 +19,16 @@ class NewOrdersListView(generics.ListAPIView):
                 'unloading__name', 'client__name', 'dispatcher__last_name', 'dispatcher__first_name',
             )
         )
+
+
+class BookOrRollbackOrderView(views.APIView):
+
+    def get(self, request, order_id, *args, **kwargs):
+        order = get_object(models.Order, id=order_id, status=choices.OrderStatus.NEW)
+        user = request.user
+        order.dispatcher = None if order.dispatcher == user else user
+        order.save()
+        return Response()
 
 
 class CreateOrderView(generics.CreateAPIView):
