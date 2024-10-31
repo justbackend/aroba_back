@@ -28,24 +28,6 @@ class NewOrdersListView(generics.ListAPIView):
         )
 
 
-class FillingOrdersListView(generics.ListAPIView):
-    serializer_class = serializers.FillingOrdersListSerializer
-
-    def get_queryset(self):
-        return (
-            models.Order.objects.filter(status=choices.OrderStatus.FILLING)
-            .select_related('client', 'loading', 'unloading')
-            .annotate(extra_amount=ArrayAgg(
-                Func(
-                    Value('amount'), 'payments__amount',
-                    Value('comment'), 'payments__comment',
-                    Value('file'),
-                    Concat(Value('http://localhost:8000/media/'), 'payments__file'),
-                    function='JSON_BUILD_OBJECT',
-                    output_field=TextField()
-                ), filter=Q(payments__type=choices.PaymentTypes.EXTRA))))
-
-
 class BookOrRollbackOrderView(views.APIView):
 
     def get(self, request, order_id, *args, **kwargs):
@@ -56,5 +38,29 @@ class BookOrRollbackOrderView(views.APIView):
             raise APIException('User is not allowed to book orders.')
 
         order.dispatcher = None if order.dispatcher else user
+        order.status = choices.OrderStatus.FILLING
         order.save()
         return Response()
+
+
+class FillingOrdersListView(generics.ListAPIView):
+    serializer_class = serializers.FillingOrdersListSerializer
+
+    def get_queryset(self):
+        return (
+            models.Order.objects.filter(status=choices.OrderStatus.FILLING)
+            .select_related('client', 'loading', 'unloading')
+            .only(
+                'id', 'code', 'date', 'comment', 'payment_type', 'created_at', 'loading__name',
+                'unloading__name', 'client__name', 'total_amount', 'car_number', 'driver_phone',
+            )
+            .annotate(extra_amount=ArrayAgg(
+                Func(
+                    Value('amount'), 'payments__amount',
+                    Value('comment'), 'payments__comment',
+                    Value('file'),
+                    Concat(Value('http://localhost:8000/media/'), 'payments__file'),
+                    function='JSON_BUILD_OBJECT',
+                    output_field=TextField()
+                ), filter=Q(payments__type=choices.PaymentTypes.EXTRA)))
+        )
