@@ -38,7 +38,10 @@ class Order(BaseModel):
         'clients.Client', on_delete=models.PROTECT, related_name='orders', verbose_name="Client",
     )
     creator = models.ForeignKey(
-        'users.User', on_delete=models.PROTECT, related_name='orders', verbose_name="Creator",
+        'users.User', on_delete=models.PROTECT, related_name='orders_creator', verbose_name="Creator",
+    )
+    dispatcher = models.ForeignKey(
+        'users.User', on_delete=models.PROTECT, related_name='orders_dispatcher', verbose_name="Dispatcher",
     )
 
     class Meta:
