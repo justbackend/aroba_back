@@ -1,14 +1,14 @@
 from django.contrib.postgres.aggregates import ArrayAgg
-from django.db.models import Sum, Func, Value, Q, JSONField, TextField, DecimalField, FileField, CharField
-from django.db.models.functions import Cast, Concat
+from django.db.models import Func, Value, Q, TextField
+from django.db.models.functions import Concat
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import generics, views
 from rest_framework.response import Response
 
-from .. import models
-from . import serializers
-from utils import choices
 from utils import *
+from utils import choices
+from . import serializers
+from .. import models
 
 
 class NewOrdersListView(generics.ListAPIView):
@@ -64,3 +64,8 @@ class FillingOrdersListView(generics.ListAPIView):
                     output_field=TextField()
                 ), filter=Q(payments__type=choices.PaymentTypes.EXTRA)))
         )
+
+
+class FillingOrderView(generics.UpdateAPIView):
+    http_method_names = 'patch',
+    serializer_class = serializers.FillOrderSerializer

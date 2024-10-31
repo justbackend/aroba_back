@@ -77,6 +77,10 @@ class Order(BaseModel):
                 result.append(cls.generate_code())
         return result
 
+    @classmethod
+    def create_log(cls, order, user, action, comment=None):
+        return OrderLog.objects.create(order=order, user=user, comment=comment, action=action)
+
 
 class OrderPayment(BaseModel):
     amount = models.DecimalField(max_digits=10, decimal_places=2, verbose_name="Amount")
@@ -108,7 +112,3 @@ class OrderLog(BaseModel):
         verbose_name = 'Order Log'
         verbose_name_plural = 'Order Logs'
         db_table = 'order_logs'
-
-    @classmethod
-    def create(cls, order, user, action, comment=None):
-        return cls.objects.create(order=order, user=user, comment=comment, action=action)
