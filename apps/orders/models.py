@@ -65,6 +65,7 @@ class Order(BaseModel):
 
     @classmethod
     def generate_codes(cls, count) -> list[str]:
+
         result = []
 
         for i in range(count):
