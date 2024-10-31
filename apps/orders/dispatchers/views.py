@@ -1,3 +1,4 @@
+from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import generics, views
 from rest_framework.response import Response
 
@@ -9,6 +10,8 @@ from utils import *
 
 class NewOrdersListView(generics.ListAPIView):
     serializer_class = serializers.NewOrdersListSerializer
+    filter_backends = (DjangoFilterBackend,)
+    filterset_fields = ('client', )
     pagination_class = None
 
     def get_queryset(self):
