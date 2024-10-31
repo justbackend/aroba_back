@@ -57,8 +57,8 @@ class Order(BaseModel):
     @classmethod
     def generate_code(cls):
         while True:
-            numbers = ''.join(random.choices(string.digits, k=3))
-            letters = ''.join(random.choices(string.ascii_uppercase, k=2))
+            numbers = ''.join(random.choices(string.digits, k=2))
+            letters = ''.join(random.choices(string.ascii_uppercase, k=3))
             code = f"{numbers}{letters}"
             if not cls.objects.filter(code=code).exists():
                 return code
