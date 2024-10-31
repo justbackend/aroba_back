@@ -56,9 +56,12 @@ class Order(BaseModel):
 
     @classmethod
     def generate_code(cls):
-        numbers = ''.join(random.choices(string.digits, k=3))
-        letters = ''.join(random.choices(string.ascii_uppercase, k=2))
-        return f"{numbers}{letters}"
+        while True:
+            numbers = ''.join(random.choices(string.digits, k=3))
+            letters = ''.join(random.choices(string.ascii_uppercase, k=2))
+            code = f"{numbers}{letters}"
+            if not cls.objects.filter(code=code).exists():
+                return code
 
 
 class OrderPayment(BaseModel):
