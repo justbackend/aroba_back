@@ -108,3 +108,7 @@ class OrderLog(BaseModel):
         verbose_name = 'Order Log'
         verbose_name_plural = 'Order Logs'
         db_table = 'order_logs'
+
+    @classmethod
+    def create(cls, order, user, action, comment=None):
+        return cls.objects.create(order=order, user=user, comment=comment, action=action)

@@ -15,7 +15,11 @@ class AdditionalAmountSerializer(serializers.Serializer):
         return attrs
 
     def update(self, instance, validated_data):
+        user = self.context['request'].user
         models.OrderPayment.objects.create(
             order=instance, type=PaymentTypes.EXTRA, **validated_data
         )
+        log_comment = (f"Summa qo'shib berildi: {validated_data['amount']}  \n"
+                       f"Komentariya: {validated_data.get('comment')}")
+        models.OrderLog.create(instance, user, OrderLogActions.ADDITIONAL_AMOUNT, comment=log_comment)
         return validated_data
