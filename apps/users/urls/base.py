@@ -22,4 +22,7 @@ urlpatterns = [
     path('modules/', modules_lc, name='modules'),
     path('modules/<int:pk>/', modules_udd, name='modules'),
 
+    # my permissions
+    path('my-perms/<int:user_id>/', views.MyPermissionsListAPI.as_view(), name='my-perms'),
+
 ]
