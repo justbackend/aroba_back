@@ -1,7 +1,6 @@
 import re
 
 from rest_framework import permissions
-from rest_framework.permissions import DjangoModelPermissions
 
 
 class RolePermission(permissions.BasePermission):
@@ -25,3 +24,7 @@ class RolePermission(permissions.BasePermission):
         return False
 
 
+class IsActive(permissions.BasePermission):
+    def has_permission(self, request, view):
+        user = request.user
+        return bool(user and user.is_authenticated and user.is_active)

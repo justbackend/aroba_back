@@ -15,6 +15,12 @@ class CreateOrderSerializer(serializers.Serializer):
     comment = serializers.CharField(required=False)
     payment_type = serializers.ChoiceField(choices=choices.OrderPaymentTypes.choices)
 
+    def validate(self, attrs):
+
+        if attrs['loading'] == attrs['unloading']:
+            raise utils.APIException('The Point must not be same')
+        return attrs
+
     def create(self, validated_data):
         car_count = validated_data.pop('car_count')
         self.codes: list = models.Order.generate_codes(car_count)

@@ -19,4 +19,5 @@ class NewOrdersListView(generics.ListAPIView):
 
 
 class CreateOrderView(generics.CreateAPIView):
+    permission_classes = ()
     serializer_class = serializers.CreateOrderSerializer
