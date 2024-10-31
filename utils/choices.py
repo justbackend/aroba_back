@@ -43,3 +43,11 @@ class APIRoutes(models.TextChoices):
 class ClientRouteTypes(models.TextChoices):
     TRANSFER = 'transfer', 'Transfer'
     CASH = 'cash', 'Cash'
+
+
+class OrderLogActions(models.TextChoices):
+    CREATE = 'create', 'Create'
+    UPDATE = 'update', 'Update'
+    DELETE = 'delete', 'Delete'
+    AMOUNT = 'amount', 'Amount'
+

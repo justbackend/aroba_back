@@ -16,7 +16,6 @@ class CreateOrderSerializer(serializers.Serializer):
     payment_type = serializers.ChoiceField(choices=choices.OrderPaymentTypes.choices)
 
     def validate(self, attrs):
-
         if attrs['loading'] == attrs['unloading']:
             raise utils.APIException('The Point must not be same')
         return attrs
@@ -26,9 +25,15 @@ class CreateOrderSerializer(serializers.Serializer):
         self.codes: list = models.Order.generate_codes(car_count)
 
         order_objs = list(map(lambda code: models.Order(code=code, **validated_data), self.codes))
-        models.Order.objects.bulk_create(order_objs)
+        orders = models.Order.objects.bulk_create(order_objs)
+        self.create_logs(orders)
         return validated_data
+
+    def create_logs(self, orders):
+        user = self.validated_data['creator']
+        logs = list(map(lambda order: models.OrderLog(order=order, user_id=user.id), orders))
+        models.OrderLog.objects.bulk_create(logs)
+        return logs
 
     def to_representation(self, instance):
         return dict(codes=self.codes)
-

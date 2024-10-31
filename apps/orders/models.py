@@ -54,6 +54,9 @@ class Order(BaseModel):
         verbose_name_plural = 'Orders'
         db_table = 'orders'
 
+    def __str__(self):
+        return self.code
+
     @classmethod
     def generate_code(cls):
         while True:
@@ -89,3 +92,19 @@ class OrderPayment(BaseModel):
         constraints = [
             models.UniqueConstraint(fields=['order', 'type'], name='unique_order_type')
         ]
+
+
+class OrderLog(BaseModel):
+    order = models.ForeignKey(Order, verbose_name="Order", on_delete=models.CASCADE)
+    user = models.ForeignKey('users.User', verbose_name="User", on_delete=models.CASCADE)
+    comment = models.CharField(verbose_name="Text", null=True, blank=True, max_length=255)
+    action = models.CharField(
+        max_length=20, verbose_name="Action",
+        choices=choices.OrderLogActions.choices,
+        default=choices.OrderLogActions.CREATE
+    )
+
+    class Meta:
+        verbose_name = 'Order Log'
+        verbose_name_plural = 'Order Logs'
+        db_table = 'order_logs'
