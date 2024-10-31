@@ -22,7 +22,7 @@ class ClientRouteViewSet(viewsets.ModelViewSet):
     queryset = models.ClientRoute.objects.all()
 
 
-class CreateOrderRoutes(generics.ListAPIView):
+class CreateOrderRoutesListAPI(generics.ListAPIView):
     serializer_class = serializers.CreateOrderRoutesSerializer
     filter_backends = ()
     pagination_class = None
