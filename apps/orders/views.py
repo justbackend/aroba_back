@@ -1,6 +1,7 @@
 from rest_framework import viewsets, status, views, generics
 from . import models, serializers
 from utils import choices
+from utils import *
 
 
 class NewOrdersListView(generics.ListAPIView):
@@ -19,5 +20,5 @@ class NewOrdersListView(generics.ListAPIView):
 
 
 class CreateOrderView(generics.CreateAPIView):
-    permission_classes = ()
+    permission_classes = (IsActive,)
     serializer_class = serializers.CreateOrderSerializer
