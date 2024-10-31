@@ -71,7 +71,7 @@ class FillOrderSerializer(serializers.ModelSerializer):
         obj = super().update(instance, validated_data)
         log_comment = (
             f"Buyurtam qo'ldirldi\n"
-            f"Clinet: {validated_data.get('client')}"
+            f"Client: {validated_data.get('client')}"
             f"Loading: {validated_data.get('loading')}"
             f"Unloading: {validated_data.get('unloading')}"
             f"Driver Phone: {validated_data.get('driver_phone')}"
