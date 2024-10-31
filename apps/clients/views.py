@@ -21,7 +21,14 @@ class ClientRouteViewSet(viewsets.ModelViewSet):
     queryset = models.ClientRoute.objects.all()
 
 
-# @method_decorator(permission_required('clients.view_client', raise_exception=True), name='get')
-class Salom(generics.ListAPIView):
-    serializer_class = serializers.ClientRouteSerializer
-    queryset = models.ClientRoute.objects.all()
+class CreateOrderRoutes(generics.ListAPIView):
+    serializer_class = serializers.CreateOrderRoutesSerializer
+    filter_backends = ()
+    pagination_class = None
+
+    def get_queryset(self):
+        return (
+            models.ClientRoute.objects.filter(client_id=self.kwargs['client_id'])
+            .select_related('unloading', 'loading')
+            .only('id', 'unloading__name', 'loading__name', 'loading_id', 'unloading_id')
+        )

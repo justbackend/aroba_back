@@ -12,3 +12,11 @@ class ClientRouteSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.ClientRoute
         fields = '__all__'
+
+
+class CreateOrderRoutesSerializer(serializers.Serializer):
+    id = serializers.IntegerField()
+    loading_name = serializers.CharField(source='loading.name')
+    loading_id = serializers.IntegerField(source='loading.id')
+    unloading_name = serializers.CharField(source='unloading.name')
+    unloading_id = serializers.IntegerField(source='unloading.id')

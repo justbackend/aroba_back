@@ -9,6 +9,8 @@ clients_udd = views.ClientViewSet.as_view({'patch': 'partial_update', 'delete': 
 urlpatterns = [
     path('', clients_lc, name='client_lc'),
     path('<int:pk>/', clients_udd, name='client_udd'),
-    path('salom/', views.Salom.as_view(), name='salom'),
+
+    # for order create client routes
+    path('create-order-routes/', views.CreateOrderRoutes.as_view(), name='create_order_routes'),
 ]
 
