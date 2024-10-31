@@ -15,7 +15,6 @@ class ClientRouteSerializer(serializers.ModelSerializer):
 
 
 class CreateOrderRoutesSerializer(serializers.Serializer):
-    id = serializers.IntegerField()
     loading_name = serializers.CharField(source='loading.name')
     loading_id = serializers.IntegerField(source='loading.id')
     unloading_name = serializers.CharField(source='unloading.name')

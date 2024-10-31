@@ -30,5 +30,5 @@ class CreateOrderRoutes(generics.ListAPIView):
         return (
             models.ClientRoute.objects.filter(client_id=self.kwargs['client_id'])
             .select_related('unloading', 'loading')
-            .only('id', 'unloading__name', 'loading__name', 'loading_id', 'unloading_id')
+            .only('unloading__name', 'loading__name', 'loading_id', 'unloading_id')
         )
