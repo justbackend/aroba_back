@@ -78,5 +78,8 @@ class ConfirmationFilledView(views.APIView):
         order.status = OrderStatus.STARTED
         order.save()
         order.create_payment(user=request.user, amount=order.total_amount, _type=order.payment_type)
+        log_comment = f"Buyurtma to'ldirishdan tasdiqlandi"
+        order.create_log(comment=log_comment, user=request.user, action=OrderLogActions.FILLED)
+
         return Response({'msg': "Successfully filled order."}, status=status.HTTP_200_OK)
 
