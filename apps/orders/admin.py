@@ -11,6 +11,7 @@ class OrderAdmin(admin.ModelAdmin):
     list_display = ('id', 'code', 'date', 'status', 'total_amount', 'car_number', 'payment_type', 'client')
     list_display_links = ('id', 'code',)
     list_filter = ('date', 'status', 'total_amount', 'car_number', 'payment_type', 'client')
+    inlines = (OrderPaymentInline,)
 
 
 @admin.register(models.OrderPayment)
