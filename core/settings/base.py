@@ -69,9 +69,9 @@ REST_FRAMEWORK = {
         "django_filters.rest_framework.DjangoFilterBackend",
         "rest_framework.filters.SearchFilter",
     ),
-    "DEFAULT_PERMISSION_CLASSES": (
-        'utils.customs.RolePermission',
-    ),
+    # "DEFAULT_PERMISSION_CLASSES": (
+    #     'utils.customs.RolePermission',
+    # ),
     "DEFAULT_PAGINATION_CLASS": "utils.PageNumberPagination",
     "PAGE_SIZE": 25,
     'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
