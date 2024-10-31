@@ -1,0 +1,21 @@
+# .dockerignore faylining misol tarkibi
+
+# Git kataloglari va fayllari
+.git
+.gitignore
+
+# Log fayllari
+*.log
+
+# Python virtual muhit katalogi
+venv/
+__pycache__/
+
+# Mahalliy fayllar
+*.sqlite3
+
+# Django migratsiya fayllari (kerakli hollarda)
+*/migrations/
+
+# NPM yoki Yarn node_modules katalogi
+node_modules/
