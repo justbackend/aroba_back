@@ -63,6 +63,16 @@ class Order(BaseModel):
             if not cls.objects.filter(code=code).exists():
                 return code
 
+    @classmethod
+    def generate_codes(cls, count) -> list[str]:
+        result = []
+
+        for i in range(count):
+            code = cls.generate_code()
+            if code not in result:
+                result.append(cls.generate_code())
+        return result
+
 
 class OrderPayment(BaseModel):
     amount = models.DecimalField(max_digits=10, decimal_places=2, verbose_name="Amount")
