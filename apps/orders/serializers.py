@@ -21,4 +21,5 @@ class NewOrdersListSerializer(serializers.ModelSerializer):
             'loading',
             'unloading',
             'client',
+            'dispatcher',
         )

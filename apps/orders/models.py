@@ -41,7 +41,9 @@ class Order(BaseModel):
         'users.User', on_delete=models.PROTECT, related_name='orders_creator', verbose_name="Creator",
     )
     dispatcher = models.ForeignKey(
-        'users.User', on_delete=models.PROTECT, related_name='orders_dispatcher', verbose_name="Dispatcher",
+        'users.User', on_delete=models.PROTECT,
+        related_name='orders_dispatcher', verbose_name="Dispatcher",
+        null=True, blank=True,
     )
 
     class Meta:
