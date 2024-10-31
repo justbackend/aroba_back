@@ -30,7 +30,7 @@ class CreateOrderSerializer(serializers.Serializer):
         return validated_data
 
     def to_representation(self, instance):
-        return self.codes
+        return dict(codes=self.codes)
 
 
 class NewOrdersListSerializer(serializers.ModelSerializer):
