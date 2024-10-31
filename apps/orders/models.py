@@ -1,3 +1,6 @@
+import random
+import string
+
 from django.db import models
 
 from apps.common.models import BaseModel
@@ -50,6 +53,12 @@ class Order(BaseModel):
         verbose_name = 'Order'
         verbose_name_plural = 'Orders'
         db_table = 'orders'
+
+    @classmethod
+    def generate_code(cls):
+        numbers = ''.join(random.choices(string.digits, k=3))
+        letters = ''.join(random.choices(string.ascii_uppercase, k=2))
+        return f"{numbers}{letters}"
 
 
 class OrderPayment(BaseModel):
