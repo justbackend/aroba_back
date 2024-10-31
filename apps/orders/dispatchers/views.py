@@ -27,7 +27,11 @@ class BookOrRollbackOrderView(views.APIView):
     def get(self, request, order_id, *args, **kwargs):
         order = get_object(models.Order, id=order_id, status=choices.OrderStatus.NEW)
         user = request.user
-        order.dispatcher = None if order.dispatcher == user else user
+
+        if order.dispatcher != user:
+            raise APIException('User is not allowed to book orders.')
+
+        order.dispatcher = None if order.dispatcher else user
         order.save()
         return Response()
 
