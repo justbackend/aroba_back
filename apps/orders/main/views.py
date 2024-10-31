@@ -1,7 +1,7 @@
 from rest_framework import generics
 
 from utils import *
-from ..serializres import orders as serializers
+from . import serializers
 
 
 class CreateOrderView(generics.CreateAPIView):

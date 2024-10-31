@@ -3,7 +3,7 @@ from django.http import Http404
 from rest_framework import viewsets, views
 from rest_framework.response import Response
 
-from apps.users.serializers import users as serializers
+from . import serializers
 from .. import models
 
 

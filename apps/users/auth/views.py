@@ -1,7 +1,7 @@
 from rest_framework import generics, status
 from rest_framework.response import Response
 
-from apps.users.serializers import auth as serializers
+from . import serializers
 from django.core.cache import cache
 
 

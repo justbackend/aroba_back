@@ -2,7 +2,7 @@ from rest_framework import generics, views
 from rest_framework.response import Response
 
 from .. import models
-from ..serializres import dispatchers as serializers
+from . import serializers
 from utils import choices
 from utils import *
 

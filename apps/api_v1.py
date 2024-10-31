@@ -15,13 +15,13 @@ urlpatterns = [
 
     path(
         'orders/',
-        include('apps.orders.urls.orders'),
+        include('apps.orders.main.urls'),
         name='orders',
         ),
 
     path(
         'dispatchers/',
-        include('apps.orders.urls.dispatchers'),
+        include('apps.orders.dispatchers.urls'),
         name='dispatchers',
     ),
 
