@@ -6,7 +6,7 @@ import utils
 from . import models, serializers
 
 
-@utils.permission_required_cls(perm='test.test_view', methods=('list',))
+# @utils.permission_required_cls(perm='test.test_view', methods=('list',))
 class ClientViewSet(viewsets.ModelViewSet):
     serializer_class = serializers.ClientSerializer
     queryset = models.Client.active_objects.all()
@@ -21,7 +21,7 @@ class ClientRouteViewSet(viewsets.ModelViewSet):
     queryset = models.ClientRoute.objects.all()
 
 
-@method_decorator(permission_required('clients.view_client', raise_exception=True), name='get')
+# @method_decorator(permission_required('clients.view_client', raise_exception=True), name='get')
 class Salom(generics.ListAPIView):
     serializer_class = serializers.ClientRouteSerializer
     queryset = models.ClientRoute.objects.all()
