@@ -6,7 +6,7 @@ from rest_framework import generics, views
 from rest_framework.response import Response
 
 from utils import *
-from utils import choices
+from utils.choices import *
 from . import serializers
 from .. import models
 
@@ -19,7 +19,7 @@ class NewOrdersListView(generics.ListAPIView):
 
     def get_queryset(self):
         return (
-            models.Order.objects.filter(status=choices.OrderStatus.NEW)
+            models.Order.objects.filter(status=OrderStatus.NEW)
             .select_related('client', 'loading', 'unloading', 'dispatcher')
             .only(
                 'id', 'code', 'date', 'comment', 'payment_type', 'created_at', 'loading__name',
@@ -31,14 +31,14 @@ class NewOrdersListView(generics.ListAPIView):
 class BookOrRollbackOrderView(views.APIView):
 
     def get(self, request, order_id, *args, **kwargs):
-        order = get_object(models.Order, id=order_id, status=choices.OrderStatus.NEW)
+        order = get_object(models.Order, id=order_id, status=OrderStatus.NEW)
         user = request.user
 
         if order.dispatcher and order.dispatcher != user:
             raise APIException('User is not allowed to book orders.')
 
         order.dispatcher = None if order.dispatcher else user
-        order.status = choices.OrderStatus.FILLING
+        order.status = OrderStatus.FILLING
         order.save()
         return Response()
 
@@ -48,7 +48,7 @@ class FillingOrdersListView(generics.ListAPIView):
 
     def get_queryset(self):
         return (
-            models.Order.objects.filter(status=choices.OrderStatus.FILLING)
+            models.Order.objects.filter(status=OrderStatus.FILLING)
             .select_related('client', 'loading', 'unloading')
             .only(
                 'id', 'code', 'date', 'comment', 'payment_type', 'created_at', 'loading__name',
@@ -62,10 +62,20 @@ class FillingOrdersListView(generics.ListAPIView):
                     Concat(Value('http://localhost:8000/media/'), 'payments__file'),
                     function='JSON_BUILD_OBJECT',
                     output_field=TextField()
-                ), filter=Q(payments__type=choices.PaymentTypes.EXTRA)))
+                ), filter=Q(payments__type=PaymentTypes.EXTRA)))
         )
 
 
 class FillingOrderView(generics.UpdateAPIView):
     http_method_names = 'patch',
     serializer_class = serializers.FillOrderSerializer
+
+
+class ConfirmationFilledView(views.APIView):
+
+    def get(self, request, order_id, *args, **kwargs):
+        order = get_object(models.Order, id=order_id, status=OrderStatus.FILLING)
+        order.status = OrderStatus.STARTED
+        order.save()
+
+    pass

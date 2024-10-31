@@ -70,16 +70,23 @@ class Order(BaseModel):
     def generate_codes(cls, count) -> list[str]:
 
         result = []
-
         for i in range(count):
             code = cls.generate_code()
             if code not in result:
                 result.append(cls.generate_code())
+
         return result
 
     @classmethod
     def create_log(cls, order, user, action, comment=None):
         return OrderLog.objects.create(order=order, user=user, comment=comment, action=action)
+
+    @classmethod
+    def cls_create_payment(cls, order, user, amount, _type):
+        return OrderPayment.objects.create(order=order, user=user, amount=amount, type=_type)
+
+    def create_payment(self, user, amount, _type):
+        return OrderPayment.objects.create(order=self, user=user, amount=amount, type=_type)
 
 
 class OrderPayment(BaseModel):
