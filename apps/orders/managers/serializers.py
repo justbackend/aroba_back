@@ -1,7 +1,7 @@
 from rest_framework import serializers
 import utils
-from utils import choices
-from  .. import models
+from utils.choices import *
+from .. import models
 
 
 class AdditionalAmountSerializer(serializers.Serializer):
@@ -16,6 +16,6 @@ class AdditionalAmountSerializer(serializers.Serializer):
 
     def update(self, instance, validated_data):
         models.OrderPayment.objects.create(
-            order=instance, type=choices.PaymentTypes.EXTRA, **validated_data
+            order=instance, type=PaymentTypes.EXTRA, **validated_data
         )
         return validated_data

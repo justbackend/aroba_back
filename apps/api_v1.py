@@ -26,6 +26,12 @@ urlpatterns = [
     ),
 
     path(
+        'managers/',
+        include('apps.orders.managers.urls'),
+        name='managers',
+    ),
+
+    path(
         'clients/',
         include('apps.clients.urls'),
         name='clients',

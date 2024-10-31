@@ -1,12 +1,18 @@
-from rest_framework.response import Response
-from rest_framework import status, views, generics, viewsets
+from rest_framework import generics
+from django.db.models import Q
+from utils import *
+from utils.choices import PaymentTypes
 from . import serializers
 from .. import models
-from utils import *
 
 
 class AdditionalAmountView(generics.UpdateAPIView):
     serializer_class = serializers.AdditionalAmountSerializer
+    http_method_names = 'patch',
 
     def get_object(self):
-        return get_object(models.Order, id=self.kwargs['pk'])
+        return get_object(
+            models.Order,
+            ~Q(payments__type=PaymentTypes.EXTRA),
+            id=self.kwargs['order_id'],
+        )

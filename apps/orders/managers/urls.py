@@ -1,6 +1,8 @@
 from django.urls import path
 
-urlpatterns = [
+from . import views
 
+urlpatterns = [
+    path('additional-amount/<int:order_id>/', views.AdditionalAmountView.as_view(), name='additional-amount'),
 ]
 
