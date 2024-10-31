@@ -1,7 +1,8 @@
-from rest_framework import viewsets, status, views, generics
+from rest_framework import generics, views
 from rest_framework.response import Response
 
-from . import models, serializers
+from .. import models
+from ..serializres import dispatchers as serializers
 from utils import choices
 from utils import *
 
@@ -31,6 +32,3 @@ class BookOrRollbackOrderView(views.APIView):
         return Response()
 
 
-class CreateOrderView(generics.CreateAPIView):
-    permission_classes = (IsActive,)
-    serializer_class = serializers.CreateOrderSerializer

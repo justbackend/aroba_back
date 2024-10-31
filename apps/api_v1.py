@@ -15,9 +15,14 @@ urlpatterns = [
 
     path(
         'orders/',
-        include('apps.orders.urls'),
+        include('apps.orders.urls.orders'),
         name='orders',
         ),
+    path(
+        'dispatchers/',
+        include('apps.orders.urls.dispatchers'),
+        name='dispatchers',
+    ),
 
     path(
         'clients/',
