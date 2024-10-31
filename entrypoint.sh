@@ -5,7 +5,7 @@ set -e
 python manage.py migrate --noinput
 
 # Agar gunicorn bn run qilsez
-exec gunicorn core.wsgi:application --bind 0.0.0.0:8001
+exec gunicorn core.wsgi:application --bind 0.0.0.0:8001 --workers 3
 
 # Agar gunicorn ishlatmasez
 #exec python manage.py runserver 0.0.0.0:8000
