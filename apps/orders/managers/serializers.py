@@ -22,5 +22,5 @@ class AdditionalAmountSerializer(serializers.Serializer):
         log_comment = (f"Summa qo'shib berildi: {validated_data['amount']}  \n"
                        f"Komentariya: {validated_data.get('comment')}")
 
-        models.Order.create_log(instance, user, OrderLogActions.ADDITIONAL_AMOUNT, comment=log_comment)
+        instance.create_log(user, OrderLogActions.ADDITIONAL_AMOUNT, comment=log_comment)
         return validated_data

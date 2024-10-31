@@ -78,8 +78,11 @@ class Order(BaseModel):
         return result
 
     @classmethod
-    def create_log(cls, order, user, action, comment=None):
+    def create_log_cls(cls, order, user, action, comment=None):
         return OrderLog.objects.create(order=order, user=user, comment=comment, action=action)
+
+    def create_log(self, user, action, comment=None):
+        return OrderLog.objects.create(order=self, user=user, comment=comment, action=action)
 
     @classmethod
     def cls_create_payment(cls, order, user, amount, _type):
