@@ -51,4 +51,9 @@ class RollbackOrderView(views.APIView):
         return Response({'msg': "Success"})
 
 
+class UpdateOrderStatusView(generics.UpdateAPIView):
+    serializer_class = serializers.UpdateOrderStatusSerializer
+    http_method_names = 'patch',
 
+    def get_object(self):
+        return get_object(models.Order, id=self.kwargs['pk'])

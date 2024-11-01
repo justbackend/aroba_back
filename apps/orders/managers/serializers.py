@@ -43,3 +43,8 @@ class StatusOrdersListSerializer(serializers.ModelSerializer):
             'loading',
             'unloading',
         )
+
+
+class UpdateOrderStatusSerializer(serializers.ModelSerializer):
+    model = models.Order
+    fields = ('id', 'status')
