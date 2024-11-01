@@ -70,6 +70,9 @@ class FillingOrderView(generics.UpdateAPIView):
     http_method_names = 'patch',
     serializer_class = serializers.FillOrderSerializer
 
+    def get_object(self):
+        return get_object(models.Order, id=self.kwargs['order_id'], status=OrderStatus.FILLING)
+
 
 class ConfirmationFilledView(views.APIView):
 
