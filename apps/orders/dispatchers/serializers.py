@@ -27,8 +27,8 @@ class NewOrdersListSerializer(serializers.ModelSerializer):
 
 
 class FillingOrdersListSerializer(serializers.ModelSerializer):
-    loading = serializers.CharField(source='loading.name')
-    unloading = serializers.CharField(source='unloading.name')
+    loading = utils.PointNameSerializer()
+    unloading = utils.PointNameSerializer()
     client = serializers.CharField(source='client.name')
     extra_amount = serializers.SerializerMethodField()
 

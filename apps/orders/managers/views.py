@@ -30,6 +30,4 @@ class StatusOrdersListView(generics.ListAPIView):
                 status__in=(OrderStatus.STARTED, OrderStatus.AT_FACTORY,
                             OrderStatus.LOADED, OrderStatus.LOCATION_ASSIGNED)
             ).select_related('loading', 'client', 'unloading')
-            .only('id', 'code', 'car_number', 'driver_phone',
-                  'date', 'loading__name', 'unloading__name', 'client__name',)
         )
