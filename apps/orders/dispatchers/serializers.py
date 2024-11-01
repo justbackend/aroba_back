@@ -68,7 +68,17 @@ class FillOrderSerializer(serializers.ModelSerializer):
         )
 
     def update(self, instance, validated_data):
-        obj = super().update(instance, validated_data)
+        user = self.context['request'].user
+        for key, value in validated_data.items():
+            setattr(instance, key, value)
+
+        if not instance.set_income():
+            raise utils.APIException("The Client has not such a route or route has not amount")
+
+        instance.status = OrderStatus.STARTED
+        instance.save()
+
+        instance.create_payment(user=user, amount=instance.total_amount, _type=instance.payment_type)
         log_comment = (
             f"Buyurtam qo'ldirldi\n"
             f"Client: {validated_data.get('client')}"
@@ -81,4 +91,4 @@ class FillOrderSerializer(serializers.ModelSerializer):
         instance.create_log(
             comment=log_comment, action=OrderLogActions.FILLED, user=self.context['request'].user
         )
-        return obj
+        return instance
