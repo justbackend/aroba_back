@@ -28,7 +28,7 @@ class AdditionalAmountSerializer(serializers.Serializer):
 
 class StatusOrdersListSerializer(serializers.ModelSerializer):
     client = utils.ClientNameSerializer()
-    loading = utils.PointLonLatSerializer()
+    loading = utils.PointNameSerializer()
     unloading = utils.PointLonLatSerializer()
 
     class Meta:
