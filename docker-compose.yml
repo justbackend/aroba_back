@@ -19,7 +19,6 @@ services:
       - DB_HOST=aroba_db
       - REDIS_URL=redis://redis:6379/0
       - CELERY_BROKER_URL=redis://redis:6379
-
     depends_on:
       - aroba_db
       - redis
@@ -27,9 +26,15 @@ services:
   aroba_db:
     image: postgres:14
     container_name: aroba_db
+    env_file:
+      - .env
     volumes:
       - ./postgres:/var/lib/postgresql/data
       - ./dump.sql:/docker-entrypoint-initdb.d/dump.sql
+    environment:
+      - POSTGRES_DB=${DB_NAME}
+      - POSTGRES_USER=${DB_USER}
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
 
 
   redis:
