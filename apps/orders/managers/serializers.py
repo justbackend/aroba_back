@@ -24,3 +24,22 @@ class AdditionalAmountSerializer(serializers.Serializer):
 
         instance.create_log(user, OrderLogActions.ADDITIONAL_AMOUNT, comment=log_comment)
         return validated_data
+
+
+class StatusOrdersListSerializer(serializers.ModelSerializer):
+    client = serializers.CharField(source='client.name', read_only=True)
+    loading = serializers.CharField(source='loading.name', read_only=True)
+    unloading = serializers.CharField(source='unloading.name', read_only=True)
+
+    class Meta:
+        model = models.Order
+        fields = (
+            'id',
+            'code',
+            'car_number',
+            'driver_phone',
+            'client',
+            'date',
+            'loading',
+            'unloading',
+        )
