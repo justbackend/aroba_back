@@ -1,5 +1,5 @@
 from django_filters.rest_framework import DjangoFilterBackend
-from rest_framework import generics
+from rest_framework import generics, views
 from django.db.models import Q
 from utils import *
 from utils.choices import *
@@ -31,3 +31,9 @@ class StatusOrdersListView(generics.ListAPIView):
                             OrderStatus.LOADED, OrderStatus.LOCATION_ASSIGNED)
             ).select_related('loading', 'client', 'unloading')
         )
+
+
+class RollbackOrderView(views.APIView):
+
+    def get(self, request, order_id, *args, **kwargs):
+        order = get_object(...)
