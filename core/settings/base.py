@@ -34,6 +34,13 @@ DEBUG = env.bool("DEBUG")
 
 ALLOWED_HOSTS = ["*"]
 
+
+# the dump secrets
+DUMP_CHAT_ID = env.str("DUMP_CHAT_ID")
+DUMP_BOT_TOKEN = env.str("DUMP_BOT_TOKEN")
+
+
+
 # Application definition
 DJANGO_APPS = [
     "jazzmin",
