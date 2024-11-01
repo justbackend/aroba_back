@@ -4,6 +4,7 @@ import string
 from django.db import models
 
 from apps.common.models import BaseModel
+from apps.clients.models import ClientRoute
 from utils import choices
 import utils
 
@@ -90,6 +91,19 @@ class Order(BaseModel):
 
     def create_payment(self, user, amount, _type):
         return OrderPayment.objects.create(order=self, user=user, amount=amount, type=_type)
+
+    def set_income(self):
+
+        route = ClientRoute.objects.filter(
+            loading=self.loading,
+            unloading=self.unloading,
+            client=self.client,
+            type=self.payment_type,
+        ).first()
+
+        if route and route.amount:
+            setattr(self, 'income', route.amount)
+        return self.income
 
 
 class OrderPayment(BaseModel):

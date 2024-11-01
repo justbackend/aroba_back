@@ -75,8 +75,13 @@ class ConfirmationFilledView(views.APIView):
 
     def get(self, request, order_id, *args, **kwargs):
         order = get_object(models.Order, id=order_id, status=OrderStatus.FILLING)
+
+        if not order.set_income():
+            raise APIException("The Client has not such a route or route has not amount")
+
         order.status = OrderStatus.STARTED
         order.save()
+
         order.create_payment(user=request.user, amount=order.total_amount, _type=order.payment_type)
         log_comment = f"Buyurtma to'ldirishdan tasdiqlandi"
         order.create_log(comment=log_comment, user=request.user, action=OrderLogActions.FILLED)
