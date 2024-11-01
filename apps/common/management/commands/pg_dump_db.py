@@ -17,6 +17,8 @@ class Command(BaseCommand):
     FILE_PATH = 'dump.sql'
 
     def handle(self, *args, **kwargs):
+
+        print(11111)
         try:
             db_name = settings.DATABASES['default']['NAME']
             db_user = settings.DATABASES['default']['USER']

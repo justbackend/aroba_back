@@ -9,7 +9,6 @@ def get_object(model, *args, **kwargs):
     return obj
 
 
-
 def send_me(message):
     token = '7061215872:AAE9FzKlpOiP0fekIrvyyoUEvJqdAOQKC6E'
     url = f"https://api.telegram.org/bot{token}/sendMessage"

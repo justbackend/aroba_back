@@ -9,4 +9,5 @@ django-filter
 djangorestframework-simplejwt
 django_redis
 django-crontab
+apscheduler
 requests
