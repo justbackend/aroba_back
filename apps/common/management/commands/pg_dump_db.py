@@ -43,7 +43,7 @@ class Command(BaseCommand):
     def send_to_telegram(self):
         now = timezone.now()
         caption = (
-            f'New Dump File \n'
+            f'New Dump File(AROBA) \n'
             f'created_at: {now.strftime("%d/%m/%Y %H:%M:%S")}'
         )
         with open(self.FILE_PATH, 'rb') as file:
