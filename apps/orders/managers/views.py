@@ -22,7 +22,7 @@ class AdditionalAmountView(generics.UpdateAPIView):
 class StatusOrdersListView(generics.ListAPIView):
     serializer_class = serializers.StatusOrdersListSerializer
     filter_backends = (DjangoFilterBackend,)
-    filterset_fields = ('client', 'status',)
+    filterset_fields = ('client', 'status', 'payment_type')
 
     def get_queryset(self):
         return (
