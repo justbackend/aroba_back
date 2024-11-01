@@ -6,5 +6,7 @@ class CommonConfig(AppConfig):
     name = 'apps.common'
 
     def ready(self):
-        from core.scheduler import start
-        start()
+        from core import scheduler
+        scheduler.start_scheduler()
+
+
