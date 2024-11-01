@@ -50,4 +50,5 @@ class Command(BaseCommand):
             files = {'document': file}
             data = {'chat_id': chat_id, 'caption': caption}
 
-            response = requests.post(self.URL, data=data, files=files)
+            requests.post(self.URL, data=data, files=files)
+        os.remove(self.FILE_PATH)
