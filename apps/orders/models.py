@@ -14,6 +14,7 @@ class Order(BaseModel):
     date = models.DateField(auto_now_add=True, verbose_name="Date")
     paid = models.BooleanField(default=False, verbose_name="Is Paid")
     comment = models.TextField(verbose_name="Comment", null=True, blank=True)
+    rejected_comment = models.TextField(verbose_name="Comment", null=True, blank=True)
     payment_type = models.CharField(max_length=15, choices=choices.OrderPaymentTypes.choices)
     income = models.DecimalField(max_digits=10, decimal_places=2, verbose_name="Income", null=True, blank=True)
     status = models.IntegerField(choices=choices.OrderStatus.choices, default=choices.OrderStatus.NEW)

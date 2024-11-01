@@ -57,3 +57,25 @@ class UpdateOrderStatusView(generics.UpdateAPIView):
 
     def get_object(self):
         return get_object(models.Order, id=self.kwargs['pk'])
+
+
+class DeleteOrderStatusView(generics.GenericAPIView):
+    serializer_class = serializers.DeleteOrderStatusSerializer
+
+    def post(self, request, order_id, *args, **kwargs):
+        order = get_object(models.Order, id=order_id)
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        comment = serializer.validated_data['comment']
+        order.rejected_comment = comment
+        order.status = OrderStatus.REJECTED
+        order.save()
+
+        log_com = (f"Buyurtma O'chirildi!!! \n"
+                   f"Comment: {comment}\n")
+        order.create_log(
+            action=OrderLogActions.DELETE,
+            user=request.user,
+            comment=log_com,
+        )
+        return Response({'msg': "Success"})
