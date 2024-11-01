@@ -47,7 +47,6 @@ class StatusOrdersListSerializer(serializers.ModelSerializer):
 
 class UpdateOrderStatusSerializer(serializers.ModelSerializer):
 
-
     class Meta:
         model = models.Order
         fields = ('id', 'status')
