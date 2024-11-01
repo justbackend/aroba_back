@@ -380,3 +380,4 @@ Temporary Items
 celerybeat-schedule.db
 postgres/
 redis/
+dump.sql
