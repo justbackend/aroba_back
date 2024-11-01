@@ -15,7 +15,7 @@ from pathlib import Path
 import environ
 
 from core.jazzmin import *  # noqa
-from ..cronjobs import CRON_TASKS # noqa
+from ..cronjobs import CRON_TASKS  # noqa
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
@@ -35,12 +35,9 @@ DEBUG = env.bool("DEBUG")
 
 ALLOWED_HOSTS = ["*"]
 
-
 # the dump secrets
 DUMP_CHAT_ID = env.str("DUMP_CHAT_ID")
 DUMP_BOT_TOKEN = env.str("DUMP_BOT_TOKEN")
-
-
 
 # Application definition
 DJANGO_APPS = [
@@ -65,7 +62,6 @@ THIRD_PARTY_APPS = [
     "corsheaders",
     'drf_spectacular',
     'django_filters',
-    'django_crontab',
 ]
 
 INSTALLED_APPS = DJANGO_APPS + CUSTOM_APPS + THIRD_PARTY_APPS
@@ -183,7 +179,6 @@ CACHES = {
         "KEY_PREFIX": "aroba",
     }
 }
-
 
 # CELERY CONFIGURATION
 CELERY_BROKER_URL = env.str("CELERY_BROKER_URL", "redis://localhost:6379")

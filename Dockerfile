@@ -8,10 +8,11 @@ SHELL ["/bin/bash", "-c"]
 ENV PYTHONDONTWRITEBYTECODE=1
 ENV PYTHONUNBUFFERED=1
 
-# Update package list and install dependencies
+# Paket ro'yxatini yangilang va kerakli kutubxonalarni o'rnating
 RUN apt-get update && \
     apt-get -qy install gcc libjpeg-dev libxslt-dev libpq-dev libmariadb-dev \
-    libmariadb-dev-compat gettext cron openssh-client flake8 locales vim
+    libmariadb-dev-compat gettext cron openssh-client flake8 locales vim postgresql-client
+
 
 # Upgrade pip
 RUN pip install --upgrade pip
