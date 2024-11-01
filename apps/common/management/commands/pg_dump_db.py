@@ -6,7 +6,6 @@ from django.core.management.base import BaseCommand
 from django.utils import timezone
 
 from utils import send_me
-import os
 
 bot_token = settings.DUMP_BOT_TOKEN
 chat_id = settings.DUMP_CHAT_ID
