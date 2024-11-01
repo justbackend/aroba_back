@@ -10,3 +10,4 @@ djangorestframework-simplejwt
 django_redis
 apscheduler
 requests
+django_crontab
