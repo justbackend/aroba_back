@@ -70,7 +70,8 @@ class FillOrderSerializer(serializers.ModelSerializer):
     def update(self, instance, validated_data):
         user = self.context['request'].user
         for key, value in validated_data.items():
-            setattr(instance, key, value)
+            if value:
+                setattr(instance, key, value)
 
         if not instance.set_income():
             raise utils.APIException("The Client has not such a route or route has not amount")
@@ -78,7 +79,7 @@ class FillOrderSerializer(serializers.ModelSerializer):
         instance.status = OrderStatus.STARTED
         instance.save()
 
-        instance.create_payment(user=user, amount=instance.total_amount, _type=instance.payment_type)
+        instance.create_payment(amount=instance.total_amount, _type=instance.payment_type)
         log_comment = (
             f"Buyurtam qo'ldirldi\n"
             f"Client: {validated_data.get('client')}"

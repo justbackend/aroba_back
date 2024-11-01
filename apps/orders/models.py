@@ -100,6 +100,7 @@ class Order(BaseModel):
             client=self.client,
             type=self.payment_type,
         ).first()
+        print(self.loading, self.unloading, )
 
         if route and route.amount:
             setattr(self, 'income', route.amount)
