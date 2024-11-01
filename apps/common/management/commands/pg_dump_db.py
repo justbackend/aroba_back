@@ -12,7 +12,7 @@ chat_id = settings.DUMP_CHAT_ID
 
 
 class Command(BaseCommand):
-    help = 'Create a PostgreSQL dump of the database and send it via Telegram bot'
+    help = 'Create a PostgresSQL dump of the database and send it via Telegram bot'
     URL = f'https://api.telegram.org/bot{bot_token}/sendDocument'
     FILE_PATH = 'dump.sql'
 

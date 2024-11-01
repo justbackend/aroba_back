@@ -8,4 +8,5 @@ drf-spectacular
 django-filter
 djangorestframework-simplejwt
 django_redis
+django-crontab
 requests

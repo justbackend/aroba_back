@@ -15,6 +15,7 @@ from pathlib import Path
 import environ
 
 from core.jazzmin import *  # noqa
+from ..cronjobs import CRON_TASKS # noqa
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
@@ -64,6 +65,7 @@ THIRD_PARTY_APPS = [
     "corsheaders",
     'drf_spectacular',
     'django_filters',
+    'django_crontab',
 ]
 
 INSTALLED_APPS = DJANGO_APPS + CUSTOM_APPS + THIRD_PARTY_APPS
@@ -211,3 +213,5 @@ SIMPLE_JWT = {
     "ACCESS_TOKEN_LIFETIME": timedelta(hours=24),
     "REFRESH_TOKEN_LIFETIME": timedelta(days=10),
 }
+
+CRONJOBS = CRON_TASKS
