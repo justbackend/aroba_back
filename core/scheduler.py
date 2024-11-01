@@ -16,5 +16,5 @@ def start_scheduler():
     with scheduler_lock:
         if scheduler is None:
             scheduler = BackgroundScheduler()
-            scheduler.add_job(lambda: call_command('pg_dump_db'), 'interval', seconds=10)
+            scheduler.add_job(lambda: call_command('pg_dump_db'), 'interval', minutes=33)
             scheduler.start()
