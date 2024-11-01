@@ -106,6 +106,17 @@ class Order(BaseModel):
             setattr(self, 'income', route.amount)
         return self.income
 
+    def clear(self, fields=()):
+        """
+        The method clear instance according to fields
+        """
+        for field in fields:
+            if hasattr(self, field):
+                setattr(self, field, None)
+
+
+
+
 
 class OrderPayment(BaseModel):
     amount = models.DecimalField(max_digits=10, decimal_places=2, verbose_name="Amount")

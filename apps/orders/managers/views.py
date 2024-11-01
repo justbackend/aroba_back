@@ -36,4 +36,13 @@ class StatusOrdersListView(generics.ListAPIView):
 class RollbackOrderView(views.APIView):
 
     def get(self, request, order_id, *args, **kwargs):
-        order = get_object(...)
+        order = get_object(models.Order, ~Q(status=OrderStatus.NEW), id=order_id)
+        order.clear(
+            fields=('car_number', 'income', 'driver_phone', 'total_amount', 'dispatcher')
+        )
+        order.status = OrderStatus.NEW
+        order.paid = False
+        order.save()
+
+
+
