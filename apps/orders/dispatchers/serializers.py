@@ -29,7 +29,7 @@ class NewOrdersListSerializer(serializers.ModelSerializer):
 class FillingOrdersListSerializer(serializers.ModelSerializer):
     loading = utils.PointNameSerializer()
     unloading = utils.PointNameSerializer()
-    client = serializers.CharField(source='client.name')
+    client = utils.ClientNameSerializer()
     extra_amount = serializers.SerializerMethodField()
 
     def get_extra_amount(self, obj):
