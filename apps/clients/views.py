@@ -1,8 +1,11 @@
+from itertools import groupby
+from operator import itemgetter
+
 from django.contrib.auth.decorators import permission_required
 from django.contrib.postgres.aggregates import ArrayAgg
 from django.db.models import F, Func, Value, TextField
 from django.utils.decorators import method_decorator
-from rest_framework import viewsets, generics
+from rest_framework import viewsets, generics, views
 from rest_framework.response import Response
 
 import utils
@@ -25,18 +28,26 @@ class ClientRouteViewSet(viewsets.ModelViewSet):
     queryset = models.ClientRoute.objects.all()
 
 
-class CombinationCreateOrderRoutesListAPI(generics.GenericAPIView):
+class CombinationCreateOrderRoutesListAPI(views.APIView):
 
     def get(self, request, client_id, *args, **kwargs):
-        routes = (
+        routes_list = (
             models.ClientRoute.objects.filter(client_id=client_id)
-            .values('loading_id', loading_name=F('loading__name'))
-            .annotate(unloadings=ArrayAgg(
-                Func(
-                    Value('id'), 'unloading_id',
-                    Value('name'), 'unloading__name',
-                    function='JSON_BUILD_OBJECT',
-                    output_field=TextField()
-                ))))
+            .values('loading_id', 'loading__name', 'unloading_id', 'unloading__name')
+        )
 
-        return Response(routes)
+        routes_grouped = []
+        for key, group in groupby(sorted(routes_list, key=itemgetter('loading_id')),
+                                  key=itemgetter('loading_id', 'loading__name')):
+            loading_id, loading_name = key
+            unloadings = [
+                {"id": g['unloading_id'], "name": g['unloading__name']}
+                for g in group
+            ]
+            routes_grouped.append({
+                "loading_id": loading_id,
+                "loading_name": loading_name,
+                "unloadings": unloadings
+            })
+
+        return Response(routes_grouped)
