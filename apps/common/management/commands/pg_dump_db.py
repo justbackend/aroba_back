@@ -19,7 +19,6 @@ class Command(BaseCommand):
 
     def handle(self, *args, **kwargs):
 
-        print(11111)
         try:
             db_name = settings.DATABASES['default']['NAME']
             db_user = settings.DATABASES['default']['USER']
@@ -47,11 +46,8 @@ class Command(BaseCommand):
             f'New Dump File \n'
             f'created_at: {now.strftime("%d/%m/%Y %H:%M:%S")}'
         )
-        print(os.path.exists(self.FILE_PATH))
-
         with open(self.FILE_PATH, 'rb') as file:
             files = {'document': file}
             data = {'chat_id': chat_id, 'caption': caption}
 
             response = requests.post(self.URL, data=data, files=files)
-            print(response.text)
