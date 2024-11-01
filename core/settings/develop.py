@@ -1,8 +1,6 @@
 
 from .base import *  # noqa
 
-# urlpatterns.append(path("__debug__/", include("debug_toolbar.urls")))
-
 
 DEBUG = True
 CELERY_TASK_ALWAYS_EAGER = True
