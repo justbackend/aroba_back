@@ -1,5 +1,3 @@
-# from django.urls import path, include
-# from core.urls import urlpatterns
 
 from .base import *  # noqa
 
