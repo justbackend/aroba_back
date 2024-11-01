@@ -46,7 +46,7 @@ class ClientRoute(BaseModel):
     unloading = models.ForeignKey(
         'common.Point',
         on_delete=models.PROTECT,
-        verbose_name="Loading",
+        verbose_name="UnLoading",
         related_name="client_routes_unloading",
     )
     client = models.ForeignKey(
