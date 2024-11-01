@@ -1,11 +1,14 @@
-#!/bin/sh
+#!/bin/bash
 set -e
 
-# Migrations va boshqa konfiguratsiyalar
+# Django migrations
 python manage.py migrate --noinput
 
-# Crontabni o'rnatish
+# Crontab qo'shish
 python manage.py crontab add
 
-# Gunicorn bilan ishlash
+# Cron xizmatini to'g'ridan-to'g'ri sessiyada ishga tushirish
+cron -f &
+
+# Asosiy dasturlarni ishga tushirish
 exec gunicorn core.wsgi:application --bind 0.0.0.0:8001 --workers 3
