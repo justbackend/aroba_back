@@ -1,14 +1,9 @@
 from itertools import groupby
 from operator import itemgetter
 
-from django.contrib.auth.decorators import permission_required
-from django.contrib.postgres.aggregates import ArrayAgg
-from django.db.models import F, Func, Value, TextField
-from django.utils.decorators import method_decorator
-from rest_framework import viewsets, generics, views
+from rest_framework import viewsets, views
 from rest_framework.response import Response
 
-import utils
 from . import models, serializers
 
 
