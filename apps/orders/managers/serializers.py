@@ -28,8 +28,8 @@ class AdditionalAmountSerializer(serializers.Serializer):
 
 class StatusOrdersListSerializer(serializers.ModelSerializer):
     client = serializers.CharField(source='client.name', read_only=True)
-    loading = serializers.CharField(source='loading.name', read_only=True)
-    unloading = serializers.CharField(source='unloading.name', read_only=True)
+    loading = utils.PointLonLatSerializer()
+    unloading = utils.PointLonLatSerializer()
 
     class Meta:
         model = models.Order
