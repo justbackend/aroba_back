@@ -12,9 +12,10 @@ scheduler_lock = threading.Lock()
 
 
 def start_scheduler():
-    global scheduler
-    with scheduler_lock:
-        if scheduler is None:
-            scheduler = BackgroundScheduler()
-            scheduler.add_job(lambda: call_command('pg_dump_db'), 'interval', minutes=33)
-            scheduler.start()
+    pass
+    # global scheduler
+    # with scheduler_lock:
+    #     if scheduler is None:
+    #         scheduler = BackgroundScheduler()
+    #         scheduler.add_job(lambda: call_command('pg_dump_db'), 'interval', minutes=33)
+    #         scheduler.start()
