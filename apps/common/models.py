@@ -1,4 +1,8 @@
 from django.db import models
+from django.db.models.signals import pre_migrate
+from django.dispatch import receiver
+
+
 from . import managers
 
 
@@ -35,3 +39,11 @@ class Point(models.Model):
     def __str__(self):
         return self.name
 
+
+# @receiver(pre_migrate)
+# def pre_migrate_signal(sender, **kwargs):
+#
+#     from core.scheduler import start_scheduler
+#     start_scheduler()
+#
+#     print('the tasks')

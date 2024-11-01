@@ -19,6 +19,8 @@ services:
       - DB_HOST=aroba_db
       - REDIS_URL=redis://redis:6379/0
       - CELERY_BROKER_URL=redis://redis:6379
+      - IS_SCHEDULER=true  # faqat bitta konteynerda scheduler'ni ishga tushirish uchun
+
     depends_on:
       - aroba_db
       - redis
@@ -35,7 +37,6 @@ services:
       - POSTGRES_DB=${DB_NAME}
       - POSTGRES_USER=${DB_USER}
       - POSTGRES_PASSWORD=${DB_PASSWORD}
-
 
   redis:
     image: redis:latest

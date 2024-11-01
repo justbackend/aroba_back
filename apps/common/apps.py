@@ -1,3 +1,5 @@
+import os
+
 from django.apps import AppConfig
 
 
@@ -6,7 +8,8 @@ class CommonConfig(AppConfig):
     name = 'apps.common'
 
     def ready(self):
-        from core import scheduler
-        scheduler.start_scheduler()
+        if os.environ.get('RUN_MAIN') != 'true':
+            from core import scheduler
+            scheduler.start_scheduler()
 
 
