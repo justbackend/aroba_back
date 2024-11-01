@@ -56,6 +56,7 @@ THIRD_PARTY_APPS = [
     "rest_framework",
     "corsheaders",
     'drf_spectacular',
+    'django_filters',
 ]
 
 INSTALLED_APPS = DJANGO_APPS + CUSTOM_APPS + THIRD_PARTY_APPS
