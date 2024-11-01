@@ -1,6 +1,9 @@
 from django.contrib.auth.decorators import permission_required
+from django.contrib.postgres.aggregates import ArrayAgg
+from django.db.models import F, Func, Value, TextField
 from django.utils.decorators import method_decorator
 from rest_framework import viewsets, generics
+from rest_framework.response import Response
 
 import utils
 from . import models, serializers
@@ -22,14 +25,18 @@ class ClientRouteViewSet(viewsets.ModelViewSet):
     queryset = models.ClientRoute.objects.all()
 
 
-class CreateOrderRoutesListAPI(generics.ListAPIView):
-    serializer_class = serializers.CreateOrderRoutesSerializer
-    filter_backends = ()
-    pagination_class = None
+class CombinationCreateOrderRoutesListAPI(generics.GenericAPIView):
 
-    def get_queryset(self):
-        return (
-            models.ClientRoute.objects.filter(client_id=self.kwargs['client_id'])
-            .select_related('unloading', 'loading')
-            .only('unloading__name', 'loading__name', 'loading_id', 'unloading_id')
-        )
+    def get(self, request, client_id, *args, **kwargs):
+        routes = (
+            models.ClientRoute.objects.filter(client_id=client_id)
+            .values('loading_id', loading_name=F('loading__name'))
+            .annotate(unloadings=ArrayAgg(
+                Func(
+                    Value('id'), 'unloading_id',
+                    Value('name'), 'unloading__name',
+                    function='JSON_BUILD_OBJECT',
+                    output_field=TextField()
+                ))))
+
+        return Response(routes)
