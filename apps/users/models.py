@@ -79,7 +79,7 @@ class User(AbstractBaseUser, PermissionsMixin, BaseModel):
         return str(self.username)
 
     def hashing_password(self):
-        if not self.password.startswith("pbkdf2_sha256"):
+        if self.password and not self.password.startswith("pbkdf2_sha256"):
             self.set_password(self.password)
 
     def save(self, *args, **kwargs):

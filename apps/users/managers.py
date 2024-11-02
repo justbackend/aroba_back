@@ -33,6 +33,9 @@ class UserManager(DjangoUserManager):
 
         return self._create_user(username, password, **extra_fields)
 
+    def get_queryset(self):
+        return super().get_queryset().order_by('-id')
+
 
 class ModuleManager(DjangoContentTypeManager):
 

@@ -1,6 +1,7 @@
 from django.contrib.postgres.aggregates import ArrayAgg
 from django.http import Http404
 from rest_framework import viewsets, views
+from rest_framework.parsers import MultiPartParser, FormParser
 from rest_framework.response import Response
 
 from utils import RolePermission
@@ -32,6 +33,7 @@ class UserViewSet(viewsets.ModelViewSet):
     serializer_class = serializers.CreateUserSerializer
     queryset = models.User.objects.all()
     pagination_class = None
+    parser_classes = (MultiPartParser, FormParser)
 
     def get_object(self):
         return models.User.objects.filter(id=self.kwargs['pk']).first()

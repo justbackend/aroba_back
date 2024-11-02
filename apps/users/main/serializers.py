@@ -46,3 +46,12 @@ class CreateUserSerializer(serializers.ModelSerializer):
         extra_kwargs = {
             'password': {'write_only': True, 'required': False},
         }
+
+    def to_internal_value(self, data):
+        mutable_data = data.copy()
+
+        if 'roles[]' in mutable_data:
+            mutable_data.setlist('roles', mutable_data.getlist('roles[]'))
+            del mutable_data['roles[]']
+
+        return super().to_internal_value(mutable_data)
