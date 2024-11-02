@@ -22,6 +22,7 @@ RUN mkdir -p /opt/run
 
 # Set working directory
 WORKDIR /aroba
+COPY .env /aroba/.env
 
 # Copy requirements and install dependencies
 COPY --chown=aroba:aroba requirements /aroba/requirements
