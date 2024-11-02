@@ -11,3 +11,4 @@ django_redis
 apscheduler
 requests
 django_crontab
+python-dotenv
