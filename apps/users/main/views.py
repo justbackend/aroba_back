@@ -10,11 +10,13 @@ from .. import models
 class RoleViewSet(viewsets.ModelViewSet):
     queryset = models.Role.objects.all().order_by('-id')
     serializer_class = serializers.RoleSerializer
+    pagination_class = None
 
 
 class ModuleViewSet(viewsets.ModelViewSet):
     queryset = models.Module.objects.prefetch_related('permission_set').all().order_by('-id')
     serializer_class = serializers.ContentTypeSerializer
+    pagination_class = None
 
 
 class MyPermissionsListAPI(views.APIView):
