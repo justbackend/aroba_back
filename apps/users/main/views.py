@@ -6,6 +6,7 @@ from rest_framework.response import Response
 from utils import RolePermission
 from . import serializers
 from .. import models
+from django.core.cache import cache
 
 
 class RoleViewSet(viewsets.ModelViewSet):
@@ -24,7 +25,5 @@ class ModuleViewSet(viewsets.ModelViewSet):
 class MyPermissionsListAPI(views.APIView):
 
     def get(self, request, user_id: int, *args, **kwargs):
-        user = models.User.objects.filter(pk=user_id).annotate(perms=ArrayAgg('user_permissions__codename')).first()
-        if not user:
-            raise Http404
-        return Response(user.perms)
+        return Response(cache.get(f'apis_perm_{user_id}'))
+
