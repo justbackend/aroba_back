@@ -40,3 +40,7 @@ class CreateUserSerializer(serializers.ModelSerializer):
             'phone',
             'photo',
         )
+
+        extra_kwargs = {
+            'password': {'write_only': True},
+        }
