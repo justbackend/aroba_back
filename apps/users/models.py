@@ -17,6 +17,7 @@ from . import managers
 from utils import choices
 from django.db.models.signals import m2m_changed
 from django.dispatch import receiver
+import utils
 
 
 class User(AbstractBaseUser, PermissionsMixin, BaseModel):
@@ -39,6 +40,8 @@ class User(AbstractBaseUser, PermissionsMixin, BaseModel):
     username = models.CharField(max_length=50, unique=True, verbose_name='Username')
     first_name = models.CharField(_("first name"), max_length=150, blank=True)
     last_name = models.CharField(_("last name"), max_length=150, blank=True)
+    photo = models.ImageField(upload_to='users/', blank=True, verbose_name='Photo')
+    phone = models.CharField(_("phone number"), max_length=15, blank=True, validators=[utils.PhoneValidator])
     date_joined = models.DateTimeField(_("date joined"), default=timezone.now)
     roles = models.ManyToManyField('Role', blank=True, related_name='users')
     actions = models.ManyToManyField('Action', blank=True, related_name='users', verbose_name=_('Actions'))
