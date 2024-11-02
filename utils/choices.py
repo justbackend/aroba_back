@@ -52,4 +52,5 @@ class OrderLogActions(models.TextChoices):
     AMOUNT = 'amount', 'Amount'
     ADDITIONAL_AMOUNT = 'additional_amount', 'Additional Amount'
     FILLED = 'filled', 'Filled'
+    ROLLBACK = 'rollback', 'Rollback'
 

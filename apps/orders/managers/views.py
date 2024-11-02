@@ -37,16 +37,28 @@ class StatusOrdersListView(generics.ListAPIView):
         )
 
 
-class RollbackOrderView(views.APIView):
+class RollbackOrderView(generics.GenericAPIView):
+    serializer_class = serializers.DeleteOrderStatusSerializer
 
-    def get(self, request, order_id, *args, **kwargs):
+    def patch(self, request, order_id, *args, **kwargs):
         order = get_object(models.Order, ~Q(status=OrderStatus.NEW), id=order_id)
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        comment = serializer.validated_data['comment']
         order.clear(
             fields=('car_number', 'income', 'driver_phone', 'total_amount', 'dispatcher')
         )
         order.status = OrderStatus.NEW
         order.paid = False
         order.save()
+
+        log_com = (f"Buyurtma Qaytarildi!!! \n"
+                   f"Comment: {comment}\n")
+        order.create_log(
+            action=OrderLogActions.ROLLBACK,
+            user=request.user,
+            comment=log_com,
+        )
 
         return Response({'msg': "Success"})
 
