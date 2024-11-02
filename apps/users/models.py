@@ -41,7 +41,7 @@ class User(AbstractBaseUser, PermissionsMixin, BaseModel):
     last_name = models.CharField(_("last name"), max_length=150, blank=True)
     date_joined = models.DateTimeField(_("date joined"), default=timezone.now)
     roles = models.ManyToManyField('Role', blank=True, related_name='users')
-    actions = models.ManyToManyField('Action', blank=True, related_name='users')
+    actions = models.ManyToManyField('Action', blank=True, related_name='users', verbose_name=_('Actions'))
     is_staff = models.BooleanField(
         _("staff status"),
         default=False,
@@ -96,7 +96,7 @@ class Role(BaseModel):
 
 
 class Module(models.Model):
-    name = models.CharField(_("name"), max_length=150)
+    name = models.CharField(_("name"), max_length=150, verbose_name="Name")
 
     class Meta:
         db_table = "modules"
@@ -120,7 +120,7 @@ class APIRoute(models.Model):
     )
 
     route = models.CharField(_("route"), max_length=50, choices=choices.APIRoutes.choices)
-    name = models.CharField(_("name"), max_length=100, )
+    name = models.CharField(_("name"), max_length=100,)
     dynamic = models.BooleanField(_("dynamic"), default=False)
     method = models.CharField(
         _("method"), max_length=100,
