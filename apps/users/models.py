@@ -145,9 +145,8 @@ class APIRoute(models.Model):
     def __str__(self):
         return f'{self.route}{self.name} {self.method}'
 
-    def format_save_redis(self):
-        return dict(dynamic=self.dynamic, )
 
+# Signals to clear cache api routes
 
 @receiver(m2m_changed, sender=Role.actions.through)
 def role_action_change(sender, instance, **kwargs):
@@ -168,10 +167,8 @@ def user_action_change(sender, instance, **kwargs):
 
 @receiver(m2m_changed, sender=User.roles.through)
 def user_action_change(sender, instance, action, **kwargs):
-
     if action == 'post_add' or action == 'post_remove' or action == 'post_clear':
         related_actions = Action.objects.filter(roles__in=instance.roles.all()).distinct()
         instance.actions.set(related_actions)
 
         clear_users_perms((instance,))
-
