@@ -28,6 +28,8 @@ class RoleSerializer(serializers.ModelSerializer):
 
 
 class CreateUserSerializer(serializers.ModelSerializer):
+    # roles = serializers.CharField(write_only=True, required=False)
+
     class Meta:
         model = models.User
         fields = (
@@ -42,5 +44,5 @@ class CreateUserSerializer(serializers.ModelSerializer):
         )
 
         extra_kwargs = {
-            'password': {'write_only': True},
+            'password': {'write_only': True, 'required': False},
         }
