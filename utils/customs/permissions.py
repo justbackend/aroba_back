@@ -28,7 +28,7 @@ class RolePermission(permissions.BasePermission):
 
             for api_info in api_list:
 
-                if int(api_info['dynamic']):
+                if api_info['dynamic']:
                     pattern = f"^{api_info['name'].replace('$', '[^/]+')}$"
                     if re.match(pattern, path):
                         return True

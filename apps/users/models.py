@@ -118,7 +118,7 @@ class APIRoute(models.Model):
 
     route = models.CharField(_("route"), max_length=50, choices=choices.APIRoutes.choices)
     name = models.CharField(_("name"), max_length=100, )
-    dynamic = models.CharField(_("dynamic"), choices=API_DYNAMIC_CHOICES)
+    dynamic = models.BooleanField(_("dynamic"), default=False)
     method = models.CharField(
         _("method"), max_length=100,
         choices=choices.APIMethods.choices,
