@@ -34,4 +34,7 @@ class CreateUserSerializer(serializers.ModelSerializer):
             'id',
             'last_name',
             'first_name',
+            'username',
+            'password',
+            'roles',
         )
