@@ -96,7 +96,7 @@ class Role(BaseModel):
 
 
 class Module(models.Model):
-    name = models.CharField(_("name"), max_length=150, verbose_name="Name")
+    name = models.CharField(_("name"), max_length=150,)
 
     class Meta:
         db_table = "modules"

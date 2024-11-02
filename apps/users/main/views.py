@@ -18,7 +18,7 @@ class RoleViewSet(viewsets.ModelViewSet):
 class ModuleViewSet(viewsets.ModelViewSet):
     permission_classes = (RolePermission,)
     queryset = models.Module.objects.prefetch_related('actions').all().order_by('-id')
-    serializer_class = serializers.ContentTypeSerializer
+    serializer_class = serializers.ModuleSerializer
     pagination_class = None
 
 
@@ -26,4 +26,8 @@ class MyPermissionsListAPI(views.APIView):
 
     def get(self, request, user_id: int, *args, **kwargs):
         return Response(cache.get(f'apis_perm_{user_id}'))
+
+
+
+# class
 

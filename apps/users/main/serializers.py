@@ -13,7 +13,7 @@ class PermissionSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
-class ContentTypeSerializer(serializers.ModelSerializer):
+class ModuleSerializer(serializers.ModelSerializer):
     actions = ActionNameSerializer(many=True)
 
     class Meta:
