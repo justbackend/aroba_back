@@ -30,6 +30,8 @@ class MyPermissionsListAPI(views.APIView):
 
 class UserViewSet(viewsets.ModelViewSet):
     serializer_class = serializers.CreateUserSerializer
+    queryset = models.User.objects.all()
+    pagination_class = None
 
     def get_object(self):
         return models.User.objects.filter(id=self.kwargs['pk']).first()

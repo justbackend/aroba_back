@@ -62,7 +62,7 @@ class User(AbstractBaseUser, PermissionsMixin, BaseModel):
         _("phone number"),
         max_length=15,
         blank=True,
-        validators=[utils.PhoneValidator],
+        validators=[utils.PhoneValidator()],
         null=True,
     )
 
@@ -84,7 +84,7 @@ class User(AbstractBaseUser, PermissionsMixin, BaseModel):
 
     def save(self, *args, **kwargs):
         self.hashing_password()
-        sum(*args, **kwargs)
+        super(User, self).save(*args, **kwargs)
 
     def tokens(self):
         refresh = RefreshToken.for_user(self)
