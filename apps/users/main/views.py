@@ -28,6 +28,8 @@ class MyPermissionsListAPI(views.APIView):
         return Response(cache.get(f'apis_perm_{user_id}'))
 
 
+class CreateUserViewSet(viewsets.ModelViewSet):
+    serializer_class = serializers.CreateUserSerializer
 
-# class
-
+    def get_object(self):
+        return models.User.objects.filter(id=self.kwargs['pk']).first()

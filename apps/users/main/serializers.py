@@ -25,3 +25,13 @@ class RoleSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Role
         fields = '__all__'
+
+
+class CreateUserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.User
+        fields = (
+            'id',
+            'last_name',
+            'first_name',
+        )
