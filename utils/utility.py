@@ -1,5 +1,6 @@
 from django.http import Http404
 import requests
+from django.core.cache import cache
 
 
 def get_object(model, *args, **kwargs):
@@ -18,3 +19,11 @@ def send_me(message):
         'parse_mode': 'html',
     }
     requests.post(url, params=data)
+
+
+def clear_users_perms(users):
+    for user in users:
+        if type(user) is int:
+            cache.delete(f"apis_perm_{user}")
+        else:
+            cache.delete(f"apis_perm_{user.id}")

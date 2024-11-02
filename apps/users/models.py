@@ -12,8 +12,11 @@ from django.utils.translation import gettext_lazy as _
 from rest_framework_simplejwt.tokens import RefreshToken
 
 from apps.common.models import BaseModel
+from utils.utility import clear_users_perms
 from . import managers
 from utils import choices
+from django.db.models.signals import m2m_changed
+from django.dispatch import receiver
 
 
 class User(AbstractBaseUser, PermissionsMixin, BaseModel):
@@ -135,13 +138,23 @@ class APIRoute(models.Model):
         return dict(dynamic=self.dynamic, )
 
 
-a = [
-    {
-        'method': 'POST',
-        'route': '/api/v1/users/',
-        'name': 'modules/$/',
+@receiver(m2m_changed, sender=Role.actions.through)
+def role_action_change(sender, instance, **kwargs):
+    users = instance.users.all()
+    clear_users_perms(users)
 
-    }
-]
 
-# 'users/modules/$/'
+@receiver(m2m_changed, sender=Action.apis.through)
+def action_apis_change(sender, instance, **kwargs):
+    users = instance.users.all()
+    clear_users_perms(users)
+
+
+@receiver(m2m_changed, sender=User.actions.through)
+def user_action_change(sender, instance, **kwargs):
+    clear_users_perms((instance,))
+
+
+@receiver(m2m_changed, sender=User.roles.through)
+def user_action_change(sender, instance, **kwargs):
+    clear_users_perms((instance,))
