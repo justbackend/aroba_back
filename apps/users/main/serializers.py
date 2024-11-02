@@ -2,6 +2,11 @@ from rest_framework import serializers
 from .. import models
 
 
+class ActionNameSerializer(serializers.Serializer):
+    id = serializers.IntegerField(read_only=True)
+    name = serializers.CharField(read_only=True)
+
+
 class PermissionSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Permission
@@ -9,7 +14,7 @@ class PermissionSerializer(serializers.ModelSerializer):
 
 
 class ContentTypeSerializer(serializers.ModelSerializer):
-    permission_set = PermissionSerializer(many=True, read_only=True)
+    actions = ActionNameSerializer(many=True)
 
     class Meta:
         model = models.Module

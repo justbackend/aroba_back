@@ -38,7 +38,7 @@ class User(AbstractBaseUser, PermissionsMixin, BaseModel):
     last_name = models.CharField(_("last name"), max_length=150, blank=True)
     date_joined = models.DateTimeField(_("date joined"), default=timezone.now)
     roles = models.ManyToManyField('Role', blank=True, related_name='users')
-    apis = models.ManyToManyField('APIRoute', blank=True, related_name='users')
+    actions = models.ManyToManyField('Action', blank=True, related_name='users')
     is_staff = models.BooleanField(
         _("staff status"),
         default=False,
@@ -130,6 +130,9 @@ class APIRoute(models.Model):
 
     def __str__(self):
         return f'{self.route}{self.name} {self.method}'
+
+    def format_save_redis(self):
+        return dict(dynamic=self.dynamic, )
 
 
 a = [

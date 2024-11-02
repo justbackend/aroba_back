@@ -12,6 +12,10 @@ class UserAdmin(admin.ModelAdmin):
     list_display = ('id', 'username',)
 
 
+@admin.register(models.Action)
+class ActionAdmin(admin.ModelAdmin):
+    list_display = ('id', 'module', 'name',)
+
 @admin.register(models.Module)
 class ContentTypeAdmin(admin.ModelAdmin):
     class ActionsInline(admin.StackedInline):
