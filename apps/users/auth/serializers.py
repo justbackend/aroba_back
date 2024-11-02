@@ -19,4 +19,4 @@ class LoginSerializer(serializers.Serializer):
         return data
 
     def to_representation(self, instance):
-        return self.validated_data['user'].tokens()
+        return dict(user_id=self.validated_data['user'].id, **self.validated_data['user'].tokens())

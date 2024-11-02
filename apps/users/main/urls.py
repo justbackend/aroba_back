@@ -12,6 +12,10 @@ role_udd = views.RoleViewSet.as_view({'get': 'retrieve', 'patch': 'partial_updat
 modules_lc = views.ModuleViewSet.as_view({'get': 'list', 'post': 'create'})
 modules_udd = views.ModuleViewSet.as_view({'get': 'retrieve', 'patch': 'partial_update', 'delete': 'destroy'})
 
+
+users_lc = views.UserViewSet.as_view({'get': 'list', 'post': 'create'})
+users_udd = views.UserViewSet.as_view({'patch': 'partial_update', 'delete': 'destroy'})
+
 urlpatterns = [
 
     # roles view set
@@ -24,5 +28,10 @@ urlpatterns = [
 
     # my permissions
     path('my-perms/<int:user_id>/', views.MyPermissionsListAPI.as_view(), name='my-perms'),
+
+
+    # users
+    path('users/', users_lc, name='users'),
+    path('users/<int:pk>/', users_udd, name='users'),
 
 ]
