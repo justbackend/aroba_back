@@ -4,6 +4,7 @@ __all__ = (
     'User',
     'Role',
 )
+
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin, Permission, ContentType as BaseContentType
 from django.db import models
 from django.utils import timezone
@@ -12,6 +13,7 @@ from rest_framework_simplejwt.tokens import RefreshToken
 
 from apps.common.models import BaseModel
 from . import managers
+from utils import choices
 
 
 class User(AbstractBaseUser, PermissionsMixin, BaseModel):
@@ -117,3 +119,25 @@ class Module(BaseContentType):
         super().save(*args, **kwargs)
         if not hasattr(self, 'extended'):
             ExtendedModule.objects.create(content_type=self, custom=True)
+
+
+class APIRoute(models.Model):
+    API_DYNAMIC_CHOICES = (
+        ('1', 'Yes'),
+        ('0', 'No'),
+    )
+
+    route = models.CharField(_("route"), max_length=50, choices=choices.APIRoutes.choices)
+    name = models.CharField(_("name"), max_length=100, )
+    dynamic = models.CharField(_("dynamic"), choices=API_DYNAMIC_CHOICES)
+    method = models.CharField(
+        _("method"), max_length=100,
+        choices=choices.APIMethods.choices,
+        default=choices.APIMethods.GET
+    )
+
+    class Meta:
+        db_table = "api_routes"
+
+    def __str__(self):
+        return f'{self.route}{self.name} {self.method}'
