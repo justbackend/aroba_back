@@ -33,6 +33,7 @@ COPY --chown=aroba:aroba . .
 # Add entrypoint.sh
 COPY entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh
+RUN cron -f &
 
 
 # Set entrypoint
