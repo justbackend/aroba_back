@@ -13,7 +13,6 @@ import os
 from datetime import timedelta
 from pathlib import Path
 
-import environ
 from dotenv import load_dotenv
 
 from core.jazzmin import *  # noqa
@@ -23,26 +22,22 @@ from ..cronjobs import CRON_TASKS  # noqa
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
 
 # READING ENV
-env = environ.Env()
-env.read_env(".env")
-
-# READING ENV
-load_dotenv(dotenv_path=BASE_DIR / ".env")
+load_dotenv(dotenv_path=BASE_DIR / ".env")  # .env faylni yuklash
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = env.str("SECRET_KEY")
+SECRET_KEY = os.getenv("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = env.bool("DEBUG")
+DEBUG = os.getenv("DEBUG") == "1"
 
 ALLOWED_HOSTS = ["*"]
 
 # the dump secrets
-DUMP_CHAT_ID = env.str("DUMP_CHAT_ID")
-DUMP_BOT_TOKEN = env.str("DUMP_BOT_TOKEN")
+DUMP_CHAT_ID = os.getenv("DUMP_CHAT_ID")
+DUMP_BOT_TOKEN = os.getenv("DUMP_BOT_TOKEN")
 
 # Application definition
 DJANGO_APPS = [
@@ -120,12 +115,12 @@ WSGI_APPLICATION = "core.wsgi.application"
 
 DATABASES = {
     "default": {
-        "ENGINE": env.str("DB_ENGINE"),
-        "NAME": env.str("DB_NAME"),
-        "USER": env.str("DB_USER"),
-        "PASSWORD": env.get_value("DB_PASSWORD"),
-        "HOST": env.str("DB_HOST"),
-        "PORT": env.str("DB_PORT"),
+        "ENGINE": os.getenv("DB_ENGINE"),
+        "NAME": os.getenv("DB_NAME"),
+        "USER": os.getenv("DB_USER"),
+        "PASSWORD": os.getenv("DB_PASSWORD"),
+        "HOST": os.getenv("DB_HOST"),
+        "PORT": os.getenv("DB_PORT"),
         "ATOMIC_REQUESTS": True,
     }
 }
@@ -178,7 +173,7 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 CACHES = {
     "default": {
         "BACKEND": "django_redis.cache.RedisCache",
-        "LOCATION": f"{env.str('REDIS_URL', 'redis://localhost:6379/0')}",
+        "LOCATION": f"{os.getenv('REDIS_URL', 'redis://localhost:6379/0')}",
         "OPTIONS": {
             "CLIENT_CLASS": "django_redis.client.DefaultClient",
         },
@@ -187,8 +182,8 @@ CACHES = {
 }
 
 # CELERY CONFIGURATION
-CELERY_BROKER_URL = env.str("CELERY_BROKER_URL", "redis://localhost:6379")
-CELERY_RESULT_BACKEND = env.str("CELERY_BROKER_URL", "redis://localhost:6379")
+CELERY_BROKER_URL = os.getenv("CELERY_BROKER_URL", "redis://localhost:6379")
+CELERY_RESULT_BACKEND = os.getenv("CELERY_BROKER_URL", "redis://localhost:6379")
 
 CELERY_TIMEZONE = "Asia/Tashkent"
 

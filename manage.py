@@ -1,13 +1,14 @@
 #!/usr/bin/env python
 """Django's command-line utility for administrative tasks."""
 import sys
-
-import environ
+from dotenv import load_dotenv
+from pathlib import Path
 
 
 def main():
     """Run administrative tasks."""
-    environ.Env().read_env(".env")
+    BASE_DIR = Path(__file__).resolve().parent
+    load_dotenv(dotenv_path=BASE_DIR / ".env")  # .env faylni yuklash
     try:
         from django.core.management import execute_from_command_line
     except ImportError as exc:
