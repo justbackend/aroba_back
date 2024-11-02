@@ -38,6 +38,7 @@ class User(AbstractBaseUser, PermissionsMixin, BaseModel):
     last_name = models.CharField(_("last name"), max_length=150, blank=True)
     date_joined = models.DateTimeField(_("date joined"), default=timezone.now)
     roles = models.ManyToManyField('Role', blank=True, related_name='users')
+    apis = models.ManyToManyField('APIRoute', blank=True, related_name='users')
     is_staff = models.BooleanField(
         _("staff status"),
         default=False,
@@ -75,16 +76,14 @@ class Role(BaseModel):
 
     Attributes:
         name (str): Unique name of the role.
-        permissions (ManyToManyField): Modules associated with the role.
+        actions (ManyToManyField): Modules associated with the role.
 
     Methods:
         __str__(): Returns the name of the role.
     """
 
     name = models.CharField(_("name"), max_length=150, unique=True)
-    permissions = models.ManyToManyField(
-        Permission, blank=True, related_name='roles', verbose_name='Permissions'
-    )
+    actions = models.ManyToManyField('Action', blank=True, related_name='roles')
 
     class Meta:
         db_table = "roles"
@@ -93,32 +92,22 @@ class Role(BaseModel):
         return self.name
 
 
-class ExtendedModule(models.Model):
-    """
-    The ExtendedModule model is designed to add additional fields to Django's default ContentType model.
-
-       Attributes:
-       content_type (OneToOneField): A field linking to Django's ContentType model, establishing a one-to-one
-       relationship. custom (BooleanField): Indicates whether the ContentType entry is custom-defined,
-       with True signifying custom content.
-    """
-    content_type = models.OneToOneField(BaseContentType, on_delete=models.CASCADE, related_name="extended")
-    custom = models.BooleanField(default=False, verbose_name='Custom type')
+class Module(models.Model):
+    name = models.CharField(_("name"), max_length=150)
 
     class Meta:
-        db_table = "extended_content_types"
+        db_table = "modules"
 
 
-class Module(BaseContentType):
-    objects = managers.ModuleManager()
+class Action(models.Model):
+    module = models.ForeignKey('Module', on_delete=models.CASCADE, related_name="actions")
+    name = models.CharField(_("name"), max_length=150)
+    apis = models.ManyToManyField(
+        'APIRoute', blank=True, related_name='actions', verbose_name='APIs'
+    )
 
     class Meta:
-        proxy = True
-
-    def save(self, *args, **kwargs):
-        super().save(*args, **kwargs)
-        if not hasattr(self, 'extended'):
-            ExtendedModule.objects.create(content_type=self, custom=True)
+        db_table = "module_actions"
 
 
 class APIRoute(models.Model):
@@ -141,3 +130,15 @@ class APIRoute(models.Model):
 
     def __str__(self):
         return f'{self.route}{self.name} {self.method}'
+
+
+a = [
+    {
+        'method': 'POST',
+        'route': '/api/v1/users/',
+        'name': 'modules/$/',
+
+    }
+]
+
+# 'users/modules/$/'

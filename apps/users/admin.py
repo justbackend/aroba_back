@@ -14,18 +14,19 @@ class UserAdmin(admin.ModelAdmin):
 
 @admin.register(models.Module)
 class ContentTypeAdmin(admin.ModelAdmin):
-    class PermissionsInline(admin.StackedInline):
-        model = models.Permission
+    class ActionsInline(admin.StackedInline):
+        model = models.Action
         extra = 1
 
-    class ExtendedModuleInline(admin.StackedInline):
-        model = models.ExtendedModule
-        extra = 1
-
-    list_display = ('id', 'app_label', 'model')
-    inlines = (ExtendedModuleInline, PermissionsInline)
+    list_display = ('id', 'name', )
+    inlines = (ActionsInline,)
 
 
 @admin.register(models.Permission)
 class PermissionAdmin(admin.ModelAdmin):
     list_display = ('id', 'codename', 'name',)
+
+
+@admin.register(models.APIRoute)
+class APIRouteAdmin(admin.ModelAdmin):
+    list_display = ('id', 'name', 'dynamic', 'method')
