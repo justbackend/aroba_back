@@ -12,3 +12,4 @@ apscheduler
 requests
 django_crontab
 python-dotenv
+pillow
