@@ -19,7 +19,7 @@ class ClientSerializer(serializers.ModelSerializer):
     unloading = serializers.PrimaryKeyRelatedField(
         write_only=True, queryset=common_models.Point.active_objects.all()
     )
-    amount = serializers.IntegerField(read_only=True, min_value=1)
+    amount = serializers.IntegerField(required=True, min_value=1, write_only=True)
     type = serializers.ChoiceField(choices=choices.ClientRouteTypes.choices)
 
     class Meta:
@@ -37,12 +37,12 @@ class ClientSerializer(serializers.ModelSerializer):
             'amount'
         )
 
-
     def create(self, validated_data):
-        loading = validated_data.pop('loading', )
-        unloading = validated_data.pop('unloading', )
-        amount = validated_data.pop('amount', )
-        _type = validated_data.pop('type', )
+        print(validated_data)
+        loading = validated_data.pop('loading')
+        unloading = validated_data.pop('unloading')
+        amount = validated_data.pop('amount')
+        _type = validated_data.pop('type')
         obj = models.Client(**validated_data)
 
         models.ClientRoute.objects.create(loading=loading, unloading=unloading, amount=amount, type=_type)
