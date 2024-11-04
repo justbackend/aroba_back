@@ -38,9 +38,8 @@ def cleared_users(sender, instance, **kwargs):
         clear_user_profile_data(users=(instance.id,))
 
 
-@receiver(pre_save, sender=models.Action)
+@receiver(pre_save, sender=models.APIRoute)
 def clear_user_profile_data(sender, instance, **kwargs):
-
     if instance.pk:
         users = models.User.objects.filter(actions__apis=instance)
         clear_users_perms(users)
