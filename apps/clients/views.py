@@ -2,7 +2,6 @@ from itertools import groupby
 from operator import itemgetter
 
 from django.db.models import Prefetch
-from django_filters import filters
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import viewsets, views
 from rest_framework.filters import SearchFilter
@@ -29,12 +28,12 @@ class ClientViewSet(viewsets.ModelViewSet):
             models.ClientRoute.objects
             .select_related('unloading', 'loading')
             .only('amount', 'type', 'loading__name', 'unloading__name', 'client_id')
-            .all()
         )
+
         return (
             models.Client.active_objects
             .prefetch_related(Prefetch('routes', queryset=routes_qs))
-            .all().distinct()
+            .all()
         )
 
     def get_object(self):
