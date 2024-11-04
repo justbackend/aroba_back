@@ -38,6 +38,8 @@ class APIRoutes(models.TextChoices):
     CLIENTS = '/api/v1/clients/', 'Clients'
     ORDERS = '/api/v1/orders/', 'Orders'
     AUTH = '/api/v1/auth/', 'Auth'
+    MANAGERS = '/api/v1/managers/', 'Managers'
+    DISPATCHERS = '/api/v1/dispatchers/', 'Dispatchers'
 
 
 class ClientRouteTypes(models.TextChoices):
