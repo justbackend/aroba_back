@@ -7,5 +7,8 @@ app_name = 'auth'
 urlpatterns = [
     path('login/', views.LoginView.as_view(), name='login'),
     path('profile/', views.ProfileView.as_view(), name='profile'),
+
+    # my permissions
+    path('my-perms/<int:user_id>/', views.MyPermissionsListAPI.as_view(), name='my-perms'),
 ]
 

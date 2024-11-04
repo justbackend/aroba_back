@@ -27,3 +27,9 @@ class ProfileView(views.APIView):
         if profile_data.get("photo"):
             profile_data["photo"] = request.build_absolute_uri(profile_data["photo"])
         return Response(profile_data)
+
+
+class MyPermissionsListAPI(views.APIView):
+
+    def get(self, request, user_id: int, *args, **kwargs):
+        return Response()
