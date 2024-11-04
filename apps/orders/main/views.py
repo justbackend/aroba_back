@@ -25,9 +25,12 @@ class CombinationCreateOrderRoutesListAPI(views.APIView):
 
     def get(self, request, client_id, *args, **kwargs):
         routes_list = (
-            clients_models.ClientRoute.objects.filter(client_id=client_id)
+            clients_models.ClientRoute.objects.filter(client_id=client_id,)
             .values('loading_id', 'loading__name', 'unloading_id', 'unloading__name')
         )
+
+        if _type := self.request.query_params.get('type', None):
+            routes_list = routes_list.filter(type=_type)
 
         routes_grouped = []
         for key, group in groupby(sorted(routes_list, key=itemgetter('loading_id')),
