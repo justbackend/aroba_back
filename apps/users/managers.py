@@ -36,8 +36,3 @@ class UserManager(DjangoUserManager):
     def get_queryset(self):
         return super().get_queryset().order_by('-id')
 
-
-class ModuleManager(DjangoContentTypeManager):
-
-    def get_queryset(self):
-        return super().get_queryset().filter(extended__isnull=False)

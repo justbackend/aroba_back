@@ -143,6 +143,9 @@ class Module(models.Model):
     class Meta:
         db_table = "modules"
 
+    def __str__(self):
+        return self.name
+
 
 class Action(models.Model):
     """
@@ -165,6 +168,9 @@ class Action(models.Model):
 
     class Meta:
         db_table = "module_actions"
+
+    def __str__(self):
+        return self.name
 
 
 class APIRoute(models.Model):
