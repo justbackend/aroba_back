@@ -1,7 +1,7 @@
 from rest_framework import serializers
 
 
-def create_serializer(fields: dict):
+def create_serializer(fields: dict) -> type(serializers.Serializer):
     field_mapping = {
         int: serializers.IntegerField,
         str: serializers.CharField,
