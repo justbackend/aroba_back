@@ -32,5 +32,4 @@ class MyPermissionsListAPI(views.APIView):
     authentication_classes = (PayloadAuthentication,)
 
     def get(self, request, *args, **kwargs):
-        data = utils.get_apis_perm(request.auth['user_id'])
-        return Response(data)
+        return Response(utils.get_user_perms(request.auth['user_id']))
