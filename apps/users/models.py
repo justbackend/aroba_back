@@ -6,19 +6,16 @@ __all__ = (
 )
 
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin, Permission, ContentType as BaseContentType
+from django.core.cache import cache
 from django.db import models
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 from rest_framework_simplejwt.tokens import RefreshToken
 
 from apps.common.models import BaseModel
-from utils.utility import clear_users_perms, clear_user_profile_data
-from . import managers
 from utils import choices
-from django.db.models.signals import m2m_changed, pre_save
-from django.dispatch import receiver
-import utils
-from django.core.cache import cache
+from utils.validators import PhoneValidator
+from . import managers
 
 
 class User(AbstractBaseUser, PermissionsMixin, BaseModel):
@@ -63,7 +60,7 @@ class User(AbstractBaseUser, PermissionsMixin, BaseModel):
         _("phone number"),
         max_length=15,
         blank=True,
-        validators=[utils.PhoneValidator()],
+        validators=[PhoneValidator()],
         null=True,
     )
 
@@ -162,46 +159,3 @@ class APIRoute(models.Model):
 
     def __str__(self):
         return f'{self.route}{self.name} {self.method}'
-
-
-# Signals to clear cache api routes
-
-@receiver(m2m_changed, sender=Role.actions.through)
-def role_action_change(sender, instance, **kwargs):
-    users = instance.users.all()
-    clear_users_perms(users)
-
-
-@receiver(m2m_changed, sender=Action.apis.through)
-def action_apis_change(sender, instance, **kwargs):
-    users = instance.users.all()
-    clear_users_perms(users)
-
-
-@receiver(m2m_changed, sender=User.actions.through)
-def user_action_change(sender, instance, **kwargs):
-    clear_users_perms((instance,))
-
-
-@receiver(m2m_changed, sender=User.roles.through)
-def user_action_change(sender, instance, action, **kwargs):
-    if action == 'post_add' or action == 'post_remove' or action == 'post_clear':
-        related_actions = Action.objects.filter(roles__in=instance.roles.all()).distinct()
-        instance.actions.set(related_actions)
-
-        clear_users_perms((instance,))
-
-
-@receiver(pre_save, sender=User)
-def cleared_users(sender, instance, **kwargs):
-    if instance.pk:
-        clear_user_profile_data(users=(instance.id,))
-
-
-@receiver(pre_save, sender=Action)
-def clear_user_profile_data(sender, instance, **kwargs):
-
-    if instance.pk:
-        users = User.objects.filter(actions__apis=instance)
-        clear_users_perms(users)
-
