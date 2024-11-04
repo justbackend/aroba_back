@@ -20,3 +20,7 @@ class PointLonLatSerializer(PointNameSerializer):
 class ClientNameSerializer(serializers.Serializer):
     id = serializers.IntegerField(read_only=True)
     name = serializers.CharField(read_only=True)
+
+
+
+
