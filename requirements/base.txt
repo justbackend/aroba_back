@@ -2,7 +2,7 @@ django
 psycopg2-binary
 python-environ
 django-cors-headers
-django-jazzmin
+django-unfold
 djangorestframework
 drf-spectacular
 django-filter
