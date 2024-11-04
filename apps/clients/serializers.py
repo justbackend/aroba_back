@@ -1,8 +1,7 @@
 from rest_framework import serializers
-from . import models
-from apps.common import models as common_models
+
 import utils
-from utils import choices
+from . import models
 
 
 class RouteListSerializer(serializers.Serializer):
