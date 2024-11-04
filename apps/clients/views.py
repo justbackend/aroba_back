@@ -16,21 +16,26 @@ class ClientViewSet(viewsets.ModelViewSet):
     filterset_fields = ('routes__type',)
     search_fields = ('name', 'phone', 'accounting_phone')
 
+    routes_qs = (
+        models.ClientRoute.objects
+        .select_related('unloading', 'loading')
+        .only('amount', 'type', 'loading__name', 'unloading__name', 'client_id')
+    )
+
     def get_queryset(self):
-        routes_qs = (
-            models.ClientRoute.objects
-            .select_related('unloading', 'loading')
-            .only('amount', 'type', 'loading__name', 'unloading__name', 'client_id')
-        )
 
         return (
             models.Client.active_objects
-            .prefetch_related(Prefetch('routes', queryset=routes_qs))
+            .prefetch_related(Prefetch('routes', queryset=self.routes_qs))
             .all()
         )
 
     def get_object(self):
-        return models.Client.objects.filter(pk=self.kwargs['pk']).first()
+        return (
+            models.Client.objects
+            .prefetch_related(Prefetch('routes', queryset=self.routes_qs))
+            .filter(pk=self.kwargs['pk']).first()
+        )
 
     def perform_destroy(self, instance):
         instance.deleted = True
