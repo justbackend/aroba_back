@@ -11,6 +11,6 @@ urlpatterns = [
     path('<int:pk>/', clients_udd, name='client_udd'),
 
     # for order create client routes
-    path('create-order-routes/<int:client_id>/', views.CombinationCreateOrderRoutesListAPI.as_view(), name='create_order_routes'),
+    path('create-order-routes/<int:client_id>/', views.CombinationCreateOrderRoutesListAPI.as_view(), name='c-routes'),
 ]
 

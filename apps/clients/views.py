@@ -1,6 +1,7 @@
 from itertools import groupby
 from operator import itemgetter
 
+from django.db.models import Prefetch
 from rest_framework import viewsets, views
 from rest_framework.response import Response
 
@@ -10,8 +11,28 @@ from . import models, serializers
 # @utils.permission_required_cls(perm='test.test_view', methods=('list',))
 class ClientViewSet(viewsets.ModelViewSet):
     serializer_class = serializers.ClientSerializer
-    queryset = models.Client.active_objects.all()
-    pagination_class = None
+
+    SERIALIZERS = {
+        'list': serializers.ClientListSerializer,
+    }
+
+    def get_serializer_class(self):
+        return self.SERIALIZERS.get(self.action, self.serializer_class)
+
+    def get_queryset(self):
+        routes_qs = (
+            models.ClientRoute.objects
+            .select_related('unloading', 'loading')
+            .only('amount', 'type', 'loading__name', 'unloading__name', 'client_id')
+            .all()
+        )
+        return (
+            models.Client.active_objects
+            .prefetch_related(Prefetch('routes', queryset=routes_qs)).all()
+        )
+
+    def get_object(self):
+        return models.Client.objects.get(pk=self.kwargs['pk'])
 
     def perform_destroy(self, instance):
         instance.deleted = True

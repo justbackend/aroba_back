@@ -50,7 +50,7 @@ class ClientRoute(BaseModel):
         related_name="client_routes_unloading",
     )
     client = models.ForeignKey(
-        Client,
+        'Client',
         on_delete=models.CASCADE,
         verbose_name="Client",
         related_name="routes",
