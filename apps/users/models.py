@@ -12,10 +12,10 @@ from django.utils.translation import gettext_lazy as _
 from rest_framework_simplejwt.tokens import RefreshToken
 
 from apps.common.models import BaseModel
-from utils.utility import clear_users_perms
+from utils.utility import clear_users_perms, clear_user_profile_data
 from . import managers
 from utils import choices
-from django.db.models.signals import m2m_changed
+from django.db.models.signals import m2m_changed, pre_save
 from django.dispatch import receiver
 import utils
 from django.core.cache import cache
@@ -195,3 +195,9 @@ def user_action_change(sender, instance, action, **kwargs):
         instance.actions.set(related_actions)
 
         clear_users_perms((instance,))
+
+
+@receiver(pre_save, sender=User)
+def cleared_users(sender, instance, **kwargs):
+    if instance.pk:
+        clear_user_profile_data(users=(instance.id,))

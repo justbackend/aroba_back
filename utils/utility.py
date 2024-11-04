@@ -27,3 +27,12 @@ def clear_users_perms(users):
             cache.delete(f"apis_perm_{user}")
         else:
             cache.delete(f"apis_perm_{user.id}")
+
+
+def clear_user_profile_data(users):
+    for user in users:
+        if type(user) is int:
+            cache.delete(f"user_profile_{user}")
+        else:
+            cache.delete(f"user_profile_{user.id}")
+
