@@ -18,6 +18,7 @@ from utils import choices
 from django.db.models.signals import m2m_changed
 from django.dispatch import receiver
 import utils
+from django.core.cache import cache
 
 
 class User(AbstractBaseUser, PermissionsMixin, BaseModel):
@@ -74,6 +75,21 @@ class User(AbstractBaseUser, PermissionsMixin, BaseModel):
         verbose_name = _("user")
         verbose_name_plural = _("users")
         db_table = "users"
+
+    @classmethod
+    def profile_data(cls, user_id):
+        data = cache.get(f'user_profile_{user_id}')
+        if data is None:
+            user = cls.objects.filter(pk=user_id).first()
+            data = dict(
+                username=user.username,
+                first_name=user.first_name,
+                last_name=user.last_name,
+                photo=str(user.photo),
+                phone=user.phone,
+            )
+            cache.set(f'user_profile_{user_id}', data)
+        return data
 
     def __str__(self):
         return str(self.username)
