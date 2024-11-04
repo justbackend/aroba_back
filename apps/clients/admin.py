@@ -5,7 +5,7 @@ from . import models
 
 @admin.register(models.Client)
 class ClientAdmin(u_admin.ModelAdmin):
-    class ClientRouteInline(admin.StackedInline):
+    class ClientRouteInline(u_admin.StackedInline):
         model = models.ClientRoute
         extra = 1
 
