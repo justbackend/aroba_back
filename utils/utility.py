@@ -24,7 +24,6 @@ def send_me(message):
 
 
 def clear_users_perms(users):
-    print(users)
     for user in users:
         if type(user) is int:
             cache.delete(f"apis_perm_{user}")
