@@ -23,18 +23,18 @@ class RolePermission(permissions.BasePermission):
         user = request.user
 
         if user and user.is_authenticated:
-            api_list, api_route_len = self.get_filtered_perms_and_route(request)
+            perms, api_route_len = self.get_filtered_perms_and_route(request)
             path = request.path[api_route_len:]
 
-            for api_info in api_list:
+            for perm in perms:
 
-                if api_info['dynamic']:
-                    pattern = f"^{api_info['name'].replace('$', '[^/]+')}$"
+                if perm['dynamic']:
+                    pattern = f"^{perm['name'].replace('$', '[^/]+')}$"
                     if re.match(pattern, path):
                         return True
                 else:
-                    api_info['name'] = api_info['name'] or ''
-                    if api_info['name'] == path:
+                    perm['name'] = perm['name'] or ''
+                    if perm['name'] == path:
                         return True
 
         return False

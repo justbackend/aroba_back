@@ -196,3 +196,12 @@ def user_action_change(sender, instance, action, **kwargs):
 def cleared_users(sender, instance, **kwargs):
     if instance.pk:
         clear_user_profile_data(users=(instance.id,))
+
+
+@receiver(pre_save, sender=Action)
+def clear_user_profile_data(sender, instance, **kwargs):
+
+    if instance.pk:
+        users = User.objects.filter(actions__apis=instance)
+        clear_users_perms(users)
+
