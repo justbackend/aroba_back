@@ -15,7 +15,6 @@ from pathlib import Path
 
 from dotenv import load_dotenv
 
-from core.jazzmin import *  # noqa
 from ..cronjobs import CRON_TASKS  # noqa
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
