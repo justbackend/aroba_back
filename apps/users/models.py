@@ -30,6 +30,8 @@ class User(AbstractBaseUser, PermissionsMixin, BaseModel):
         roles (ManyToManyField): Roles assigned to the user for permissions.
         is_staff (bool): Indicates if the user can access the admin site.
         is_active (bool): Indicates if the user is active or disabled.
+        phone (PhoneValidator): Phone validator.
+        photo (ImageValidator): Image validator.
 
     Methods:
         tokens(): Generates JWT tokens for the user.
@@ -110,7 +112,7 @@ class Role(BaseModel):
 
     Attributes:
         name (str): Unique name of the role.
-        actions (ManyToManyField): Modules associated with the role.
+        actions (ManyToManyField): Actions associated with the role.
 
     Methods:
         __str__(): Returns the name of the role.
@@ -127,6 +129,15 @@ class Role(BaseModel):
 
 
 class Module(models.Model):
+    """
+    Model representing a module within the application.
+
+    Attributes:
+        name (str): Name of the module, limited to 150 characters.
+
+    Meta:
+        db_table (str): Specifies the database table name as "modules".
+    """
     name = models.CharField(_("name"), max_length=150, )
 
     class Meta:
@@ -134,6 +145,18 @@ class Module(models.Model):
 
 
 class Action(models.Model):
+    """
+    Model representing an action within a specific module.
+
+    Attributes:
+        module (ForeignKey): The module this action belongs to. If the module is deleted, related actions are also deleted.
+        name (str): Name of the action, limited to 150 characters.
+        apis (ManyToManyField): The API routes associated with this action.
+
+    Meta:
+        db_table (str): Specifies the database table name as "module_actions".
+    """
+
     module = models.ForeignKey('Module', on_delete=models.CASCADE, related_name="actions")
     name = models.CharField(_("name"), max_length=150)
     apis = models.ManyToManyField(
@@ -145,6 +168,22 @@ class Action(models.Model):
 
 
 class APIRoute(models.Model):
+    """
+    Model representing an API route within the application.
+
+    Attributes:
+        route (str): The API endpoint path, with choices defined by APIRoutes.
+        name (str): Name of the API route, limited to 100 characters.
+        dynamic (bool): Indicates if the route is dynamic. Defaults to False.
+        method (str): HTTP method for the route (e.g., GET, POST), with choices defined by APIMethods.
+
+    Methods:
+        __str__(): Returns a string representation of the API route, formatted as "{route}{name} {method}".
+
+    Meta:
+        db_table (str): Specifies the database table name as "api_routes".
+    """
+
     route = models.CharField(_("route"), max_length=50, choices=APIRoutes.choices)
     name = models.CharField(_("name"), max_length=100, )
     dynamic = models.BooleanField(_("dynamic"), default=False)
