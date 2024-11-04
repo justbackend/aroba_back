@@ -1,13 +1,16 @@
 from itertools import groupby
 from operator import itemgetter
 
+from django.urls import get_resolver
 from rest_framework import generics, views
+from rest_framework import renderers
 from rest_framework.response import Response
+from rest_framework.schemas import get_schema_view
 
 import utils
+from apps.clients import models as clients_models
 from utils.permissions import *
 from . import serializers
-from apps.clients import models as clients_models
 
 
 class CreateOrderView(generics.CreateAPIView):
@@ -24,8 +27,9 @@ class ClientsListView(generics.ListAPIView):
 class CombinationCreateOrderRoutesListAPI(views.APIView):
 
     def get(self, request, client_id, *args, **kwargs):
+
         routes_list = (
-            clients_models.ClientRoute.objects.filter(client_id=client_id,)
+            clients_models.ClientRoute.objects.filter(client_id=client_id, )
             .values('loading_id', 'loading__name', 'unloading_id', 'unloading__name')
         )
 

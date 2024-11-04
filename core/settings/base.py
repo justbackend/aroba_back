@@ -41,7 +41,7 @@ DUMP_BOT_TOKEN = os.getenv("DUMP_BOT_TOKEN")
 
 # Application definition
 DJANGO_APPS = [
-    "jazzmin",
+    "unfold",
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",

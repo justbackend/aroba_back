@@ -1,9 +1,10 @@
 from django.contrib import admin
+from unfold import admin as u_admin
 from . import models
 
 
 @admin.register(models.Client)
-class ClientAdmin(admin.ModelAdmin):
+class ClientAdmin(u_admin.ModelAdmin):
     class ClientRouteInline(admin.StackedInline):
         model = models.ClientRoute
         extra = 1
@@ -14,5 +15,5 @@ class ClientAdmin(admin.ModelAdmin):
 
 
 @admin.register(models.ClientRoute)
-class ClientRouteAdmin(admin.ModelAdmin):
+class ClientRouteAdmin(u_admin.ModelAdmin):
     list_display = ('id', 'amount', 'loading', 'unloading', 'client')

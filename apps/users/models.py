@@ -195,6 +195,11 @@ class APIRoute(models.Model):
 
     class Meta:
         db_table = "api_routes"
+        constraints = [
+            models.UniqueConstraint(
+                fields=['route', 'name', 'dynamic', 'method'], name='api_routes_unique'
+            )
+        ]
 
     def __str__(self):
         return f'{self.route}{self.name} {self.method}'
