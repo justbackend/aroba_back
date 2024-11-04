@@ -21,7 +21,6 @@ class CreateOrderSerializer(serializers.Serializer):
         return attrs
 
     def create(self, validated_data):
-
         car_count = validated_data.pop('car_count')
         self.codes: list = models.Order.generate_codes(car_count)
         order_objs = list(map(lambda code: models.Order(code=code, **validated_data), self.codes))
@@ -37,3 +36,8 @@ class CreateOrderSerializer(serializers.Serializer):
 
     def to_representation(self, instance):
         return dict(codes=self.codes)
+
+
+class OrderClientSerializer(serializers.Serializer):
+    id = serializers.IntegerField()
+    name = serializers.CharField()
