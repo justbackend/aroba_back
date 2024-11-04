@@ -2,6 +2,7 @@ import re
 from django.core.cache import cache
 from rest_framework import permissions
 from .choices import APIRoutes
+from apps.users.utils import get_user_perms
 
 
 class RolePermission(permissions.BasePermission):
@@ -28,7 +29,7 @@ class RolePermission(permissions.BasePermission):
 
     @classmethod
     def get_filtered_perms_and_route(cls, request):
-        data = cache.get(f'apis_perm_{request.user.id}')
+        data = get_user_perms(request.user.id)
         route = cls.get_route(request)
         return tuple(filter(lambda perm: perm['method'] == request.method and perm['route'] == route, data)), len(route)
 
