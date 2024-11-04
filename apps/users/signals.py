@@ -1,7 +1,7 @@
 from django.db.models.signals import m2m_changed, pre_save
 from django.dispatch import receiver
 from  . import models
-from utils.utility import clear_users_perms
+from utils.utility import clear_users_perms, clear_user_profile_data
 
 
 # Signals to clear cache api routes
@@ -39,7 +39,7 @@ def cleared_users(sender, instance, **kwargs):
 
 
 @receiver(pre_save, sender=models.APIRoute)
-def clear_user_profile_data(sender, instance, **kwargs):
+def api_route_signals(sender, instance, **kwargs):
     if instance.pk:
         users = models.User.objects.filter(actions__apis=instance)
         clear_users_perms(users)
