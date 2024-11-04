@@ -76,7 +76,7 @@ class JWTAuthentication(jwt_authentication):
                 AuthUser.objects
                 .filter(id=user_id)
                 .annotate(
-                    api_list=ArrayAgg(
+                    perms=ArrayAgg(
                         Func(
                             Value('name'), 'actions__apis__name',
                             Value('dynamic'), 'actions__apis__dynamic',
@@ -91,8 +91,8 @@ class JWTAuthentication(jwt_authentication):
             )
 
             if user:
-                cache.set(f'apis_perm_{user_id}', user.api_list)
-                delattr(user, 'api_list')
+                cache.set(f'apis_perm_{user_id}', user.perms)
+                delattr(user, 'perms')
                 return user
 
 
