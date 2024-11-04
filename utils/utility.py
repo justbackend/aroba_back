@@ -1,8 +1,6 @@
-from django.http import Http404
 import requests
 from django.core.cache import cache
-
-from apps.users import models
+from django.http import Http404
 
 
 def get_object(model, *args, **kwargs):
