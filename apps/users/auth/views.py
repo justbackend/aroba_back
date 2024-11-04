@@ -1,8 +1,7 @@
 from rest_framework import generics, status, views
 from rest_framework.response import Response
 
-from utils.customs.authentication import PayloadAuthentication, JWTAuthentication
-from utils.permissions import RolePermission
+from utils.customs.authentication import PayloadAuthentication
 from . import serializers
 from .. import models, utils
 
