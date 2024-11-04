@@ -30,6 +30,7 @@ class ProfileView(views.APIView):
 
 class MyPermissionsListAPI(views.APIView):
     authentication_classes = (PayloadAuthentication,)
+    permission_classes = ()
 
     def get(self, request, *args, **kwargs):
         return Response(utils.get_user_perms(request.auth['user_id']))
