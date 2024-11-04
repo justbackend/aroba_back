@@ -7,4 +7,4 @@ class UsersConfig(AppConfig):
 
     def ready(self):
         from . import signals
-        from utils.customs.schemas import JWTAuthenticationScheme
+        from utils.customs.schemas import JWTAuthenticationScheme, PayloadAuthenticationScheme

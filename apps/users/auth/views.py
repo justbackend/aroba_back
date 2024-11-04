@@ -1,10 +1,9 @@
 from rest_framework import generics, status, views
 from rest_framework.response import Response
 
-from utils.permissions import RolePermission
-from utils.customs.authentication import PayloadAuthentication, JWTAuthentication
-from .. import models
+from utils.customs.authentication import PayloadAuthentication
 from . import serializers
+from .. import models, utils
 
 
 class LoginView(generics.GenericAPIView):
@@ -19,8 +18,8 @@ class LoginView(generics.GenericAPIView):
 
 
 class ProfileView(views.APIView):
-    authentication_classes = (JWTAuthentication,)
-    permission_classes = (RolePermission,)
+    authentication_classes = (PayloadAuthentication,)
+    permission_classes = ()
 
     def get(self, request):
         profile_data = models.User.profile_data(request.auth['user_id'])
@@ -30,6 +29,8 @@ class ProfileView(views.APIView):
 
 
 class MyPermissionsListAPI(views.APIView):
+    authentication_classes = (PayloadAuthentication,)
 
-    def get(self, request, user_id: int, *args, **kwargs):
-        return Response()
+    def get(self, request, *args, **kwargs):
+        data = utils.get_apis_perm(request.auth['user_id'])
+        return Response({})
