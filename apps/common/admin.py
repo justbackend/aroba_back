@@ -1,10 +1,11 @@
 from django.contrib import admin
+from unfold import admin as u_admin
 from . import models
 
 
 @admin.register(models.Region)
-class RegionAdmin(admin.ModelAdmin):
-    class PointInline(admin.StackedInline):
+class RegionAdmin(u_admin.ModelAdmin):
+    class PointInline(u_admin.StackedInline):
         model = models.Point
         extra = 1
 
@@ -13,5 +14,5 @@ class RegionAdmin(admin.ModelAdmin):
 
 
 @admin.register(models.Point)
-class PointAdmin(admin.ModelAdmin):
+class PointAdmin(u_admin.ModelAdmin):
     list_display = ('id', 'name', 'region', 'deleted')

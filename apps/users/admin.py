@@ -1,36 +1,38 @@
 from django.contrib import admin
+from unfold import admin as u_admin
 from . import models
 
 
 @admin.register(models.Role)
-class RoleAdmin(admin.ModelAdmin):
+class RoleAdmin(u_admin.ModelAdmin):
     list_display = ('id', 'name')
 
 
 @admin.register(models.User)
-class UserAdmin(admin.ModelAdmin):
+class UserAdmin(u_admin.ModelAdmin):
     list_display = ('id', 'username',)
 
 
 @admin.register(models.Action)
-class ActionAdmin(admin.ModelAdmin):
+class ActionAdmin(u_admin.ModelAdmin):
     list_display = ('id', 'module', 'name',)
 
+
 @admin.register(models.Module)
-class ContentTypeAdmin(admin.ModelAdmin):
+class ContentTypeAdmin(u_admin.ModelAdmin):
     class ActionsInline(admin.StackedInline):
         model = models.Action
         extra = 1
 
-    list_display = ('id', 'name', )
+    list_display = ('id', 'name',)
     inlines = (ActionsInline,)
 
 
 @admin.register(models.Permission)
-class PermissionAdmin(admin.ModelAdmin):
+class PermissionAdmin(u_admin.ModelAdmin):
     list_display = ('id', 'codename', 'name',)
 
 
 @admin.register(models.APIRoute)
-class APIRouteAdmin(admin.ModelAdmin):
+class APIRouteAdmin(u_admin.ModelAdmin):
     list_display = ('id', 'name', 'dynamic', 'method')

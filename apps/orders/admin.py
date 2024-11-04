@@ -1,14 +1,15 @@
 from django.contrib import admin
+from unfold import admin as u_admin
 from . import models
 
 
 @admin.register(models.Order)
-class OrderAdmin(admin.ModelAdmin):
-    class OrderPaymentInline(admin.StackedInline):
+class OrderAdmin(u_admin.ModelAdmin):
+    class OrderPaymentInline(u_admin.StackedInline):
         model = models.OrderPayment
         extra = 1
 
-    class OrderLogInline(admin.StackedInline):
+    class OrderLogInline(u_admin.StackedInline):
         model = models.OrderLog
         extra = 1
 
@@ -19,7 +20,7 @@ class OrderAdmin(admin.ModelAdmin):
 
 
 @admin.register(models.OrderPayment)
-class OrderPaymentAdmin(admin.ModelAdmin):
+class OrderPaymentAdmin(u_admin.ModelAdmin):
     list_display = ('id', 'amount', 'type', 'comment', 'order')
     list_display_links = ('id', 'type', 'amount')
     list_filter = ('type', 'order')
