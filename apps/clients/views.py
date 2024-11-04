@@ -14,6 +14,7 @@ from . import models, serializers
 class ClientViewSet(viewsets.ModelViewSet):
     serializer_class = serializers.ClientSerializer
     filter_backends = (DjangoFilterBackend, SearchFilter,)
+    filterset_fields = ('routes__type',)
     search_fields = ('name', 'phone', 'accounting_phone')
 
     SERIALIZERS = {
@@ -32,7 +33,8 @@ class ClientViewSet(viewsets.ModelViewSet):
         )
         return (
             models.Client.active_objects
-            .prefetch_related(Prefetch('routes', queryset=routes_qs)).all()
+            .prefetch_related(Prefetch('routes', queryset=routes_qs))
+            .all().distinct()
         )
 
     def get_object(self):
