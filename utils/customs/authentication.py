@@ -1,10 +1,11 @@
 from django.contrib.postgres.aggregates import ArrayAgg
 from django.db.models import Func, Value, Q, IntegerField
 from django.utils.translation import gettext_lazy as _
+from rest_framework.authentication import BaseAuthentication
 from rest_framework_simplejwt.authentication import JWTAuthentication as jwt_authentication
 from rest_framework_simplejwt.exceptions import InvalidToken, AuthenticationFailed
 from rest_framework_simplejwt.settings import api_settings
-from rest_framework_simplejwt.tokens import Token
+from rest_framework_simplejwt.tokens import Token, AccessToken
 from rest_framework_simplejwt.utils import get_md5_hash_password
 from typing import Union
 
@@ -17,6 +18,7 @@ class JWTAuthentication(jwt_authentication):
         An authentication plugin that authenticates requests through a JSON web
         token provided in a request header.
     """
+
     def __init__(self):
         self.request = None
 
@@ -81,3 +83,30 @@ class JWTAuthentication(jwt_authentication):
             )
             .first()
         )
+
+
+class PayloadAuthentication(BaseAuthentication):
+    def authenticate(self, request):
+        auth_header = request.META.get('HTTP_AUTHORIZATION')
+        if not auth_header:
+            return None
+
+        try:
+            auth_scheme, token = auth_header.split(' ')
+        except ValueError:
+            raise AuthenticationFailed(_('Invalid Authorization header format. Expected "Bearer <token>"'))
+
+        if auth_scheme.lower() != 'bearer':
+            raise AuthenticationFailed(_('Authorization scheme must be Bearer'))
+
+        try:
+            access_token = AccessToken(token)
+            payload = access_token.payload
+        except Exception as e:
+            raise AuthenticationFailed(_('Invalid or expired token'))
+
+        return None, payload
+
+    def authenticate_header(self, request):
+        return 'Bearer realm="api"'
+
