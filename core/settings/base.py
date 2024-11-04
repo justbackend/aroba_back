@@ -16,6 +16,7 @@ from pathlib import Path
 from dotenv import load_dotenv
 
 from ..cronjobs import CRON_TASKS  # noqa
+from ..unfold import * # noqa
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
@@ -40,8 +41,14 @@ DUMP_BOT_TOKEN = os.getenv("DUMP_BOT_TOKEN")
 
 # Application definition
 DJANGO_APPS = [
-    "unfold",
-    "django.contrib.admin",
+    "unfold",  # before django.contrib.admin
+    "unfold.contrib.filters",  # optional, if special filters are needed
+    "unfold.contrib.forms",  # optional, if special form elements are needed
+    "unfold.contrib.inlines",  # optional, if special inlines are needed
+    "unfold.contrib.import_export",  # optional, if django-import-export package is used
+    "unfold.contrib.guardian",  # optional, if django-guardian package is used
+    "unfold.contrib.simple_history",  # optional, if django-simple-history package is used
+    "django.contrib.admin",  # required
     "django.contrib.auth",
     "django.contrib.contenttypes",
     "django.contrib.sessions",

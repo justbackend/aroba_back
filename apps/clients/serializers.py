@@ -23,6 +23,7 @@ class ClientSerializer(serializers.ModelSerializer):
             'requisite',
             'requisite_file',
             'accounting_phone',
+            'routes',
         )
 
     # def create(self, validated_data):
@@ -39,22 +40,6 @@ class ClientSerializer(serializers.ModelSerializer):
     #     )
     #
     #     return obj
-
-
-class ClientListSerializer(serializers.ModelSerializer):
-    routes = RouteListSerializer(many=True)
-
-    class Meta:
-        model = models.Client
-        fields = (
-            'id',
-            'name',
-            'phone',
-            'accounting_phone',
-            'requisite_file',
-            'requisite',
-            'routes'
-        )
 
 
 class ClientRouteSerializer(serializers.ModelSerializer):
