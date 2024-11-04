@@ -148,11 +148,6 @@ class Action(models.Model):
 
 
 class APIRoute(models.Model):
-    API_DYNAMIC_CHOICES = (
-        ('1', 'Yes'),
-        ('0', 'No'),
-    )
-
     route = models.CharField(_("route"), max_length=50, choices=choices.APIRoutes.choices)
     name = models.CharField(_("name"), max_length=100, )
     dynamic = models.BooleanField(_("dynamic"), default=False)

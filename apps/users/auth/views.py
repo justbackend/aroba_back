@@ -1,6 +1,6 @@
 from rest_framework import generics, status, views
 from rest_framework.response import Response
-from utils.customs.authentication import PayloadAuthentication
+from utils.customs.authentication import PayloadAuthentication, JWTAuthentication
 from .. import models
 from . import serializers
 
@@ -17,7 +17,7 @@ class LoginView(generics.GenericAPIView):
 
 
 class ProfileView(views.APIView):
-    authentication_classes = (PayloadAuthentication,)
+    authentication_classes = (JWTAuthentication,)
     permission_classes = ()
 
     def get(self, request):

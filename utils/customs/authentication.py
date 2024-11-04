@@ -1,5 +1,6 @@
 from django.contrib.postgres.aggregates import ArrayAgg
-from django.db.models import Func, Value, Q, IntegerField
+from django.core.cache import cache
+from django.db.models import Func, Value, Q, IntegerField, TextField
 from django.utils.translation import gettext_lazy as _
 from rest_framework.authentication import BaseAuthentication
 from rest_framework_simplejwt.authentication import JWTAuthentication as jwt_authentication
@@ -43,7 +44,7 @@ class JWTAuthentication(jwt_authentication):
         except KeyError:
             raise InvalidToken(_("Token contained no recognizable user identification"))
 
-        user = self.user_query(user_id, self.route)
+        user = self.user_query(user_id)
 
         if not user:
             raise AuthenticationFailed(_("User not found"), code="user_not_found")
@@ -64,29 +65,38 @@ class JWTAuthentication(jwt_authentication):
     def user_query(
             self,
             user_id: int,
-            route: str
     ) -> Union['AuthUser', None]:
 
-        return (
-            AuthUser.objects
-            .filter(id=user_id)
-            .annotate(
-                api_list=ArrayAgg(
-                    Func(
-                        Value('name'), 'roles__modules__apis__name',
-                        Value('dynamic'), 'roles__modules__apis__dynamic',
-                        function='JSON_BUILD_OBJECT',
+        perms = cache.get(f'apis_perm_{user_id}')
+        if perms:
+            return AuthUser.objects.filter(id=user_id).first()
+
+        elif perms is None:
+            user = (
+                AuthUser.objects
+                .filter(id=user_id)
+                .annotate(
+                    api_list=ArrayAgg(
+                        Func(
+                            Value('name'), 'actions__apis__name',
+                            Value('dynamic'), 'actions__apis__dynamic',
+                            Value('method'), 'actions__apis__method',
+                            Value('route'), 'actions__apis__route',
+                            function='JSON_BUILD_OBJECT',
+                            output_field=TextField()
+                        ),
                     ),
-                    filter=Q(roles__modules__apis__method=self.request.method, roles__modules__apis__route=route)
-                ),
-                api_route_len=Value(len(route), output_field=IntegerField())
+                )
+                .first()
             )
-            .first()
-        )
+
+            if user:
+                cache.set(f'apis_perm_{user_id}', user.api_list)
+                delattr(user, 'api_list')
+                return user
 
 
 class PayloadAuthentication(BaseAuthentication):
-
     """
     An authentication plugin that authenticates requests through a JSON web
     """
@@ -114,4 +124,3 @@ class PayloadAuthentication(BaseAuthentication):
 
     def authenticate_header(self, request):
         return 'Bearer realm="api"'
-
