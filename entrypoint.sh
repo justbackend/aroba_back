@@ -3,6 +3,7 @@ set -e
 
 # Django migrations
 python manage.py migrate --noinput
+python manage.py collectstatic --noinput
 
 # Crontab qo'shish
 python manage.py crontab add
