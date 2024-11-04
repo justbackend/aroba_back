@@ -13,14 +13,6 @@ class RouteListSerializer(serializers.Serializer):
 
 
 class ClientSerializer(serializers.ModelSerializer):
-    loading = serializers.PrimaryKeyRelatedField(
-        write_only=True, queryset=common_models.Point.active_objects.all()
-    )
-    unloading = serializers.PrimaryKeyRelatedField(
-        write_only=True, queryset=common_models.Point.active_objects.all()
-    )
-    amount = serializers.IntegerField(required=True, min_value=1, write_only=True)
-    type = serializers.ChoiceField(choices=choices.ClientRouteTypes.choices, write_only=True)
 
     class Meta:
         model = models.Client
@@ -31,26 +23,22 @@ class ClientSerializer(serializers.ModelSerializer):
             'requisite',
             'requisite_file',
             'accounting_phone',
-            'loading',
-            'unloading',
-            'type',
-            'amount'
         )
 
-    def create(self, validated_data):
-        loading = validated_data.pop('loading')
-        unloading = validated_data.pop('unloading')
-        amount = validated_data.pop('amount')
-        _type = validated_data.pop('type')
-
-        obj = models.Client.objects.create(**validated_data)
-
-        models.ClientRoute.objects.create(
-            loading=loading, unloading=unloading,
-            amount=amount, type=_type, client=obj
-        )
-
-        return obj
+    # def create(self, validated_data):
+    #     loading = validated_data.pop('loading')
+    #     unloading = validated_data.pop('unloading')
+    #     amount = validated_data.pop('amount')
+    #     _type = validated_data.pop('type')
+    #
+    #     obj = models.Client.objects.create(**validated_data)
+    #
+    #     models.ClientRoute.objects.create(
+    #         loading=loading, unloading=unloading,
+    #         amount=amount, type=_type, client=obj
+    #     )
+    #
+    #     return obj
 
 
 class ClientListSerializer(serializers.ModelSerializer):
