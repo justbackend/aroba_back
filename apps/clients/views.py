@@ -8,7 +8,6 @@ from rest_framework.response import Response
 from . import models, serializers
 
 
-# @utils.permission_required_cls(perm='test.test_view', methods=('list',))
 class ClientViewSet(viewsets.ModelViewSet):
     serializer_class = serializers.ClientSerializer
 
