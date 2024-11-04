@@ -3,11 +3,12 @@ __all__ = (
     'PhoneValidator',
     'VehicleNumberValidator',
     'UserNameSerializer',
+    'RolePermission',
+    'IsActive',
     'permission_required_cls',
     'now',
     'get_object',
     'send_me',
-    'permissions',
     'create_serializer',
 )
 
