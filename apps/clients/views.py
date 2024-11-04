@@ -32,7 +32,7 @@ class ClientViewSet(viewsets.ModelViewSet):
         )
 
     def get_object(self):
-        return models.Client.objects.get(pk=self.kwargs['pk'])
+        return models.Client.objects.filter(pk=self.kwargs['pk']).first()
 
     def perform_destroy(self, instance):
         instance.deleted = True
