@@ -18,7 +18,5 @@ urlpatterns = [
     path('routes/', routes_lc, name='client_routes'),
     path('routes/<int:pk>/', routes_udd, name='client_routes_udd'),
 
-    # for order create client routes
-    path('create-order-routes/<int:client_id>/', views.CombinationCreateOrderRoutesListAPI.as_view(), name='c-routes'),
 ]
 
