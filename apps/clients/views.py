@@ -2,7 +2,10 @@ from itertools import groupby
 from operator import itemgetter
 
 from django.db.models import Prefetch
+from django_filters import filters
+from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import viewsets, views
+from rest_framework.filters import SearchFilter
 from rest_framework.response import Response
 
 from . import models, serializers
@@ -10,6 +13,8 @@ from . import models, serializers
 
 class ClientViewSet(viewsets.ModelViewSet):
     serializer_class = serializers.ClientSerializer
+    filter_backends = (DjangoFilterBackend, SearchFilter,)
+    search_fields = ('name', 'phone', 'accounting_phone')
 
     SERIALIZERS = {
         'list': serializers.ClientListSerializer,
