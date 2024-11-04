@@ -36,8 +36,3 @@ class CreateOrderSerializer(serializers.Serializer):
 
     def to_representation(self, instance):
         return dict(codes=self.codes)
-
-
-class OrderClientSerializer(serializers.Serializer):
-    id = serializers.IntegerField()
-    name = serializers.CharField()

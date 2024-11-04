@@ -16,5 +16,4 @@ def create_serializer(fields: dict):
             raise TypeError(f"Unsupported field type: {field_type}")
         serializer_fields[field_name] = serializer_field()
 
-    # Dynamically create a new serializer class with the specified fields
     return type("DynamicSerializer", (serializers.Serializer,), serializer_fields)
