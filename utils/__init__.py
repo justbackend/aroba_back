@@ -19,7 +19,7 @@ from .exceptions import APIException
 from .validators import PhoneValidator, VehicleNumberValidator
 from .decorators import permission_required_cls
 from .utility import get_object, send_me
-
+from .permissions import IsActive, RolePermission
 from .serializers import (
     UserNameSerializer,
     PointNameSerializer,
