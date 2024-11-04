@@ -1,9 +1,6 @@
 import threading
 
 import redis
-from apscheduler.schedulers.background import BackgroundScheduler
-from django.core.management import call_command
-from redis.exceptions import LockError
 
 redis_client = redis.Redis(host='localhost', port=6379, db=0)
 
