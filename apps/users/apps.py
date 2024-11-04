@@ -6,5 +6,10 @@ class UsersConfig(AppConfig):
     name = "apps.users"
 
     def ready(self):
+
+        """
+        Cannot be deleted  the imports
+        """
+
         from . import signals
         from utils.customs.schemas import JWTAuthenticationScheme, PayloadAuthenticationScheme

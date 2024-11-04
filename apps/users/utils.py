@@ -5,7 +5,7 @@ from . import models
 def get_apis_perm(user_id: int) -> list:
     perms = cache.get(f'apis_perm_{user_id}')
     if perms is None:
-        apis = models.APIRoute.objects.filter(actions__users_id=user_id).distinct()
+        apis = models.APIRoute.objects.filter(actions__users__id=user_id).distinct()
         data = list(
             map(lambda api: dict(dynamic=api.dynamic, name=api.name, method=api.method, route=api.route), apis)
         )

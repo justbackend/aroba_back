@@ -9,6 +9,6 @@ urlpatterns = [
     path('profile/', views.ProfileView.as_view(), name='profile'),
 
     # my permissions
-    path('my-perms/<int:user_id>/', views.MyPermissionsListAPI.as_view(), name='my-perms'),
+    path('my-perms/', views.MyPermissionsListAPI.as_view(), name='my-perms'),
 ]
 
