@@ -12,6 +12,7 @@ class RouteListSerializer(serializers.Serializer):
 
 
 class ClientSerializer(serializers.ModelSerializer):
+    routes = RouteListSerializer(many=True, read_only=True)
 
     class Meta:
         model = models.Client

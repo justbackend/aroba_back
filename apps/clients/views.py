@@ -16,13 +16,6 @@ class ClientViewSet(viewsets.ModelViewSet):
     filterset_fields = ('routes__type',)
     search_fields = ('name', 'phone', 'accounting_phone')
 
-    SERIALIZERS = {
-        'list': serializers.ClientListSerializer,
-    }
-
-    def get_serializer_class(self):
-        return self.SERIALIZERS.get(self.action, self.serializer_class)
-
     def get_queryset(self):
         routes_qs = (
             models.ClientRoute.objects
@@ -47,4 +40,3 @@ class ClientViewSet(viewsets.ModelViewSet):
 class ClientRouteViewSet(viewsets.ModelViewSet):
     serializer_class = serializers.ClientRouteSerializer
     queryset = models.ClientRoute.objects.all()
-
