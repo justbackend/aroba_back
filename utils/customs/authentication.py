@@ -86,6 +86,11 @@ class JWTAuthentication(jwt_authentication):
 
 
 class PayloadAuthentication(BaseAuthentication):
+
+    """
+    An authentication plugin that authenticates requests through a JSON web
+    """
+
     def authenticate(self, request):
         auth_header = request.META.get('HTTP_AUTHORIZATION')
         if not auth_header:
