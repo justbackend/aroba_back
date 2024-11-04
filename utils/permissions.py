@@ -1,6 +1,7 @@
 import re
 from django.core.cache import cache
 from rest_framework import permissions
+from .choices import APIRoutes
 
 
 def get_apis_perm(user) -> list:
