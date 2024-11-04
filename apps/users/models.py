@@ -85,7 +85,7 @@ class User(AbstractBaseUser, PermissionsMixin, BaseModel):
                 username=user.username,
                 first_name=user.first_name,
                 last_name=user.last_name,
-                photo=str(user.photo),
+                photo=str(user.photo.url),
                 phone=user.phone,
             )
             cache.set(f'user_profile_{user_id}', data)

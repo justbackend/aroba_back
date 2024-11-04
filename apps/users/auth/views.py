@@ -1,7 +1,7 @@
 from rest_framework import generics, status, views
 from rest_framework.response import Response
 from utils.customs.authentication import PayloadAuthentication
-
+from .. import models
 from . import serializers
 
 
@@ -21,4 +21,7 @@ class ProfileView(views.APIView):
     permission_classes = ()
 
     def get(self, request):
-        return Response({'payload': request.auth})
+        profile_data = models.User.profile_data(request.auth['user_id'])
+        if profile_data.get("photo"):
+            profile_data["photo"] = request.build_absolute_uri(profile_data["photo"])
+        return Response(profile_data)
