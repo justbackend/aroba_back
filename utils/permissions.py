@@ -4,19 +4,6 @@ from rest_framework import permissions
 from .choices import APIRoutes
 
 
-def get_apis_perm(user) -> list:
-    data = cache.get(f'apis_perm_{user.id}')
-    if data is None:
-        pass
-        # apis = models.APIRoute.objects.filter(actions__users=user).distinct()
-        # data = list(
-        #     map(lambda api: dict(dynamic=api.dynamic, name=api.name, method=api.method, route=api.route), apis)
-        # )
-        # cache.set(f'apis_perm_{user.id}', data)
-
-    return data
-
-
 class RolePermission(permissions.BasePermission):
 
     def has_permission(self, request, view):
@@ -41,7 +28,7 @@ class RolePermission(permissions.BasePermission):
 
     @classmethod
     def get_filtered_perms_and_route(cls, request):
-        data = get_apis_perm(request.user)
+        data = cache.get(f'apis_perm_{request.user.id}')
         route = cls.get_route(request)
         return tuple(filter(lambda perm: perm['method'] == request.method and perm['route'] == route, data)), len(route)
 
