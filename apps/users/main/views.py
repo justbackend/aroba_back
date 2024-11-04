@@ -1,13 +1,11 @@
-from django.contrib.postgres.aggregates import ArrayAgg
-from django.http import Http404
+from django.core.cache import cache
 from rest_framework import viewsets, views
 from rest_framework.parsers import MultiPartParser, FormParser
 from rest_framework.response import Response
 
-from utils import RolePermission
+from utils.permissions import RolePermission
 from . import serializers
 from .. import models
-from django.core.cache import cache
 
 
 class RoleViewSet(viewsets.ModelViewSet):

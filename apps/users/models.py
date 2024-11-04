@@ -13,7 +13,7 @@ from django.utils.translation import gettext_lazy as _
 from rest_framework_simplejwt.tokens import RefreshToken
 
 from apps.common.models import BaseModel
-from utils import choices
+from utils.choices import *
 from utils.validators import PhoneValidator
 from . import managers
 
@@ -145,13 +145,13 @@ class Action(models.Model):
 
 
 class APIRoute(models.Model):
-    route = models.CharField(_("route"), max_length=50, choices=choices.APIRoutes.choices)
+    route = models.CharField(_("route"), max_length=50, choices=APIRoutes.choices)
     name = models.CharField(_("name"), max_length=100, )
     dynamic = models.BooleanField(_("dynamic"), default=False)
     method = models.CharField(
         _("method"), max_length=100,
-        choices=choices.APIMethods.choices,
-        default=choices.APIMethods.GET
+        choices=APIMethods.choices,
+        default=APIMethods.GET
     )
 
     class Meta:

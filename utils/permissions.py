@@ -1,18 +1,17 @@
 import re
 from django.core.cache import cache
 from rest_framework import permissions
-from apps.users import models
-from utils.choices import APIRoutes
 
 
 def get_apis_perm(user) -> list:
     data = cache.get(f'apis_perm_{user.id}')
     if data is None:
-        apis = models.APIRoute.objects.filter(actions__users=user).distinct()
-        data = list(
-            map(lambda api: dict(dynamic=api.dynamic, name=api.name, method=api.method, route=api.route), apis)
-        )
-        cache.set(f'apis_perm_{user.id}', data)
+        pass
+        # apis = models.APIRoute.objects.filter(actions__users=user).distinct()
+        # data = list(
+        #     map(lambda api: dict(dynamic=api.dynamic, name=api.name, method=api.method, route=api.route), apis)
+        # )
+        # cache.set(f'apis_perm_{user.id}', data)
 
     return data
 

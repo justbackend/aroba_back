@@ -1,6 +1,6 @@
 from rest_framework import generics
 
-from utils import *
+from utils.permissions import *
 from . import serializers
 
 
