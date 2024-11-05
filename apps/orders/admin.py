@@ -9,7 +9,7 @@ class OrderAdmin(u_admin.ModelAdmin):
         model = models.OrderPayment
         extra = 1
 
-    class OrderLogInline(u_admin.StackedInline):
+    class OrderLogInline(u_admin.TabularInline):
         model = models.OrderLog
         extra = 1
 

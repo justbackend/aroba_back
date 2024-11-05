@@ -30,7 +30,8 @@ class CreateOrderSerializer(serializers.Serializer):
 
     def create_logs(self, orders):
         user = self.validated_data['creator']
-        logs = list(map(lambda order: models.OrderLog(order=order, user_id=user.id), orders))
+        comment = "Buyurtma Yaratildi"
+        logs = list(map(lambda order: models.OrderLog(order=order, user_id=user.id, comment=comment), orders))
         models.OrderLog.objects.bulk_create(logs)
         return logs
 
