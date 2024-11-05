@@ -23,7 +23,6 @@ class ClientViewSet(viewsets.ModelViewSet):
     )
 
     def get_queryset(self):
-
         return (
             models.Client.active_objects
             .prefetch_related(Prefetch('routes', queryset=self.routes_qs))
