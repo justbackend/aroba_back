@@ -1,7 +1,6 @@
 from django.db import models
 
 from . import managers
-from utils.managers import Manager
 
 
 class Region(models.Model):
@@ -9,7 +8,6 @@ class Region(models.Model):
 
     class Meta:
         db_table = 'regions'
-
 
     def __str__(self):
         return self.name

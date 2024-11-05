@@ -1,5 +1,7 @@
 from rest_framework import serializers
 
+from . import models
+
 
 class ReportOrdersSerializer(serializers.Serializer):
     id = serializers.IntegerField(read_only=True)
@@ -25,3 +27,23 @@ class ReportSerializer(serializers.Serializer):
             result["sum_income"] += order.income or 0
             result["sum_total_amount"] += order.total_amount or 0
         return result
+
+
+class CreateTransactionSerializer(serializers.ModelSerializer):
+    creator = serializers.HiddenField(default=serializers.CurrentUserDefault())
+
+    class Meta:
+        model = models.Transaction
+        fields = (
+            'id',
+            'comment',
+            'type',
+            'amount',
+            'creator',
+            'status',
+        )
+        extra_kwargs = {
+            'status': {'read_only': True},
+        }
+
+

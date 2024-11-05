@@ -33,3 +33,7 @@ class ReportOrdersListAPI(generics.ListAPIView):
             .filter(orders__isnull=False)
             .distinct()
         )
+
+
+class CreateTransactionAPI(generics.CreateAPIView):
+    serializer_class = serializers.CreateTransactionSerializer
