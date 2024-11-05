@@ -68,7 +68,6 @@ class FillOrderSerializer(serializers.ModelSerializer):
         )
 
     def update(self, instance, validated_data):
-        user = self.context['request'].user
         for key, value in validated_data.items():
             if value:
                 setattr(instance, key, value)
