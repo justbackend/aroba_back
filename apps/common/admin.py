@@ -16,3 +16,10 @@ class RegionAdmin(u_admin.ModelAdmin):
 @admin.register(models.Point)
 class PointAdmin(u_admin.ModelAdmin):
     list_display = ('id', 'name', 'region', 'deleted')
+
+
+def get_list_display_links(self, request, list_display):
+    return self.list_display
+
+
+u_admin.ModelAdmin.get_list_display_links = get_list_display_links

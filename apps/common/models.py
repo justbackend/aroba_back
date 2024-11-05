@@ -11,6 +11,10 @@ class Region(models.Model):
         db_table = 'regions'
 
 
+    def __str__(self):
+        return self.name
+
+
 class Point(models.Model):
     name = models.CharField(max_length=255, verbose_name="Name")
     lon = models.DecimalField(max_digits=9, decimal_places=6, null=True, verbose_name='Longitude')
