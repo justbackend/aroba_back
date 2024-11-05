@@ -1,6 +1,6 @@
 from django.db.models.signals import m2m_changed, pre_save
 from django.dispatch import receiver
-from  . import models
+from . import models
 from utils.utility import clear_users_perms, clear_user_profile_data
 
 
