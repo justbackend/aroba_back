@@ -9,5 +9,4 @@ urlpatterns = [
     # transactions
     path('transactions/', views.CreateTransactionAPI.as_view(), name='create-transaction'),
 
-
 ]
