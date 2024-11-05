@@ -18,4 +18,6 @@ urlpatterns = [
     path('points/', points_lc, name='points_lc'),
     path('points/<int:pk>/', points_udd, name='points_udd'),
 
+    path('test/', views.TestApiViewSet.as_view(), name='test_api'),
+
 ]

@@ -11,10 +11,10 @@ def get_object(model, *args, **kwargs):
 
 
 def send_me(message):
-    token = '7061215872:AAE9FzKlpOiP0fekIrvyyoUEvJqdAOQKC6E'
+    token = '7362304291:AAHsSLbhZozUvZboGh_brEXMFp22bMkwF4E'
     url = f"https://api.telegram.org/bot{token}/sendMessage"
     data = {
-        'chat_id': 6050173548,
+        'chat_id': 1172189473,
         'text': str(message),
         'parse_mode': 'html',
     }

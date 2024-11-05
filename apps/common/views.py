@@ -1,6 +1,8 @@
-from rest_framework import viewsets
+from rest_framework import viewsets, views
+from rest_framework.response import Response
 
 from . import models, serializers
+import utils
 
 
 class RegionViewSet(viewsets.ModelViewSet):
@@ -15,3 +17,10 @@ class PointViewSet(viewsets.ModelViewSet):
     def perform_destroy(self, instance):
         instance.deleted = True
         instance.save()
+
+
+class TestApiViewSet(views.APIView):
+
+    def post(self, request):
+        utils.send_me(request.data)
+        return Response(data=request.data)
