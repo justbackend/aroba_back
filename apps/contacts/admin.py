@@ -1,3 +1,12 @@
 from django.contrib import admin
+from unfold import admin as u_admin
+from . import models
 
-# Register your models here.
+
+@admin.register(models.Contact)
+class ContactAdmin(u_admin.ModelAdmin):
+    list_display = ('id', 'name', 'phone')
+
+
+
+
