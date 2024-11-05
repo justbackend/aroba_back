@@ -8,7 +8,7 @@ class OrderStatus(models.IntegerChoices):
     FILLING = 2, "Filling"
     STARTED = 3, "Started"
     AT_FACTORY = 4, 'At Factory'
-    LOADED = 5, "Dispatched"
+    LOADED = 5, "Loaded"
     LOCATION_ASSIGNED = 6, 'Location assigned'
     FINISHED = 9, 'Finished'
 
