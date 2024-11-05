@@ -31,8 +31,6 @@ class ReportOrdersListAPI(generics.ListAPIView):
         return (
             client_models.Client.objects
             .prefetch_related(Prefetch('orders', queryset=orders_qs))
-            .annotate(
-            )
             .filter(orders__isnull=False)
             .distinct()
         )
