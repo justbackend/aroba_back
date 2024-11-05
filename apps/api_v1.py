@@ -49,5 +49,11 @@ urlpatterns = [
         name='checkout',
     ),
 
+    path(
+        'contacts/',
+        include('apps.contacts.urls'),
+        name='contacts',
+    ),
+
 ]
 
