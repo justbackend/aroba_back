@@ -26,30 +26,9 @@ class ClientSerializer(serializers.ModelSerializer):
             'routes',
         )
 
-    # def create(self, validated_data):
-    #     loading = validated_data.pop('loading')
-    #     unloading = validated_data.pop('unloading')
-    #     amount = validated_data.pop('amount')
-    #     _type = validated_data.pop('type')
-    #
-    #     obj = models.Client.objects.create(**validated_data)
-    #
-    #     models.ClientRoute.objects.create(
-    #         loading=loading, unloading=unloading,
-    #         amount=amount, type=_type, client=obj
-    #     )
-    #
-    #     return obj
-
 
 class ClientRouteSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.ClientRoute
         fields = '__all__'
 
-
-class CreateOrderRoutesSerializer(serializers.Serializer):
-    loading_name = serializers.CharField(source='loading.name')
-    loading_id = serializers.IntegerField(source='loading.id')
-    unloading_name = serializers.CharField(source='unloading.name')
-    unloading_id = serializers.IntegerField(source='unloading.id')
