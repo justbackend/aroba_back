@@ -66,9 +66,19 @@ class RollbackOrderView(generics.GenericAPIView):
 class UpdateOrderStatusView(generics.UpdateAPIView):
     serializer_class = serializers.UpdateOrderStatusSerializer
     http_method_names = 'patch',
+    log_comment = "Buyurtma statusi Yangiladi\n\nYangi: {} -> Eski: {}"
 
     def get_object(self):
         return get_object(models.Order, id=self.kwargs['pk'])
+
+    def perform_update(self, serializer):
+        old_status = serializer.instance.status
+        serializer.save()
+        instance = serializer.instance
+        new_status = instance.status
+        if old_status != new_status:
+            comment = self.log_comment.format(old_status, new_status)
+            instance.create_log(user=self.request.user, comment=comment, action=OrderLogActions.UPDATE)
 
 
 class DeleteOrderStatusView(generics.GenericAPIView):

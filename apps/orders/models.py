@@ -115,9 +115,6 @@ class Order(BaseModel):
                 setattr(self, field, None)
 
 
-
-
-
 class OrderPayment(BaseModel):
     amount = models.DecimalField(max_digits=10, decimal_places=2, verbose_name="Amount")
     type = models.CharField(max_length=15, choices=choices.PaymentTypes.choices, verbose_name="Type")
