@@ -11,6 +11,7 @@ class RoleAdmin(u_admin.ModelAdmin):
 @admin.register(models.User)
 class UserAdmin(u_admin.ModelAdmin):
     list_display = ('id', 'username',)
+    readonly_fields = ('actions',)
 
 
 @admin.register(models.Action)
