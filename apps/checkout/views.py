@@ -1,6 +1,6 @@
 from django.db.models import Prefetch, F
 from django_filters.rest_framework import DjangoFilterBackend
-from rest_framework import generics
+from rest_framework import generics, mixins
 
 import utils
 from apps.clients import models as client_models
@@ -35,12 +35,18 @@ class ReportOrdersListAPI(generics.ListAPIView):
         )
 
 
-class CreateTransactionAPI(generics.CreateAPIView):
-    serializer_class = serializers.CreateTransactionSerializer
-
-
-class TransactionListAPI(generics.ListAPIView):
-    serializer_class = serializers.TransactionListSerializer
+class CreateTransactionAPI(generics.ListCreateAPIView):
     filter_backends = (DjangoFilterBackend,)
     filterset_fields = ('type', 'status')
     queryset = models.Transaction.objects.all()
+
+    serializer_classes = {
+        'POST': serializers.CreateTransactionSerializer,
+        'GET': serializers.TransactionListSerializer,
+    }
+
+    def get_serializer_class(self):
+        return self.serializer_classes[self.request.method]
+
+
+
