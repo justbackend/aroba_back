@@ -5,6 +5,8 @@ __all__ = (
     'UserNameSerializer',
     'RolePermission',
     'IsActive',
+    'BaseModel',
+    'Manager',
     'permission_required_cls',
     'now',
     'get_object',
