@@ -47,3 +47,14 @@ class CreateTransactionSerializer(serializers.ModelSerializer):
         }
 
 
+class TransactionListSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.Transaction
+        fields = (
+            'id',
+            'amount',
+            'status',
+            'type',
+            'comment',
+        )
+

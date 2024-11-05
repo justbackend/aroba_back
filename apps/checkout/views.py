@@ -6,7 +6,7 @@ import utils
 from apps.clients import models as client_models
 from apps.orders import models as order_models
 from utils.choices import *
-from . import serializers
+from . import serializers, models
 
 
 class ReportOrdersListAPI(generics.ListAPIView):
@@ -37,3 +37,10 @@ class ReportOrdersListAPI(generics.ListAPIView):
 
 class CreateTransactionAPI(generics.CreateAPIView):
     serializer_class = serializers.CreateTransactionSerializer
+
+
+class TransactionListAPI(generics.ListAPIView):
+    serializer_class = serializers.TransactionListSerializer
+    filter_backends = (DjangoFilterBackend,)
+    filterset_fields = ('type', 'status')
+    queryset = models.Transaction.objects.all()
