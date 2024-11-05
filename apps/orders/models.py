@@ -19,7 +19,7 @@ class Order(BaseModel):
     income = models.DecimalField(max_digits=10, decimal_places=2, verbose_name="Income", null=True, blank=True)
     status = models.IntegerField(choices=choices.OrderStatus.choices, default=choices.OrderStatus.NEW)
     car_number = models.CharField(
-        max_length=20, verbose_name="Cart Number",
+        max_length=20, verbose_name="Car Number",
         null=True, blank=True,
         validators=[utils.VehicleNumberValidator()]
     )
