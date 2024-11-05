@@ -5,7 +5,7 @@ from . import models
 
 @admin.register(models.Contact)
 class ContactAdmin(u_admin.ModelAdmin):
-    list_display = ('id', 'name', 'phone')
+    list_display = ('id', 'full_name', 'phone')
 
 
 
