@@ -10,6 +10,7 @@ class ReportOrdersSerializer(serializers.Serializer):
     car_number = serializers.CharField(read_only=True)
     income = serializers.IntegerField(read_only=True)
     total_amount = serializers.IntegerField(read_only=True)
+    paid = serializers.BooleanField(read_only=True)
 
 
 class ReportSerializer(serializers.Serializer):
