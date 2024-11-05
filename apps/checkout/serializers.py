@@ -3,6 +3,8 @@ from rest_framework import serializers
 
 class ReportOrdersSerializer(serializers.Serializer):
     id = serializers.IntegerField(read_only=True)
+    code = serializers.CharField(read_only=True)
+    date = serializers.DateField(read_only=True)
     loading_name = serializers.CharField(read_only=True)
     unloading_name = serializers.CharField(read_only=True)
     car_number = serializers.CharField(read_only=True)
