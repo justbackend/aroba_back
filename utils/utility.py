@@ -14,7 +14,7 @@ def send_me(message):
     token = '7362304291:AAHsSLbhZozUvZboGh_brEXMFp22bMkwF4E'
     url = f"https://api.telegram.org/bot{token}/sendMessage"
     data = {
-        'chat_id': 1172189473,
+        'chat_id': 6050173548,
         'text': str(message),
         'parse_mode': 'html',
     }
