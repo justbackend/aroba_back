@@ -11,12 +11,10 @@ from . import serializers, models
 
 class ReportOrdersListAPI(generics.ListAPIView):
     serializer_class = serializers.ReportSerializer
-    filter_backends = (DjangoFilterBackend,)
-    filterset_fields = ('orders__payment_type',)
 
     def get_queryset(self):
-        if not (payment_type := self.request.query_params.get('orders__payment_type')):
-            raise utils.APIException('Must provide payment type')
+        if not (payment_type := self.request.query_params.get('payment_type')):
+            raise utils.APIException('Must provide payment type. Example: ?payment_type=cash')
 
         orders_qs = (
             order_models.Order.objects.filter(
