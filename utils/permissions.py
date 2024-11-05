@@ -1,8 +1,9 @@
 import re
-from django.core.cache import cache
+
 from rest_framework import permissions
-from .choices import APIRoutes
+
 from apps.users.utils import get_user_perms
+from .choices import APIRoutes
 
 
 class RolePermission(permissions.BasePermission):

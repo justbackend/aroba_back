@@ -11,7 +11,7 @@ from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 from rest_framework_simplejwt.tokens import RefreshToken
 
-from apps.common.models import BaseModel
+from utils.base import BaseModel
 from utils.choices import *
 from utils.validators import PhoneValidator
 from . import managers

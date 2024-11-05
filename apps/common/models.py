@@ -1,16 +1,7 @@
 from django.db import models
 
 from . import managers
-
-
-class BaseModel(models.Model):
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
-
-    objects = managers.Manager()
-
-    class Meta:
-        abstract = True
+from utils.managers import Manager
 
 
 class Region(models.Model):
@@ -35,4 +26,3 @@ class Point(models.Model):
 
     def __str__(self):
         return self.name
-

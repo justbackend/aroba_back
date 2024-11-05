@@ -1,6 +1,6 @@
 from django.db import models
 
-from apps.common.models import BaseModel
+from utils.base import BaseModel
 from . import managers
 from utils import choices
 import utils
@@ -17,7 +17,7 @@ class Client(BaseModel):
         validators=[utils.PhoneValidator()], null=True, blank=True
     )
 
-    objects = models.Manager()
+    objects = utils.Manager()
     active_objects = managers.ActiveClientManager()
 
     class Meta:

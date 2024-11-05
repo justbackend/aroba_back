@@ -3,10 +3,10 @@ import string
 
 from django.db import models
 
-from apps.common.models import BaseModel
 from apps.clients.models import ClientRoute
 from utils import choices
 import utils
+from utils.base import BaseModel
 
 
 class Order(BaseModel):
