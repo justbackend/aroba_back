@@ -16,8 +16,14 @@ class CreateOrderSerializer(serializers.Serializer):
     payment_type = serializers.ChoiceField(choices=choices.OrderPaymentTypes.choices)
 
     def validate(self, attrs):
-        if attrs['loading'] == attrs['unloading']:
-            raise utils.APIException('The Point must not be same')
+        checking = client_models.ClientRoute.objects.filter(
+            loading=attrs['loading'],
+            unloading=attrs['unloading'],
+            client=attrs['client'],
+            type=attrs['payment_type'],
+        ).exists()
+        if not checking:
+            raise utils.APIException("The client route does not exist")
         return attrs
 
     def create(self, validated_data):
