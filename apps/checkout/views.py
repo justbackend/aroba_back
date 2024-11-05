@@ -1,13 +1,12 @@
-from django.db.models import Prefetch, F, Sum, Q, OuterRef, Subquery
+from django.db.models import Prefetch, F
 from django_filters.rest_framework import DjangoFilterBackend
-from rest_framework.response import Response
-from rest_framework import views, generics
+from rest_framework import generics
 
 import utils
-from . import models, serializers
-from apps.orders import models as order_models
 from apps.clients import models as client_models
+from apps.orders import models as order_models
 from utils.choices import *
+from . import serializers
 
 
 class ReportOrdersListAPI(generics.ListAPIView):
