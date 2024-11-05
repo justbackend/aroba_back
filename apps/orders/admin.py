@@ -7,11 +7,11 @@ from . import models
 class OrderAdmin(u_admin.ModelAdmin):
     class OrderPaymentInline(u_admin.StackedInline):
         model = models.OrderPayment
-        extra = 1
+        extra = 0
 
     class OrderLogInline(u_admin.TabularInline):
         model = models.OrderLog
-        extra = 1
+        extra = 0
 
     list_display = ('id', 'code', 'date', 'status', 'total_amount', 'car_number', 'payment_type', 'client')
     list_display_links = ('id', 'code',)
