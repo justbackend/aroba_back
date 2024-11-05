@@ -56,3 +56,13 @@ class OrderLogActions(models.TextChoices):
     FILLED = 'filled', 'Filled'
     ROLLBACK = 'rollback', 'Rollback'
 
+
+class TransactionTypes(models.TextChoices):
+    INCOME = 'income', 'Income'
+    EXPENSE = 'expense', 'Expense'
+
+
+class TransactionStatuses(models.TextChoices):
+    PENDING = 'pending', 'Pending'
+    CANCELLED = 'cancelled', 'Cancelled'
+    APPROVED = 'approved', 'Approved'
