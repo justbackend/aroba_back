@@ -40,6 +40,7 @@ class APIRoutes(models.TextChoices):
     AUTH = '/api/v1/auth/', 'Auth'
     MANAGERS = '/api/v1/managers/', 'Managers'
     DISPATCHERS = '/api/v1/dispatchers/', 'Dispatchers'
+    CHECKOUT = '/api/v1/checkout/', 'Checkout'
 
 
 class ClientRouteTypes(models.TextChoices):
