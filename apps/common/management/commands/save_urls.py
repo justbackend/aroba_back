@@ -3,7 +3,6 @@ import re
 from django.core.management import BaseCommand
 from django.urls import get_resolver
 
-from utils.choices import APIRoutes, APIMethods
 from apps.users.models import APIRoute
 
 

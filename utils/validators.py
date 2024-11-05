@@ -52,3 +52,4 @@ class VehicleNumberValidator:
             checking.append(isupper or isdigit)
         return digit and upper and all(checking)
 
+
