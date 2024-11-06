@@ -13,7 +13,6 @@ from .. import models
 
 class NewOrdersListView(generics.ListAPIView):
     serializer_class = serializers.NewOrdersListSerializer
-    filter_backends = (DjangoFilterBackend,)
     filterset_fields = ('client',)
     pagination_class = None
 

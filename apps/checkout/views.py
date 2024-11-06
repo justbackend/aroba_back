@@ -34,7 +34,6 @@ class ReportOrdersListAPI(generics.ListAPIView):
 
 
 class CreateTransactionAPI(generics.ListCreateAPIView):
-    filter_backends = (DjangoFilterBackend,)
     filterset_fields = ('type', 'status')
     queryset = models.Transaction.objects.all()
 

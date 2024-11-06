@@ -8,7 +8,6 @@ from . import models, serializers
 
 class ClientViewSet(viewsets.ModelViewSet):
     serializer_class = serializers.ClientSerializer
-    filter_backends = (DjangoFilterBackend, SearchFilter,)
     filterset_fields = ('routes__type',)
     search_fields = ('name', 'phone', 'accounting_phone')
 
