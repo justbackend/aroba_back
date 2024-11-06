@@ -1,6 +1,8 @@
+from typing import Union
+
 from django.contrib.postgres.aggregates import ArrayAgg
 from django.core.cache import cache
-from django.db.models import Func, Value, Q, IntegerField, TextField
+from django.db.models import Func, Value, TextField
 from django.utils.translation import gettext_lazy as _
 from rest_framework.authentication import BaseAuthentication
 from rest_framework_simplejwt.authentication import JWTAuthentication as jwt_authentication
@@ -8,7 +10,6 @@ from rest_framework_simplejwt.exceptions import InvalidToken, AuthenticationFail
 from rest_framework_simplejwt.settings import api_settings
 from rest_framework_simplejwt.tokens import Token, AccessToken
 from rest_framework_simplejwt.utils import get_md5_hash_password
-from typing import Union
 
 from apps.users.models import User as AuthUser
 from utils.choices import APIRoutes
