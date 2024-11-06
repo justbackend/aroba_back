@@ -1,8 +1,8 @@
-from django_filters.rest_framework import DjangoFilterBackend
-from rest_framework.response import Response
-from rest_framework import generics, views
 from django.db.models import Q
+from django_filters.rest_framework import DjangoFilterBackend
+from rest_framework import generics
 from rest_framework.filters import SearchFilter
+from rest_framework.response import Response
 
 from utils import *
 from utils.choices import *
