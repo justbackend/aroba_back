@@ -1,7 +1,5 @@
 from django.db.models import Q
-from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import generics
-from rest_framework.filters import SearchFilter
 from rest_framework.response import Response
 
 from utils import *
@@ -24,7 +22,6 @@ class AdditionalAmountView(generics.UpdateAPIView):
 
 class StatusOrdersListView(generics.ListAPIView):
     serializer_class = serializers.StatusOrdersListSerializer
-    filter_backends = (DjangoFilterBackend, SearchFilter,)
     filterset_fields = ('client', 'status', 'payment_type')
     search_fields = ('car_number', 'code', 'driver_phone')
 
