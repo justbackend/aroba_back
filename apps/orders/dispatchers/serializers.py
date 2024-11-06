@@ -80,7 +80,7 @@ class FillOrderSerializer(serializers.ModelSerializer):
 
         instance.create_payment(amount=instance.total_amount, _type=instance.payment_type)
         log_comment = (
-            f"Buyurtam qo'ldirldi\n"
+            f"Buyurtma qoldirldi\n"
             f"Client: {validated_data.get('client')}"
             f"Loading: {validated_data.get('loading')}"
             f"Unloading: {validated_data.get('unloading')}"

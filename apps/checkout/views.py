@@ -1,13 +1,14 @@
 from django.db.models import Prefetch, F
 from django_filters.rest_framework import DjangoFilterBackend
-from rest_framework import generics, mixins
+from rest_framework import generics, mixins, status
+from rest_framework.response import Response
+from rest_framework.permissions import IsAuthenticated
 
 import utils
 from apps.clients import models as client_models
 from apps.orders import models as order_models
 from utils.choices import *
 from . import serializers, models
-
 
 class ReportOrdersListAPI(generics.ListAPIView):
     serializer_class = serializers.ReportSerializer
@@ -34,7 +35,7 @@ class ReportOrdersListAPI(generics.ListAPIView):
 
 
 class CreateTransactionAPI(generics.ListCreateAPIView):
-    filterset_fields = ('type', 'status')
+    filter_set_fields = ('type', 'status')
     queryset = models.Transaction.objects.all()
 
     serializer_classes = {
@@ -43,7 +44,11 @@ class CreateTransactionAPI(generics.ListCreateAPIView):
     }
 
     def get_serializer_class(self):
+
         return self.serializer_classes[self.request.method]
 
 
+class UpdateTransactionAPI(generics.UpdateAPIView):
+    queryset = models.Transaction.objects.all()
+    serializer_class = serializers.TransactionStatusUpdateSerializer
 

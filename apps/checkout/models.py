@@ -3,6 +3,7 @@ from django.db.models.signals import post_migrate
 from django.dispatch import receiver
 from utils import BaseModel
 from utils.choices import TransactionTypes, TransactionStatuses
+from decimal import Decimal
 
 
 class Checkout(BaseModel):
@@ -16,6 +17,27 @@ class Checkout(BaseModel):
 
     def __str__(self):
         return f"{self.name} ({self.balance})"
+
+
+class MainCheckout:
+    name: str
+    balance: Decimal
+    _model: Checkout
+
+
+    @classmethod
+    def __initialize__(cls):
+        if not Checkout.objects.exists():
+            cls._model = Checkout.objects.create(name="Asosiy kassa", balance=0)
+        else:
+            cls._model = Checkout.objects.first()
+        cls.name = cls._model.name
+        cls.balance = cls._model.balance
+
+    @classmethod
+    def add_balance(cls, amount):
+        cls._model.balance += amount
+        cls._model.save()
 
 
 class Transaction(BaseModel):
@@ -35,7 +57,7 @@ class Transaction(BaseModel):
     )
     checker = models.ForeignKey(
         'users.User', verbose_name="Checker",
-        on_delete=models.PROTECT,  related_name="transactions_checker",
+        on_delete=models.PROTECT, related_name="transactions_checker",
         null=True, blank=True
     )
 
@@ -45,14 +67,11 @@ class Transaction(BaseModel):
         db_table = "transactions"
 
 
-def CHECKOUT() -> Checkout:
-    return Checkout.objects.first()
-
-
 @receiver(post_migrate)
 def create_checkout(sender, **kwargs):
     """
     The aim of signal is create main  checkout
     """
     if not Checkout.objects.exists():
-        Checkout.objects.create(name="Asosiy kassa", balance=0)
+        MainCheckout.__initialize__()
+

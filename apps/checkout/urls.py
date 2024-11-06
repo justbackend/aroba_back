@@ -8,5 +8,7 @@ urlpatterns = [
 
     # transactions
     path('transactions/', views.CreateTransactionAPI.as_view(), name='create-transaction'),
+    path('transactions/<int:pk>/', views.UpdateTransactionAPI.as_view(), name='update-transaction')
+
 
 ]

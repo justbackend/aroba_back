@@ -5,7 +5,7 @@ __all__ = (
     'Role',
 )
 
-from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin, Permission, ContentType as BaseContentType
+from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin, Permission
 from django.core.cache import cache
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
@@ -15,7 +15,6 @@ from utils.base import BaseModel
 from utils.choices import *
 from utils.validators import PhoneValidator
 from . import managers
-from django.db import models
 
 
 class User(AbstractBaseUser, PermissionsMixin, BaseModel):

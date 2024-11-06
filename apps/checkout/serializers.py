@@ -1,6 +1,8 @@
 from rest_framework import serializers
 
+from utils.choices import TransactionStatuses
 from . import models
+from .models import MainCheckout
 
 
 class ReportOrdersSerializer(serializers.Serializer):
@@ -47,6 +49,23 @@ class CreateTransactionSerializer(serializers.ModelSerializer):
         }
 
 
+class TransactionStatusUpdateSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.Transaction
+        fields = ['status']
+
+    def update(self, instance, validated_data):
+        obj = super().update(instance, validated_data)
+        if obj.status == TransactionStatuses.APPROVED:
+            amount = {
+                'income': obj.amount,
+                'expense': -obj.amount,
+            }[obj.type]
+            MainCheckout.add_balance(amount)
+
+        return obj
+
+
 class TransactionListSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Transaction
@@ -57,4 +76,3 @@ class TransactionListSerializer(serializers.ModelSerializer):
             'type',
             'comment',
         )
-
