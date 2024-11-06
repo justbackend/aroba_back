@@ -7,6 +7,7 @@ from rest_framework.response import Response
 
 from utils import *
 from utils.choices import *
+from utils.excel import ExcelListView
 from . import serializers
 from .. import models
 
@@ -71,7 +72,5 @@ class FillingOrderView(generics.UpdateAPIView):
 
     def get_object(self):
         return get_object(models.Order, id=self.kwargs['order_id'], status=OrderStatus.FILLING)
-
-
 
 
