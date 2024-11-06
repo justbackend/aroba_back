@@ -41,3 +41,17 @@ class AccountantOrdersExcel(ExcelListView, AccountantOrderList):
                 unloading_name=F('unloading__name'),
             )
         )
+
+
+class FinishedOrders(generics.ListAPIView):
+    serializer_class = serializers.AccountantOrdersSerializer
+
+    def get_queryset(self):
+        return (
+            orders_models.Order.objects
+            .select_related('loading', 'unloading', 'client')
+            .filter(
+                payment_type=OrderPaymentTypes.TRANSFER,
+                status=OrderStatus.FINISHED,
+            )
+        )

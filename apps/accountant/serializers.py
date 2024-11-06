@@ -16,3 +16,4 @@ class AccountantOrdersSerializer(serializers.Serializer):
     code = serializers.CharField()
     total_amount = serializers.IntegerField()
     client = ClientSerializer()
+
