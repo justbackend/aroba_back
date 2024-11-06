@@ -50,3 +50,6 @@ class UpdateTransactionAPI(generics.UpdateAPIView):
     queryset = models.Transaction.objects.all()
     serializer_class = serializers.TransactionStatusUpdateSerializer
 
+
+
+
