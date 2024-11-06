@@ -1,10 +1,15 @@
 from django.db import models
-from utils import BaseModel, PhoneValidator
+from utils import BaseModel, PhoneValidator, VehicleNumberValidator
 
 
 class Contact(BaseModel):
     full_name = models.CharField(max_length=100, verbose_name="Full Name")
     phone = models.CharField(max_length=20, validators=[PhoneValidator()], verbose_name='Phone')
+    car_number = models.CharField(
+        max_length=100,
+        verbose_name="Car number",
+        validators=[VehicleNumberValidator()]
+    )
     trailer_front = models.ImageField(
         null=True, blank=True,
         upload_to='contact_images/',
