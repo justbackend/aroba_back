@@ -20,10 +20,8 @@ class Checkout(BaseModel):
 
 
 class MainCheckout:
-    name: str
     balance: Decimal
     _model: Checkout
-
 
     @classmethod
     def __initialize__(cls):
@@ -31,7 +29,6 @@ class MainCheckout:
             cls._model = Checkout.objects.create(name="Asosiy kassa", balance=0)
         else:
             cls._model = Checkout.objects.first()
-        cls.name = cls._model.name
         cls.balance = cls._model.balance
 
     @classmethod

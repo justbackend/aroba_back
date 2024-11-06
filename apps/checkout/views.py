@@ -1,14 +1,12 @@
 from django.db.models import Prefetch, F
-from django_filters.rest_framework import DjangoFilterBackend
-from rest_framework import generics, mixins, status
-from rest_framework.response import Response
-from rest_framework.permissions import IsAuthenticated
+from rest_framework import generics
 
 import utils
 from apps.clients import models as client_models
 from apps.orders import models as order_models
 from utils.choices import *
 from . import serializers, models
+
 
 class ReportOrdersListAPI(generics.ListAPIView):
     serializer_class = serializers.ReportSerializer

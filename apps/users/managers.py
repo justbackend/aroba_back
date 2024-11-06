@@ -1,6 +1,5 @@
 from django.contrib.auth.hashers import make_password
 from django.contrib.auth.models import UserManager as DjangoUserManager, AbstractBaseUser
-from django.contrib.contenttypes.models import ContentTypeManager as DjangoContentTypeManager
 
 
 class UserManager(DjangoUserManager):
