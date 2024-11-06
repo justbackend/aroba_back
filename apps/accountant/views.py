@@ -55,3 +55,21 @@ class FinishedOrders(generics.ListAPIView):
                 status=OrderStatus.FINISHED,
             )
         )
+
+
+class FinishedOrdersExcel(ExcelListView, FinishedOrders):
+    filename = 'finished_orders'
+    fields = (
+        'client_name', 'date', 'loading_name',
+        'unloading_name', 'car_number', 'total_amount'
+    )
+    default_widths = 30
+    def get_data(self):
+        return (
+            self.get_queryset()
+            .annotate(
+                client_name=F('client__name'),
+                loading_name=F('loading__name'),
+                unloading_name=F('unloading__name'),
+            )
+        )

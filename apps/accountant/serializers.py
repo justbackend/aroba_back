@@ -19,7 +19,6 @@ class AccountantOrdersSerializer(serializers.Serializer):
 
 
 class FinishedOrdersSerializer(serializers.Serializer):
-    client_id = serializers.IntegerField(source='client.id')
     client_name = serializers.CharField(source='client.name')
     date = serializers.DateField()
     loading = serializers.CharField(source='loading.name')
