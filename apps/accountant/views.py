@@ -37,7 +37,7 @@ class AccountantOrdersExcel(ExcelListView, AccountantOrderList):
                 client_name=F('client__name'),
                 client_phone=F('client__phone'),
                 client_accounting_phone=F('client__accounting_phone'),
-                loading_name=F('unloading__name'),
+                loading_name=F('loading__name'),
                 unloading_name=F('unloading__name'),
             )
         )
