@@ -17,3 +17,12 @@ class AccountantOrdersSerializer(serializers.Serializer):
     total_amount = serializers.IntegerField()
     client = ClientSerializer()
 
+
+class FinishedOrdersSerializer(serializers.Serializer):
+    client_id = serializers.IntegerField(source='client.id')
+    client_name = serializers.CharField(source='client.name')
+    date = serializers.DateField()
+    loading = serializers.CharField(source='loading.name')
+    unloading = serializers.CharField(source='unloading.name')
+    car_number = serializers.CharField()
+    total_amount = serializers.IntegerField()

@@ -44,7 +44,7 @@ class AccountantOrdersExcel(ExcelListView, AccountantOrderList):
 
 
 class FinishedOrders(generics.ListAPIView):
-    serializer_class = serializers.AccountantOrdersSerializer
+    serializer_class = serializers.FinishedOrdersSerializer
 
     def get_queryset(self):
         return (
