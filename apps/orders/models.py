@@ -132,7 +132,7 @@ class OrderPayment(BaseModel):
 
 
 class OrderLog(BaseModel):
-    order = models.ForeignKey(Order, verbose_name="Order", on_delete=models.CASCADE)
+    order = models.ForeignKey(Order, verbose_name="Order", on_delete=models.CASCADE, related_name="logs")
     user = models.ForeignKey('users.User', verbose_name="User", on_delete=models.CASCADE)
     comment = models.CharField(verbose_name="Text", null=True, blank=True, max_length=255)
     action = models.CharField(
@@ -145,3 +145,4 @@ class OrderLog(BaseModel):
         verbose_name = 'Order Log'
         verbose_name_plural = 'Order Logs'
         db_table = 'order_logs'
+
