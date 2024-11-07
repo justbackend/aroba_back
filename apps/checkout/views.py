@@ -55,21 +55,18 @@ class UpdateTransactionAPI(generics.UpdateAPIView):
 
 
 class BalanceView(generics.GenericAPIView):
-    serializer_class = BalanceSerializer
-
     def get(self, request):
         current_balance = MainCheckout.balance
-        debt_cash_sum = Order.objects.filter(
-            paid=False, payment_type=PaymentTypes.CASH
-        ).aggregate(Sum('income'))['income__sum'] or 0.0
 
-        debt_transfer_sum = Order.objects.filter(
-            paid=False, payment_type=PaymentTypes.TRANSFER
-        ).aggregate(Sum('income'))['income__sum'] or 0.0
+        unpaid_orders = Order.objects.filter(paid=False)
+        debt_sums = unpaid_orders.values('payment_type').annotate(total_income=Sum('income'))
+
+        debt_cash_sum = next((item['total_income'] for item in debt_sums if item['payment_type'] == PaymentTypes.CASH), 0.0)
+        debt_transfer_sum = next((item['total_income'] for item in debt_sums if item['payment_type'] == PaymentTypes.TRANSFER), 0.0)
 
         data = {
-            'current_balance': current_balance,
-            'debt_cash': debt_cash_sum,
-            'debt_transfer': debt_transfer_sum,
+            'current_balance': float(current_balance),
+            'debt_cash': float(debt_cash_sum),
+            'debt_transfer': float(debt_transfer_sum),
         }
         return Response(data)
