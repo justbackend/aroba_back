@@ -1,4 +1,5 @@
-from django.db.models import Prefetch, F, Sum
+from django.db.models import Prefetch, F, Sum, Case, When
+from django.db.models.fields import FloatField
 from rest_framework import generics
 from rest_framework.response import Response
 
@@ -61,12 +62,26 @@ class BalanceView(generics.GenericAPIView):
         unpaid_orders = Order.objects.filter(paid=False)
         debt_sums = unpaid_orders.values('payment_type').annotate(total_income=Sum('income'))
 
-        debt_cash_sum = next((item['total_income'] for item in debt_sums if item['payment_type'] == PaymentTypes.CASH), 0.0)
-        debt_transfer_sum = next((item['total_income'] for item in debt_sums if item['payment_type'] == PaymentTypes.TRANSFER), 0.0)
+        debt_sums = Order.objects.filter(paid=False).aggregate(
+            debt_cash=Sum(
+                Case(
+                    When(payment_type=PaymentTypes.CASH, then='income'),
+                    default=0.0,
+                    output_field=FloatField()
+                )
+            ),
+            debt_transfer=Sum(
+                Case(
+                    When(payment_type=PaymentTypes.TRANSFER, then='income'),
+                    default=0.0,
+                    output_field=FloatField()
+                )
+            )
+        )
 
         data = {
             'current_balance': float(current_balance),
-            'debt_cash': float(debt_cash_sum),
-            'debt_transfer': float(debt_transfer_sum),
+            'debt_cash': float(debt_sums['debt_cash'] or 0.0),
+            'debt_transfer': float(debt_sums['debt_transfer'] or 0.0),
         }
         return Response(data)
