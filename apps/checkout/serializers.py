@@ -76,3 +76,9 @@ class TransactionListSerializer(serializers.ModelSerializer):
             'type',
             'comment',
         )
+
+
+class BalanceSerializer(serializers.Serializer):
+    current_balance = serializers.FloatField()
+    debt_cash = serializers.FloatField()
+    debt_transfer = serializers.FloatField()

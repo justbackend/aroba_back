@@ -14,5 +14,6 @@ urlpatterns = [
     # delete and rollback order
     path('delete-order/<int:order_id>/', views.DeleteOrderStatusView.as_view(), name='status-orders-update'),
     path('rollback-order/<int:order_id>/', views.RollbackOrderView.as_view(), name='status-orders'),
+
 ]
 

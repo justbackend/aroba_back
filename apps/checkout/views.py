@@ -1,11 +1,15 @@
-from django.db.models import Prefetch, F
+from django.db.models import Prefetch, F, Sum
 from rest_framework import generics
+from rest_framework.response import Response
 
 import utils
 from apps.clients import models as client_models
 from apps.orders import models as order_models
 from utils.choices import *
 from . import serializers, models
+from .models import MainCheckout
+from .serializers import BalanceSerializer
+from ..orders.models import Order
 
 
 class ReportOrdersListAPI(generics.ListAPIView):
@@ -48,3 +52,24 @@ class CreateTransactionAPI(generics.ListCreateAPIView):
 class UpdateTransactionAPI(generics.UpdateAPIView):
     queryset = models.Transaction.objects.all()
     serializer_class = serializers.TransactionStatusUpdateSerializer
+
+
+class BalanceView(generics.GenericAPIView):
+    serializer_class = BalanceSerializer
+
+    def get(self, request):
+        current_balance = MainCheckout.balance
+        debt_cash_sum = Order.objects.filter(
+            paid=False, payment_type=PaymentTypes.CASH
+        ).aggregate(Sum('income'))['income__sum'] or 0.0
+
+        debt_transfer_sum = Order.objects.filter(
+            paid=False, payment_type=PaymentTypes.TRANSFER
+        ).aggregate(Sum('income'))['income__sum'] or 0.0
+
+        data = {
+            'current_balance': current_balance,
+            'debt_cash': debt_cash_sum,
+            'debt_transfer': debt_transfer_sum,
+        }
+        return Response(data)

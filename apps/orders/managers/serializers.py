@@ -53,3 +53,6 @@ class UpdateOrderStatusSerializer(serializers.ModelSerializer):
 
 class DeleteOrderStatusSerializer(serializers.Serializer):
     comment = serializers.CharField(required=True)
+
+
+

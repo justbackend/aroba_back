@@ -1,4 +1,4 @@
-from django.db.models import Q
+from django.db.models import Q, Sum
 from rest_framework import generics
 from rest_framework.response import Response
 
@@ -6,6 +6,8 @@ from utils import *
 from utils.choices import *
 from . import serializers
 from .. import models
+from ..models import Order
+from ...checkout.models import MainCheckout
 
 
 class AdditionalAmountView(generics.UpdateAPIView):
