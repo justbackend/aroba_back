@@ -18,6 +18,13 @@ class TransClientsViewList(generics.ListAPIView):
             .distinct()
         )
 
+
+class TransClientsViewExcel(ExcelListView, TransClientsViewList):
+
+    def get_data(self):
+        return self.get_queryset()
+
+
 class FinishedOrders(generics.ListAPIView):
     serializer_class = serializers.FinishedOrdersSerializer
 

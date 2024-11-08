@@ -5,6 +5,7 @@ urlpatterns = [
 
     # accountant orders
     path('clients/', views.TransClientsViewList.as_view(), name='accountant-orders'),
+    path('clients-excel/', views.TransClientsViewList.as_view(), name='accountant-orders'),
 
     # report orders
     path('finished-orders/', views.FinishedOrders.as_view(), name='accountant-finished-orders'),
