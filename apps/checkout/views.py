@@ -6,6 +6,7 @@ import utils
 from apps.clients import models as client_models
 from apps.orders import models as order_models
 from utils.choices import *
+from utils.excel import *
 from . import serializers, models
 from .models import MainCheckout
 from ..orders.models import Order
@@ -88,4 +89,9 @@ class CashSummaryListView(generics.ListAPIView):
             .only('id', 'code', 'date', 'car_number', 'loading__name',
                   'unloading__name', 'client__name', 'total_amount', 'income')
         )
+
+
+class CashSummaryExcelView(ExcelListView):
+    pass
+
 
