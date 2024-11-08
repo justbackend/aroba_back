@@ -74,6 +74,8 @@ class BalanceView(views.APIView):
 
 class CashSummaryListView(generics.ListAPIView):
     serializer_class = serializers.CashSummarySerializer
+    filterset_fields = ('client', 'loading', 'unloading', )
+    search_fields = ('code', 'car_number', 'driver_phone', )
 
     def get_queryset(self):
         return (
