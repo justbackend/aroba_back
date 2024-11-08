@@ -56,7 +56,6 @@ class Order(BaseModel):
         verbose_name_plural = 'Orders'
         db_table = 'orders'
 
-
     def __str__(self):
         return self.code
 
@@ -150,4 +149,3 @@ class OrderLog(BaseModel):
         verbose_name = 'Order Log'
         verbose_name_plural = 'Order Logs'
         db_table = 'order_logs'
-
