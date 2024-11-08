@@ -19,22 +19,25 @@ class Checkout(BaseModel):
         return f"{self.name} ({self.balance})"
 
 
-class MainCheckout:
-    balance: Decimal
-    _model: Checkout
+class _MainCheckout:
 
     @classmethod
     def __initialize__(cls):
         if not Checkout.objects.exists():
-            cls._model = Checkout.objects.create(name="Asosiy kassa", balance=0)
-        else:
-            cls._model = Checkout.objects.first()
-        cls.balance = cls._model.balance
+            Checkout.objects.create(name="Asosiy kassa", balance=0)
 
-    @classmethod
-    def add_balance(cls, amount):
-        cls._model.balance += amount
-        cls._model.save()
+    @property
+    def __checkout(self) -> Checkout:
+        return Checkout.objects.first()
+
+    @property
+    def balance(self):
+        return self.__checkout.balance
+
+    def add(self, amount):
+        checkout = self.__checkout
+        checkout.balance += amount
+        checkout.save()
 
 
 class Transaction(BaseModel):
@@ -70,5 +73,7 @@ def create_checkout(sender, **kwargs):
     The aim of signal is create main  checkout
     """
     if not Checkout.objects.exists():
-        MainCheckout.__initialize__()
+        _MainCheckout.__initialize__()
 
+
+MainCheckout = _MainCheckout()

@@ -2,6 +2,7 @@ from rest_framework import serializers
 
 from utils.choices import TransactionStatuses
 from . import models
+from apps.orders import models as orders_models
 from .models import MainCheckout
 
 
@@ -78,7 +79,15 @@ class TransactionListSerializer(serializers.ModelSerializer):
         )
 
 
-class BalanceSerializer(serializers.Serializer):
-    current_balance = serializers.FloatField()
-    debt_cash = serializers.FloatField()
-    debt_transfer = serializers.FloatField()
+class CashSummarySerializer(serializers.Serializer):
+    id = serializers.IntegerField()
+    code = serializers.CharField(read_only=True)
+    date = serializers.DateField(read_only=True)
+    car_number = serializers.CharField(read_only=True)
+    loading = serializers.CharField(read_only=True, source='loading.name')
+    unloading = serializers.CharField(read_only=True, source='unloading.name')
+    client = serializers.CharField(read_only=True, source='client.name')
+    total_amount = serializers.IntegerField(read_only=True)
+    income = serializers.IntegerField(read_only=True)
+
+

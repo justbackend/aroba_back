@@ -1,46 +1,35 @@
 from django.db.models import F
-from rest_framework import generics
+from rest_framework import generics, mixins
 
 from apps.orders import models as orders_models
+from apps.clients import models as client_models
 from utils.choices import *
 from . import serializers
 from utils.excel import ExcelListView
 
 
-class AccountantOrderList(generics.ListAPIView):
-    serializer_class = serializers.AccountantOrdersSerializer
+class TransClientsViewList(generics.ListAPIView):
+    serializer_class = serializers.TransClientSerializer
 
     def get_queryset(self):
         return (
-            orders_models.Order.objects
-            .select_related('loading', 'unloading', 'client')
-            .filter(
-                payment_type=OrderPaymentTypes.TRANSFER,
-                status__in=(OrderStatus.STARTED, OrderStatus.LOADED,
-                            OrderStatus.AT_FACTORY, OrderStatus.LOCATION_ASSIGNED)
-            )
+            client_models.Client.objects
+            .filter(routes__type=ClientRouteTypes.TRANSFER)
+            .distinct()
         )
 
 
-class AccountantOrdersExcel(ExcelListView, AccountantOrderList):
-    filename = 'accountant_orders'
-    fields = (
-        'id', 'code', 'client_name', 'client_phone',
-        'client_accounting_phone', 'loading_name', 'unloading_name', 'total_amount'
-    )
-    default_widths = 30
+class TransClientsViewUpdate(generics.UpdateAPIView):
+    serializer_class = serializers.TransClientSerializer
+    queryset = client_models.Client.objects.all()
+    http_method_names = 'patch',
+
+
+class TransClientsViewExcel(ExcelListView, TransClientsViewList):
+    fields = ('id', 'customer', 'accounting_phone', 'inn', 'requisite')
 
     def get_data(self):
-        return (
-            self.get_queryset()
-            .annotate(
-                client_name=F('client__name'),
-                client_phone=F('client__phone'),
-                client_accounting_phone=F('client__accounting_phone'),
-                loading_name=F('loading__name'),
-                unloading_name=F('unloading__name'),
-            )
-        )
+        return self.get_queryset()
 
 
 class FinishedOrders(generics.ListAPIView):
@@ -64,6 +53,7 @@ class FinishedOrdersExcel(ExcelListView, FinishedOrders):
         'unloading_name', 'car_number', 'total_amount'
     )
     default_widths = 30
+
     def get_data(self):
         return (
             self.get_queryset()

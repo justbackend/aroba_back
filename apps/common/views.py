@@ -8,11 +8,13 @@ import utils
 class RegionViewSet(viewsets.ModelViewSet):
     serializer_class = serializers.RegionSerializer
     queryset = models.Region.objects.all()
+    pagination_class = None
 
 
 class PointViewSet(viewsets.ModelViewSet):
     serializer_class = serializers.PointSerializer
     queryset = models.Point.active_objects.all()
+    pagination_class = None
 
     def perform_destroy(self, instance):
         instance.deleted = True

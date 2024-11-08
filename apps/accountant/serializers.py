@@ -1,21 +1,22 @@
 from rest_framework import serializers
+from apps.clients import models as client_models
 
 
-class ClientSerializer(serializers.Serializer):
-    id = serializers.IntegerField()
-    name = serializers.CharField()
-    phone = serializers.CharField()
-    accounting_phone = serializers.CharField()
-    requisite = serializers.CharField()
-    requisite_file = serializers.FileField()
+class TransClientSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = client_models.Client
+        fields = (
+            'id',
+            'name',
+            'requisite',
+            'requisite_file',
+            'customer',
+            'phone',
+            'accounting_phone',
+            'inn',
+        )
 
 
-class AccountantOrdersSerializer(serializers.Serializer):
-    loading = serializers.CharField(source='loading.name', read_only=True)
-    unloading = serializers.CharField(source='unloading.name', read_only=True)
-    code = serializers.CharField()
-    total_amount = serializers.IntegerField()
-    client = ClientSerializer()
 
 
 class FinishedOrdersSerializer(serializers.Serializer):

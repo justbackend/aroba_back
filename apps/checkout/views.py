@@ -1,6 +1,5 @@
-from django.db.models import Prefetch, F, Sum, Case, When
-from django.db.models.fields import FloatField
-from rest_framework import generics
+from django.db.models import Prefetch, F, Sum
+from rest_framework import generics, views
 from rest_framework.response import Response
 
 import utils
@@ -9,7 +8,6 @@ from apps.orders import models as order_models
 from utils.choices import *
 from . import serializers, models
 from .models import MainCheckout
-from .serializers import BalanceSerializer
 from ..orders.models import Order
 
 
@@ -53,35 +51,41 @@ class CreateTransactionAPI(generics.ListCreateAPIView):
 class UpdateTransactionAPI(generics.UpdateAPIView):
     queryset = models.Transaction.objects.all()
     serializer_class = serializers.TransactionStatusUpdateSerializer
+    http_method_names = 'patch',
 
 
-class BalanceView(generics.GenericAPIView):
+class BalanceView(views.APIView):
     def get(self, request):
         current_balance = MainCheckout.balance
 
-        unpaid_orders = Order.objects.filter(paid=False)
-        debt_sums = unpaid_orders.values('payment_type').annotate(total_income=Sum('income'))
+        response = {'current_balance': current_balance}
 
-        debt_sums = Order.objects.filter(paid=False).aggregate(
-            debt_cash=Sum(
-                Case(
-                    When(payment_type=PaymentTypes.CASH, then='income'),
-                    default=0.0,
-                    output_field=FloatField()
-                )
-            ),
-            debt_transfer=Sum(
-                Case(
-                    When(payment_type=PaymentTypes.TRANSFER, then='income'),
-                    default=0.0,
-                    output_field=FloatField()
-                )
-            )
+        unpaid_orders = (
+            Order.objects.filter(paid=False)
+            .values('payment_type')
+            .annotate(total=Sum('income', default=0))
         )
 
-        data = {
-            'current_balance': float(current_balance),
-            'debt_cash': float(debt_sums['debt_cash'] or 0.0),
-            'debt_transfer': float(debt_sums['debt_transfer'] or 0.0),
-        }
-        return Response(data)
+        for item in unpaid_orders:
+            response[item['payment_type']] = item['total']
+
+        return Response(response)
+
+
+class CashSummaryListView(generics.ListAPIView):
+    serializer_class = serializers.CashSummarySerializer
+    filterset_fields = ('client', 'loading', 'unloading', )
+    search_fields = ('code', 'car_number', 'driver_phone', )
+
+    def get_queryset(self):
+        return (
+            order_models.Order.objects.filter(
+                payment_type=OrderPaymentTypes.CASH,
+                paid=True,
+                status=OrderStatus.FINISHED,
+            )
+            .select_related('loading', 'unloading', 'client')
+            .only('id', 'code', 'date', 'car_number', 'loading__name',
+                  'unloading__name', 'client__name', 'total_amount', 'income')
+        )
+
