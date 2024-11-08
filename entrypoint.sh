@@ -1,8 +1,8 @@
 #!/bin/bash
 set -e
 
-# Ma'lumotlar bazasi mavjudligini tekshirish
-./wait-for-it.sh $DB_HOST:5432 --timeout=30 --strict -- echo "Database is up"
+
+./wait-for-it.sh aroba_db:5432 --timeout=30 --strict -- echo "Database aroba_db is up"
 
 python manage.py migrate --noinput
 python manage.py collectstatic --noinput

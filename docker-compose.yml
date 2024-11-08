@@ -18,11 +18,10 @@ services:
       - DB_HOST=aroba_db
       - REDIS_URL=redis://redis:6379/0
       - CELERY_BROKER_URL=redis://redis:6379
-
+    restart: always
     depends_on:
       - aroba_db
       - redis
-    restart: always
 
   aroba_db:
     image: postgres:16
