@@ -36,5 +36,3 @@ RUN chmod +x /entrypoint.sh
 RUN cron -f &
 
 
-# Set entrypoint
-ENTRYPOINT ["/entrypoint.sh"]
