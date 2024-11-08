@@ -1,5 +1,5 @@
 # Base image
-FROM python:3.12-slim
+FROM python:3.10-slim
 
 # shell
 SHELL ["/bin/bash", "-c"]
@@ -34,5 +34,10 @@ COPY . .
 COPY entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh
 RUN cron -f &
+
+
+ADD wait-for-it.sh /wait-for-it.sh
+RUN chmod +x /wait-for-it.sh
+
 
 

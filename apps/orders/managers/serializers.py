@@ -38,6 +38,7 @@ class StatusOrdersListSerializer(serializers.ModelSerializer):
             'code',
             'car_number',
             'driver_phone',
+            'status',
             'client',
             'date',
             'loading',

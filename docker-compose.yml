@@ -1,6 +1,32 @@
 version: '3.8'
 
 services:
+  aroba_db:
+    image: postgres:16
+    container_name: aroba_db
+    env_file:
+      - .env
+    environment:
+      - POSTGRES_DB=${DB_NAME}
+      - POSTGRES_USER=${DB_USER}
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./dump.sql:/docker-entrypoint-initdb.d/dump.sql
+    restart: always
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U ${DB_USER}" ]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+
+  redis:
+    image: redis:latest
+    container_name: aroba_redis
+    restart: always
+    volumes:
+      - redis_data:/data
+
   aroba_web:
     build: .
     container_name: aroba_web
@@ -18,30 +44,10 @@ services:
       - DB_HOST=aroba_db
       - REDIS_URL=redis://redis:6379/0
       - CELERY_BROKER_URL=redis://redis:6379
-    restart: always
     depends_on:
       - aroba_db
       - redis
-
-  aroba_db:
-    image: postgres:16
-    container_name: aroba_db
-    env_file:
-      - .env
-    volumes:
-      - postgres_data:/var/lib/postgresql/data
-    environment:
-      - POSTGRES_DB=${DB_NAME}
-      - POSTGRES_USER=${DB_USER}
-      - POSTGRES_PASSWORD=${DB_PASSWORD}
-
-  redis:
-    image: redis:latest
-    container_name: aroba_redis
     restart: always
-    volumes:
-      - redis_data:/data
-
 #  nginx:
 #    build:
 #      context: ./nginx

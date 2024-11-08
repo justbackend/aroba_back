@@ -1,9 +1,6 @@
 #!/bin/bash
 set -e
 
-
-./wait-for-it.sh aroba_db:5432 --timeout=30 --strict -- echo "Database aroba_db is up"
-
 python manage.py migrate --noinput
 python manage.py collectstatic --noinput
 
@@ -19,5 +16,4 @@ if not User.objects.filter(username='a').exists():
 EOF
 
 exec gunicorn core.wsgi:application --bind 0.0.0.0:8001 --workers 4
-
 
