@@ -42,7 +42,7 @@ services:
     container_name: aroba_redis
     restart: always
     volumes:
-      - ./redis:/data  # M
+      - redis_data:/data
 
 #  nginx:
 #    build:
@@ -63,5 +63,6 @@ services:
 
 volumes:
   postgres_data:
+  redis_data:
 
 
