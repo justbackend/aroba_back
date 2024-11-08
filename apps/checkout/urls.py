@@ -13,4 +13,7 @@ urlpatterns = [
     # balance and debts
     path('balance-info/', views.BalanceView.as_view(), name='balance'),
 
+    # chash summary
+    path('cash-summary/', views.CashSummaryListView.as_view(), name='checkout'),
+
 ]

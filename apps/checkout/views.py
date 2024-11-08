@@ -51,6 +51,7 @@ class CreateTransactionAPI(generics.ListCreateAPIView):
 class UpdateTransactionAPI(generics.UpdateAPIView):
     queryset = models.Transaction.objects.all()
     serializer_class = serializers.TransactionStatusUpdateSerializer
+    http_method_names = 'patch',
 
 
 class BalanceView(views.APIView):
@@ -78,8 +79,8 @@ class CashSummaryListView(generics.ListAPIView):
         return (
             order_models.Order.objects.filter(
                 payment_type=OrderPaymentTypes.CASH,
-                paid=True,
-                status=OrderStatus.FINISHED,
+                # paid=True,
+                # status=OrderStatus.FINISHED,
             )
             .select_related('loading', 'unloading', 'client')
             .only('id', 'code', 'date', 'car_number', 'loading__name',
