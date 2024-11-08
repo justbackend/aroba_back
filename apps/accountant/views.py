@@ -8,7 +8,7 @@ from . import serializers
 from utils.excel import ExcelListView
 
 
-class TransClientsViewList(generics.ListAPIView, mixins.UpdateModelMixin):
+class TransClientsViewList(generics.ListAPIView):
     serializer_class = serializers.TransClientSerializer
 
     def get_queryset(self):
@@ -18,8 +18,11 @@ class TransClientsViewList(generics.ListAPIView, mixins.UpdateModelMixin):
             .distinct()
         )
 
-    def patch(self, request, *args, **kwargs):
-        return self.partial_update(request, *args, **kwargs)
+
+class TransClientsViewUpdate(generics.UpdateAPIView):
+    serializer_class = serializers.TransClientSerializer
+    queryset = client_models.Client.objects.all()
+    http_method_names = 'patch',
 
 
 class TransClientsViewExcel(ExcelListView, TransClientsViewList):
