@@ -88,3 +88,4 @@ class CashSummaryListView(generics.ListAPIView):
             .only('id', 'code', 'date', 'car_number', 'loading__name',
                   'unloading__name', 'client__name', 'total_amount', 'income')
         )
+
