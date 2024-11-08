@@ -75,8 +75,8 @@ class BalanceView(views.APIView):
 
 class CashSummaryListView(generics.ListAPIView):
     serializer_class = serializers.CashSummarySerializer
-    filterset_fields = ('client', 'loading', 'unloading', )
-    search_fields = ('code', 'car_number', 'driver_phone', )
+    filterset_fields = ('client', 'loading', 'unloading',)
+    search_fields = ('code', 'car_number', 'driver_phone',)
 
     def get_queryset(self):
         return (
@@ -92,6 +92,23 @@ class CashSummaryListView(generics.ListAPIView):
 
 
 class CashSummaryExcelView(ExcelListView):
-    pass
+    fields = ('id', 'code', 'date', 'car_number', 'loading_name', 'unloading_name', 'client_name')
+    filename = 'cash_summary'
 
-
+    def get_data(self):
+        return (
+            order_models.Order.objects.filter(
+                payment_type=OrderPaymentTypes.CASH,
+                paid=True,
+                status=OrderStatus.FINISHED,
+            )
+            .values(
+                'id',
+                'code',
+                'date',
+                'car_number',
+                loading_name=F('loading__name'),
+                unloading_name=F('unloading__name'),
+                client_name=F('client__name'),
+            )
+        )
