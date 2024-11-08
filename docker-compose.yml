@@ -6,7 +6,7 @@ services:
     container_name: aroba_web
     entrypoint: ./entrypoint.sh
     volumes:
-      - .:/app
+      - .:/aroba
       - ./static:/aroba/static
       - ./media:/aroba/media
       - ./dump.sql:/aroba/dump.sql
@@ -23,6 +23,7 @@ services:
     depends_on:
       - aroba_db
       - redis
+    restart: always
 
   aroba_db:
     image: postgres:14

@@ -12,6 +12,8 @@ class Client(BaseModel):
     requisite = models.CharField(max_length=255, verbose_name="Requisite comment", null=True, blank=True)
     requisite_file = models.FileField(upload_to="clients/", verbose_name="Requisite file", null=True, blank=True)
     deleted = models.BooleanField(default=False, verbose_name="Deleted")
+    inn = models.CharField(max_length=15, verbose_name="Inner client", null=True, blank=True)
+    customer = models.CharField(max_length=255, verbose_name="Customer", null=True, blank=True)
     accounting_phone = models.CharField(
         max_length=20, verbose_name="Accounting phone number",
         validators=[utils.PhoneValidator()], null=True, blank=True

@@ -22,7 +22,7 @@ RUN mkdir -p /opt/run
 
 # Set working directory
 WORKDIR /aroba
-COPY .env /aroba/.env
+COPY requirements requirements/
 
 # Copy requirements and install dependencies
 RUN pip install -r requirements/production.txt
