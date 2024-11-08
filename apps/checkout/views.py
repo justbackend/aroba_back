@@ -69,3 +69,19 @@ class BalanceView(views.APIView):
             response[item['payment_type']] = item['total']
 
         return Response(response)
+
+
+class CashSummaryListView(generics.ListAPIView):
+    serializer_class = serializers.CashSummarySerializer
+
+    def get_queryset(self):
+        return (
+            order_models.Order.objects.filter(
+                payment_type=OrderPaymentTypes.CASH,
+                paid=True,
+                status=OrderStatus.FINISHED,
+            )
+            .select_related('loading', 'unloading', 'client')
+            .only('id', 'code', 'date', 'car_number', 'loading__name',
+                  'unloading__name', 'client__name', 'total_amount', 'income')
+        )
