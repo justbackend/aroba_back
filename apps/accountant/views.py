@@ -20,6 +20,7 @@ class TransClientsViewList(generics.ListAPIView):
 
 
 class TransClientsViewExcel(ExcelListView, TransClientsViewList):
+    fields = ('id', 'customer', 'accounting_phone', 'inn', 'requisite')
 
     def get_data(self):
         return self.get_queryset()
