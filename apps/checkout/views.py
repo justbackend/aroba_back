@@ -1,6 +1,4 @@
-from django.db.models import Prefetch, F, Sum, Case, When
-from django.db.models.fields import FloatField
-from django.db.models import Prefetch, F, Sum, Count
+from django.db.models import Prefetch, F, Sum
 from rest_framework import generics, views
 from rest_framework.response import Response
 
@@ -10,7 +8,6 @@ from apps.orders import models as order_models
 from utils.choices import *
 from . import serializers, models
 from .models import MainCheckout
-from .serializers import BalanceSerializer
 from ..orders.models import Order
 
 
