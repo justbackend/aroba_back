@@ -1,5 +1,5 @@
 from django.db.models import F
-from rest_framework import generics
+from rest_framework import generics, mixins
 
 from apps.orders import models as orders_models
 from apps.clients import models as client_models
@@ -8,7 +8,7 @@ from . import serializers
 from utils.excel import ExcelListView
 
 
-class TransClientsViewList(generics.ListAPIView):
+class TransClientsViewList(generics.ListAPIView, mixins.UpdateModelMixin):
     serializer_class = serializers.TransClientSerializer
 
     def get_queryset(self):
@@ -17,6 +17,9 @@ class TransClientsViewList(generics.ListAPIView):
             .filter(routes__type=ClientRouteTypes.TRANSFER)
             .distinct()
         )
+
+    def patch(self, request, *args, **kwargs):
+        return self.partial_update(request, *args, **kwargs)
 
 
 class TransClientsViewExcel(ExcelListView, TransClientsViewList):
