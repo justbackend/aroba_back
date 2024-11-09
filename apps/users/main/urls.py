@@ -26,7 +26,6 @@ urlpatterns = [
     path('modules/', modules_lc, name='modules'),
     path('modules/<int:pk>/', modules_udd, name='modules'),
 
-
     # users
     path('users/', users_lc, name='users'),
     path('users/<int:pk>/', users_udd, name='users'),
