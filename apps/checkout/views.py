@@ -47,6 +47,7 @@ class PayCashOrder(views.APIView):
             )), paid=False, id=order_id)
 
         order.paid = True
+        order.status = OrderStatus.FINISHED
         order.save()
         return Response(data={'order_id': order_id})
 
