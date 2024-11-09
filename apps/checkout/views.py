@@ -37,8 +37,8 @@ class ReportOrdersListAPI(generics.ListAPIView):
 
 
 class CreateTransactionAPI(generics.ListCreateAPIView):
-    filter_set_fields = ('type', 'status')
-    queryset = models.Transaction.objects.all()
+    queryset = models.Transaction.objects.all().order_by('-id')
+    filterset_fields = ('type', 'status')
 
     serializer_classes = {
         'POST': serializers.CreateTransactionSerializer,

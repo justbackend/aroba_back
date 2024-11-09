@@ -68,6 +68,8 @@ class TransactionStatusUpdateSerializer(serializers.ModelSerializer):
 
 
 class TransactionListSerializer(serializers.ModelSerializer):
+    created_at = serializers.DateTimeField(read_only=True, format='%d.%m.%Y')
+
     class Meta:
         model = models.Transaction
         fields = (
@@ -76,6 +78,7 @@ class TransactionListSerializer(serializers.ModelSerializer):
             'status',
             'type',
             'comment',
+            'created_at',
         )
 
 
@@ -89,5 +92,3 @@ class CashSummarySerializer(serializers.Serializer):
     client = serializers.CharField(read_only=True, source='client.name')
     total_amount = serializers.IntegerField(read_only=True)
     income = serializers.IntegerField(read_only=True)
-
-

@@ -45,8 +45,6 @@ class ClientSerializer(serializers.ModelSerializer):
         amount = validated_data.pop('amount')
         loading = validated_data.pop('loading')
         unloading = validated_data.pop('unloading')
-        print(self.context['request'].data)
-        print(_type)
 
         obj = super().create(validated_data)
         models.ClientRoute.objects.create(client=obj, amount=amount, loading=loading, unloading=unloading, type=_type)
