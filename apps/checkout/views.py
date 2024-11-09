@@ -38,13 +38,13 @@ class ReportOrdersListAPI(generics.ListAPIView):
 class PayCashOrder(views.APIView):
 
     def get(self, request, order_id: int, *args, **kwargs):
+
         order = utils.get_object(
             order_models.Order,
             Q(status__in=(
                 OrderStatus.STARTED, OrderStatus.AT_FACTORY, OrderStatus.LOADED, OrderStatus.LOCATION_ASSIGNED
-            )),
-            paid=False, id=order_id
-        )
+            )), paid=False, id=order_id)
+
         order.paid = True
         order.save()
         return Response(data={'order_id': order_id})
