@@ -45,6 +45,8 @@ class ClientSerializer(serializers.ModelSerializer):
         amount = validated_data.pop('amount')
         loading = validated_data.pop('loading')
         unloading = validated_data.pop('unloading')
+        print(self.context['request'].data)
+        print(_type)
 
         obj = super().create(validated_data)
         models.ClientRoute.objects.create(client=obj, amount=amount, loading=loading, unloading=unloading, type=_type)
@@ -63,12 +65,21 @@ class ClientRouteSerializer(serializers.ModelSerializer):
             'type',
         )
 
+
+class CreateClientRouteSerializer(ClientRouteSerializer):
+
     def validate(self, v):
-        checking = models.ClientRoute.objects.filter(
-            client=v['client'], loading=v['loading'],
-            unloading=v['unloading'], type=v['type']
-        )
-        if checking.exists():
-            return utils.APIException('The object already exists.')
+        if not self.instance:
+            checking = models.ClientRoute.objects.filter(
+                client=v['client'], loading=v['loading'],
+                unloading=v['unloading'], type=v['type']
+            )
+            if checking.exists():
+                raise utils.APIException('The object already exists.')
         return v
 
+    def to_representation(self, obj):
+        data = super().to_representation(obj)
+        data['loading'] = utils.PointNameSerializer(obj.loading).data
+        data['unloading'] = utils.PointNameSerializer(obj.unloading).data
+        return data

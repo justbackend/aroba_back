@@ -37,5 +37,9 @@ class ClientViewSet(viewsets.ModelViewSet):
 
 
 class ClientRouteViewSet(viewsets.ModelViewSet):
-    serializer_class = serializers.ClientRouteSerializer
     queryset = models.ClientRoute.objects.all()
+
+    def get_serializer_class(self):
+        if self.action == 'list':
+            return serializers.ClientRouteSerializer
+        return serializers.CreateClientRouteSerializer

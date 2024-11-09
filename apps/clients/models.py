@@ -32,7 +32,7 @@ class Client(BaseModel):
 
 
 class ClientRoute(BaseModel):
-    amount = models.DecimalField(max_digits=10, decimal_places=2, verbose_name="Amount")
+    amount = models.DecimalField(max_digits=15, decimal_places=2, verbose_name="Amount")
     type = models.CharField(
         max_length=15,
         verbose_name="Route type",
