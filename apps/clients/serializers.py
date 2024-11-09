@@ -47,7 +47,6 @@ class ClientSerializer(serializers.ModelSerializer):
         unloading = validated_data.pop('unloading')
 
         obj = super().create(validated_data)
-
         models.ClientRoute.objects.create(client=obj, amount=amount, loading=loading, unloading=unloading, type=_type)
         return obj
 
