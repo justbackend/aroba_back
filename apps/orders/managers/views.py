@@ -32,7 +32,7 @@ class StatusOrdersListView(generics.ListAPIView):
             models.Order.objects.filter(
                 status__in=(OrderStatus.STARTED, OrderStatus.AT_FACTORY,
                             OrderStatus.LOADED, OrderStatus.LOCATION_ASSIGNED)
-            ).select_related('loading', 'client', 'unloading')
+            ).select_related('loading', 'client', 'unloading').order_by('-id')
         )
 
 
