@@ -26,21 +26,11 @@ class CreateOrderSerializer(serializers.Serializer):
             raise utils.APIException("The client route does not exist")
         return attrs
 
-    # def create(self, validated_data):
-    #     car_count = validated_data.pop('car_count')
-    #     self.codes: list = models.Order.generate_codes(car_count)
-    #     order_objs = list(map(lambda code: models.Order(code=code, **validated_data), self.codes))
-    #     orders = models.Order.objects.bulk_create(order_objs)
-    #     self.create_logs(orders)
-    #     return validated_data
-
     def create(self, validated_data):
         car_count = validated_data.pop('car_count')
-        last_serial_id = models.Order.objects.order_by('-id').first().id + 10_000
-        orders = models.Order.objects.bulk_create([
-            models.Order(code=models.Order.generate_code(last_serial_id + i + 1), **validated_data)
-            for i in range(car_count)
-        ])
+        self.codes: list = models.Order.generate_codes(car_count)
+        order_objs = list(map(lambda code: models.Order(code=code, **validated_data), self.codes))
+        orders = models.Order.objects.bulk_create(order_objs)
         self.create_logs(orders)
         return validated_data
 
@@ -52,4 +42,4 @@ class CreateOrderSerializer(serializers.Serializer):
         return logs
 
     def to_representation(self, instance):
-        return dict()
+        return dict(codes=self.codes)
