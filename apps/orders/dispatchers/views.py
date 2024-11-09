@@ -63,6 +63,7 @@ class FillingOrdersListView(generics.ListAPIView):
                     function='JSON_BUILD_OBJECT',
                     output_field=TextField()
                 ), filter=Q(payments__type=PaymentTypes.EXTRA)))
+            .order_by('-id')
         )
 
 
