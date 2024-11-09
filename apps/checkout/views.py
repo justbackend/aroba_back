@@ -88,7 +88,12 @@ class BalanceView(views.APIView):
         response = {'current_balance': current_balance}
 
         unpaid_orders = (
-            order_models.Order.objects.filter(paid=False)
+            order_models.Order.objects.filter(
+                paid=False,
+                status__in=(
+                    OrderStatus.STARTED, OrderStatus.AT_FACTORY,
+                    OrderStatus.LOADED, OrderStatus.LOCATION_ASSIGNED
+                ))
             .values('payment_type')
             .annotate(total=Sum('income', default=0))
         )
