@@ -1,14 +1,16 @@
 import io
 from datetime import datetime, date
-from typing import Union, Any
+from typing import Union, Any, TypeVar
 
 import openpyxl
 import pytz
-from django.db.models import Model
+from django.db.models import Model, QuerySet
 from django.http import HttpResponse
 from openpyxl.styles import Alignment, Side, PatternFill, Border, Font
 from openpyxl.workbook import Workbook
 from rest_framework.views import APIView
+
+T = TypeVar('T')
 
 
 class WriteWorkBook(object):
@@ -137,14 +139,17 @@ class ExcelListView(APIView):
         return response
 
     def get_data(self):
-        if self.filters:
-            return self
         assert self.data is not None, "You have to set data"
+
+        if self.filters:
+            return self.get_filtered_data(self.data)
+
         return self.data
 
-    def get_filtered_data(self, data):
+    def get_filtered_data(self, data: QuerySet[T]):
         query_params = self.request.query_params
-
+        query = dict()
         for field in self.filters:
-            if query_params.get(field):
-                pass
+            if value := query_params.get(field):
+                query[field] = value
+        return data.filter(**query)

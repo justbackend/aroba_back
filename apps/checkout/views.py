@@ -53,11 +53,11 @@ class CreateTransactionAPI(generics.ListCreateAPIView):
         serializer.save(type=TransactionTypes.EXPENSE)
 
 
-
 class TransactionsExcel(ExcelListView):
-    pass
-
-
+    data = models.Transaction.objects.all().order_by('-id')
+    filename = 'transactions'
+    fields = ('id', 'amount', 'status', 'type', 'comment', 'created_at')
+    filters = ('type', 'status')
 
 
 class UpdateTransactionAPI(generics.UpdateAPIView):
