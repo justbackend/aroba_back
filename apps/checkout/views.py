@@ -9,7 +9,6 @@ from utils.choices import *
 from utils.excel import *
 from . import serializers, models
 from .models import MainCheckout
-from ..orders.models import Order
 
 
 class ReportOrdersListAPI(generics.ListAPIView):
@@ -36,6 +35,15 @@ class ReportOrdersListAPI(generics.ListAPIView):
         )
 
 
+class PayCashOrder(views.APIView):
+
+    def get(self, request, order_id: int, *args, **kwargs):
+        order = utils.get_object(order_models.Order, paid=False, id=order_id)
+        order.paid = True
+        order.save()
+        return Response(data={'order_id': order_id})
+
+
 class CreateTransactionAPI(generics.ListCreateAPIView):
     queryset = models.Transaction.objects.all().order_by('-id')
     filterset_fields = ('type', 'status')
@@ -56,7 +64,7 @@ class TransactionsExcel(ExcelListView):
     data = models.Transaction.objects.all().order_by('-id')
     filename = 'transactions'
     fields = ['id', 'amount', 'status', 'type', 'comment', 'created_at']
-    filters = ['type',]
+    filters = ['type', ]
 
 
 class UpdateTransactionAPI(generics.UpdateAPIView):
@@ -72,7 +80,7 @@ class BalanceView(views.APIView):
         response = {'current_balance': current_balance}
 
         unpaid_orders = (
-            Order.objects.filter(paid=False)
+            order_models.Order.objects.filter(paid=False)
             .values('payment_type')
             .annotate(total=Sum('income', default=0))
         )

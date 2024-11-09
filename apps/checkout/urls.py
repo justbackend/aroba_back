@@ -5,6 +5,7 @@ urlpatterns = [
 
     # report orders
     path('report-orders/', views.ReportOrdersListAPI.as_view(), name='report-orders-list'),
+    path('pay-cash-order/<int:order_id>/', views.PayCashOrder.as_view(), name='pay-cash-order'),
 
     # transactions
     path('transactions/', views.CreateTransactionAPI.as_view(), name='create-transaction'),
