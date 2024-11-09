@@ -51,8 +51,8 @@ class CreateTransactionSerializer(serializers.ModelSerializer):
         }
 
     def validate(self, data):
-        if MainCheckout.balance > data['amount']:
-            raise utils.APIException('The main checkout has exceeded the balance.')
+        if MainCheckout.balance < data['amount']:
+            raise utils.APIException("Asosiy balansda mablag' yetarli emas")
         return data
 
     def create(self, validated_data):
@@ -84,11 +84,17 @@ class TransactionStatusUpdateSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Transaction
         fields = ('status',)
+        extra_kwargs = {
+            'status': {'required': True},
+        }
 
     def update(self, instance, validated_data):
-        obj = super().update(instance, validated_data)
-        if obj.status == TransactionStatuses.APPROVED:
+        if validated_data['status'] == TransactionStatuses.APPROVED:
+            if MainCheckout.balance < instance.amount:
+                raise utils.APIException("Asosiy balansda mablag' yetarli emas")
             MainCheckout.add(-instance.amount)
+
+        obj = super().update(instance, validated_data)
         return obj
 
 
