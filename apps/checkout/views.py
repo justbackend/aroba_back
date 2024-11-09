@@ -117,8 +117,10 @@ class CashSummaryListView(generics.ListAPIView):
                 status=OrderStatus.FINISHED,
             )
             .select_related('loading', 'unloading', 'client')
-            .only('id', 'code', 'date', 'car_number', 'loading__name',
-                  'unloading__name', 'client__name', 'total_amount', 'income')
+            .only(
+                'id', 'code', 'date', 'car_number', 'loading__name', 'payment_type',
+                'unloading__name', 'client__name', 'total_amount', 'income',
+            ).order_by('-id')
         )
 
 
