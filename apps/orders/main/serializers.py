@@ -36,7 +36,7 @@ class CreateOrderSerializer(serializers.Serializer):
 
     def create(self, validated_data):
         car_count = validated_data.pop('car_count')
-        last_serial_id = models.Order.objects.order_by('-id').first().id
+        last_serial_id = models.Order.objects.order_by('-id').first().id + 10_000
         orders = models.Order.objects.bulk_create([
             models.Order(code=models.Order.generate_code(last_serial_id + i + 1), **validated_data)
             for i in range(car_count)
@@ -52,4 +52,4 @@ class CreateOrderSerializer(serializers.Serializer):
         return logs
 
     def to_representation(self, instance):
-        return dict(codes=self.codes)
+        return dict()
