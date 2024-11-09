@@ -42,7 +42,8 @@ class _MainCheckout:
 
 class Transaction(BaseModel):
     amount = models.DecimalField(max_digits=30, decimal_places=2, verbose_name="Amount")
-    comment = models.CharField(max_length=255, verbose_name="Description", blank=True, null=True)
+    comment = models.CharField(max_length=255, verbose_name="Comment", blank=True, null=True)
+    rejected = models.CharField(max_length=255, verbose_name="Rejected", blank=True, null=True)
     type = models.CharField(
         max_length=20, verbose_name="Type",
         choices=TransactionTypes.choices,

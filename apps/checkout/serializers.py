@@ -83,12 +83,13 @@ class TransactionListSerializer(serializers.ModelSerializer):
 class TransactionStatusUpdateSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Transaction
-        fields = ('status',)
+        fields = ('status', 'rejected')
         extra_kwargs = {
             'status': {'required': True},
         }
 
     def update(self, instance, validated_data):
+
         if validated_data['status'] == TransactionStatuses.APPROVED:
             if MainCheckout.balance < instance.amount:
                 raise utils.APIException("Asosiy balansda mablag' yetarli emas")
