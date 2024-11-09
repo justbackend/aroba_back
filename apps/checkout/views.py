@@ -3,6 +3,7 @@ from rest_framework import generics, views
 from rest_framework.response import Response
 
 import utils
+from utils.excel import ExcelListView
 from apps.clients import models as client_models
 from apps.orders import models as order_models
 from utils.choices import *
@@ -50,6 +51,13 @@ class CreateTransactionAPI(generics.ListCreateAPIView):
 
     def perform_create(self, serializer):
         serializer.save(type=TransactionTypes.EXPENSE)
+
+
+
+class TransactionsExcel(ExcelListView):
+    pass
+
+
 
 
 class UpdateTransactionAPI(generics.UpdateAPIView):

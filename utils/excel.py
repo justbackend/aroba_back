@@ -112,6 +112,7 @@ class ExcelListView(APIView):
     column_widths: list = None
     default_widths: int = 15
     data: Any = None
+    filters: list = None
     filename: str = 'New_excel'
 
     def get(self, request, *args, **kwargs):
@@ -136,7 +137,14 @@ class ExcelListView(APIView):
         return response
 
     def get_data(self):
-
+        if self.filters:
+            return self
         assert self.data is not None, "You have to set data"
         return self.data
 
+    def get_filtered_data(self, data):
+        query_params = self.request.query_params
+
+        for field in self.filters:
+            if query_params.get(field):
+                pass
