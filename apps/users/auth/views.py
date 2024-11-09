@@ -4,6 +4,7 @@ from rest_framework.response import Response
 from utils.customs.authentication import PayloadAuthentication
 from . import serializers
 from .. import models, utils
+from utils.permissions import PayloadPermission
 
 
 class LoginView(generics.GenericAPIView):
@@ -19,6 +20,7 @@ class LoginView(generics.GenericAPIView):
 
 class ProfileView(views.APIView):
     authentication_classes = (PayloadAuthentication,)
+    permission_classes = (PayloadPermission,)
 
     def get(self, request):
         profile_data = models.User.profile_data(request.auth['user_id'])
@@ -29,7 +31,7 @@ class ProfileView(views.APIView):
 
 class MyPermissionsListAPI(views.APIView):
     authentication_classes = (PayloadAuthentication,)
-    permission_classes = ()
+    permission_classes = (PayloadPermission,)
 
     def get(self, request, *args, **kwargs):
         return Response(utils.get_user_perms(request.auth['user_id']))
