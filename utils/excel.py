@@ -141,11 +141,11 @@ class ExcelListView(APIView):
     def get_data(self):
         assert self.data is not None, "You have to set data"
 
-        if self.filters:
+        if isinstance(self.data, QuerySet) and self.filters:
             return self.get_filtered_data(self.data)
         return self.data
 
-    def get_filtered_data(self, data: QuerySet[T]):
+    def get_filtered_data(self, data: QuerySet[T]) -> QuerySet[T]:
         query_params = self.request.query_params
         query = dict()
         for field in self.filters:
