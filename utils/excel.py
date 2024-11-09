@@ -143,7 +143,6 @@ class ExcelListView(APIView):
 
         if self.filters:
             return self.get_filtered_data(self.data)
-
         return self.data
 
     def get_filtered_data(self, data: QuerySet[T]):
