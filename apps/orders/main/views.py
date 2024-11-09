@@ -35,14 +35,14 @@ class CombinationCreateOrderRoutesListAPI(views.APIView):
         for key, group in groupby(sorted(routes_list, key=itemgetter('loading_id')),
                                   key=itemgetter('loading_id', 'loading__name')):
             loading_id, loading_name = key
-            unloadings = [
+            un_loadings = [
                 {"id": g['unloading_id'], "name": g['unloading__name']}
                 for g in group
             ]
             routes_grouped.append({
                 "loading_id": loading_id,
                 "loading_name": loading_name,
-                "unloadings": unloadings
+                "unloadings": un_loadings
             })
 
         return Response(routes_grouped)
