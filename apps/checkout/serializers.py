@@ -1,5 +1,6 @@
 from rest_framework import serializers
 
+import utils
 from utils.choices import TransactionStatuses
 from . import models
 from apps.orders import models as orders_models
@@ -48,6 +49,16 @@ class CreateTransactionSerializer(serializers.ModelSerializer):
         extra_kwargs = {
             'status': {'read_only': True},
         }
+
+    def validate(self, data):
+        if MainCheckout.balance > data['amount']:
+            raise utils.APIException('The main checkout has exceeded the balance.')
+        return data
+
+    def create(self, validated_data):
+        trans = super().create(validated_data)
+        MainCheckout.add(-trans.amount)
+        return trans
 
     def to_representation(self, instance):
         data = super().to_representation(instance)
