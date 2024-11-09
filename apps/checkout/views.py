@@ -22,7 +22,8 @@ class ReportOrdersListAPI(generics.ListAPIView):
             order_models.Order.objects.filter(
                 payment_type=payment_type,
                 status__in=(OrderStatus.STARTED, OrderStatus.AT_FACTORY,
-                            OrderStatus.LOADED, OrderStatus.LOCATION_ASSIGNED)
+                            OrderStatus.LOADED, OrderStatus.LOCATION_ASSIGNED),
+                paid=False
             )
             .annotate(loading_name=F('loading__name'), unloading_name=F('unloading__name'))
         )
