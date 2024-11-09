@@ -103,12 +103,6 @@ class CashSummaryExcelView(ExcelListView):
                 status=OrderStatus.FINISHED,
             )
             .values(
-                'id',
-                'code',
-                'date',
-                'car_number',
-                loading_name=F('loading__name'),
-                unloading_name=F('unloading__name'),
-                client_name=F('client__name'),
-            )
-        )
+                'id', 'code', 'date', 'car_number',
+                loading_name=F('loading__name'), unloading_name=F('unloading__name'), client_name=F('client__name'),
+            ))
