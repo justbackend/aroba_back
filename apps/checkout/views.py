@@ -49,6 +49,10 @@ class CreateTransactionAPI(generics.ListCreateAPIView):
         return self.serializer_classes[self.request.method]
 
 
+    def perform_create(self, serializer):
+        serializer.save(type=TransactionTypes.EXPENSE)
+
+
 class UpdateTransactionAPI(generics.UpdateAPIView):
     queryset = models.Transaction.objects.all()
     serializer_class = serializers.TransactionStatusUpdateSerializer

@@ -40,14 +40,34 @@ class CreateTransactionSerializer(serializers.ModelSerializer):
         fields = (
             'id',
             'comment',
-            'type',
             'amount',
             'creator',
             'status',
+            'created_at',
         )
         extra_kwargs = {
             'status': {'read_only': True},
         }
+
+    def to_representation(self, instance):
+        data = super().to_representation(instance)
+        data['created_at'] = instance.created_at.strftime('%d.%m.%Y')
+        return data
+
+
+class TransactionListSerializer(serializers.ModelSerializer):
+    created_at = serializers.DateTimeField(read_only=True, format='%d.%m.%Y')
+
+    class Meta:
+        model = models.Transaction
+        fields = (
+            'id',
+            'amount',
+            'status',
+            'type',
+            'comment',
+            'created_at',
+        )
 
 
 class TransactionStatusUpdateSerializer(serializers.ModelSerializer):
@@ -65,21 +85,6 @@ class TransactionStatusUpdateSerializer(serializers.ModelSerializer):
             MainCheckout.add_balance(amount)
 
         return obj
-
-
-class TransactionListSerializer(serializers.ModelSerializer):
-    created_at = serializers.DateTimeField(read_only=True, format='%d.%m.%Y')
-
-    class Meta:
-        model = models.Transaction
-        fields = (
-            'id',
-            'amount',
-            'status',
-            'type',
-            'comment',
-            'created_at',
-        )
 
 
 class CashSummarySerializer(serializers.Serializer):
