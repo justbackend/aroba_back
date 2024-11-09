@@ -1,11 +1,8 @@
-import random
-import string
-
 from django.db import models
 
+import utils
 from apps.clients.models import ClientRoute
 from utils import choices
-import utils
 from utils.base import BaseModel
 
 
