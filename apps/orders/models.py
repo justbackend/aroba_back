@@ -73,13 +73,12 @@ class Order(BaseModel):
                 return code
 
     @classmethod
-    def generate_codes(cls, count) -> list[str]:
-
-        result = []
-        for i in range(count):
+    def generate_codes(cls, count) -> set[str]:
+        result = set()
+        while len(result) < count:
             code = cls.generate_code()
-            if code not in result:
-                result.append(cls.generate_code())
+            result.add(code)
+
         return result
 
     @classmethod

@@ -3,7 +3,6 @@ from rest_framework import serializers
 import utils
 from utils.choices import TransactionStatuses
 from . import models
-from apps.orders import models as orders_models
 from .models import MainCheckout
 
 
@@ -17,6 +16,7 @@ class ReportOrdersSerializer(serializers.Serializer):
     income = serializers.IntegerField(read_only=True)
     total_amount = serializers.IntegerField(read_only=True)
     paid = serializers.BooleanField(read_only=True)
+    status = serializers.IntegerField(read_only=True)
 
 
 class ReportSerializer(serializers.Serializer):
