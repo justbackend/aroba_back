@@ -80,7 +80,6 @@ class Order(BaseModel):
             code = cls.generate_code()
             if code not in result:
                 result.append(cls.generate_code())
-
         return result
 
     @classmethod
