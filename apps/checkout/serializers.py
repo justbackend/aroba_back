@@ -57,7 +57,6 @@ class CreateTransactionSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
         trans = super().create(validated_data)
-        MainCheckout.add(-trans.amount)
         return trans
 
     def to_representation(self, instance):
@@ -84,17 +83,12 @@ class TransactionListSerializer(serializers.ModelSerializer):
 class TransactionStatusUpdateSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Transaction
-        fields = ['status']
+        fields = ('status',)
 
     def update(self, instance, validated_data):
         obj = super().update(instance, validated_data)
         if obj.status == TransactionStatuses.APPROVED:
-            amount = {
-                'income': obj.amount,
-                'expense': -obj.amount,
-            }[obj.type]
-            MainCheckout.add_balance(amount)
-
+            MainCheckout.add(-instance.amount)
         return obj
 
 
