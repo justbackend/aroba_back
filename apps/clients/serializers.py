@@ -54,4 +54,21 @@ class ClientSerializer(serializers.ModelSerializer):
 class ClientRouteSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.ClientRoute
-        fields = '__all__'
+        fields = (
+            'id',
+            'amount',
+            'loading',
+            'unloading',
+            'client',
+            'type',
+        )
+
+    def validate(self, v):
+        checking = models.ClientRoute.objects.filter(
+            client=v['client'], loading=v['loading'],
+            unloading=v['unloading'], type=v['type']
+        )
+        if checking.exists():
+            return utils.APIException('The object already exists.')
+        return v
+
