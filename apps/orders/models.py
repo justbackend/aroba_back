@@ -1,11 +1,8 @@
-import random
-import string
-
 from django.db import models
 
+import utils
 from apps.clients.models import ClientRoute
 from utils import choices
-import utils
 from utils.base import BaseModel
 
 
@@ -55,7 +52,6 @@ class Order(BaseModel):
         verbose_name = 'Order'
         verbose_name_plural = 'Orders'
         db_table = 'orders'
-
 
     def __str__(self):
         return self.code
@@ -150,4 +146,3 @@ class OrderLog(BaseModel):
         verbose_name = 'Order Log'
         verbose_name_plural = 'Order Logs'
         db_table = 'order_logs'
-
