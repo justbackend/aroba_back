@@ -55,8 +55,8 @@ class CreateTransactionAPI(generics.ListCreateAPIView):
 class TransactionsExcel(ExcelListView):
     data = models.Transaction.objects.all().order_by('-id')
     filename = 'transactions'
-    fields = ('id', 'amount', 'status', 'type', 'comment', 'created_at')
-    filters = ('type', 'status')
+    fields = ['id', 'amount', 'status', 'type', 'comment', 'created_at']
+    filters = ['type',]
 
 
 class UpdateTransactionAPI(generics.UpdateAPIView):
