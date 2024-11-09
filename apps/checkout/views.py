@@ -49,7 +49,7 @@ class PayCashOrder(views.APIView):
         order.paid = True
         order.status = OrderStatus.FINISHED
         order.save()
-        return Response(data={'order_id': order_id})
+        return Response(data={'order_id': order_id, 'client_id': order.client_id})
 
 
 class CreateTransactionAPI(generics.ListCreateAPIView):
