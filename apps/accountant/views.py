@@ -61,5 +61,4 @@ class FinishedOrdersExcel(ExcelListView, FinishedOrders):
                 client_name=F('client__name'),
                 loading_name=F('loading__name'),
                 unloading_name=F('unloading__name'),
-            )
-        )
+            ))
