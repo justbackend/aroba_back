@@ -13,7 +13,7 @@ urlpatterns = [
     path('finished-orders-excel/', views.FinishedOrdersExcel.as_view(), name='accountant-finished-orders-excel'),
 
     # invoice orders
-    path('invoice-oredrs/', views.InvoiceOrders.as_view(), name='accountant-invoices'),
+    path('invoice-orders/', views.InvoiceOrders.as_view(), name='accountant-invoices'),
     path('create-invoice/<int:client_id>/', views.CreateInvoice.as_view(), name='accountant-invoices-create'),
     path('update-invoice/<int:pk>/', views.UpdateInvoice.as_view(), name='accountant-invoices-create'),
 ]

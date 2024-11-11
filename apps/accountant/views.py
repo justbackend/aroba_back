@@ -44,7 +44,7 @@ class FinishedOrders(generics.ListAPIView):
             .filter(
                 payment_type=OrderPaymentTypes.TRANSFER,
                 status=OrderStatus.FINISHED,
-            )
+            ).order_by('-id')
         )
 
 
@@ -122,6 +122,7 @@ class CreateInvoice(generics.GenericAPIView):
 
 class UpdateInvoice(generics.UpdateAPIView):
     serializer_class = serializers.UpdateInvoiceSerializer
+    http_method_names = 'patch',
 
     def get_object(self):
         return utils.get_object(model=models.AccountantInvoice, id=self.kwargs['pk'])
