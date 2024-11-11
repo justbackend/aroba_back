@@ -8,7 +8,7 @@ urlpatterns = [
     path('clients/<int:pk>/', views.TransClientsViewUpdate.as_view(), name='accountant-clients-list'),
     path('clients-excel/', views.TransClientsViewExcel.as_view(), name='accountant-clients-excel'),
 
-    # report orders
+    # summary orders
     path('finished-orders/', views.FinishedOrders.as_view(), name='accountant-finished-orders'),
     path('finished-orders-excel/', views.FinishedOrdersExcel.as_view(), name='accountant-finished-orders-excel'),
 
