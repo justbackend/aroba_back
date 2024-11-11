@@ -1,5 +1,8 @@
 from rest_framework import serializers
+
+import utils
 from apps.clients import models as client_models
+from . import models
 
 
 class TransClientSerializer(serializers.ModelSerializer):
@@ -26,5 +29,36 @@ class FinishedOrdersSerializer(serializers.Serializer):
     total_amount = serializers.IntegerField()
 
 
+class Test2(serializers.Serializer):
+    code = serializers.CharField()
+
+
+class Test(serializers.Serializer):
+    created_at = serializers.DateTimeField()
+    to_orders = Test2(many=True)
+
+
 class InvoiceOrdersSerializer(serializers.Serializer):
-    pass
+    id = serializers.IntegerField()
+    name = serializers.CharField()
+    inn = serializers.CharField()
+    accounting_phone = serializers.CharField()
+    invoices = serializers.SerializerMethodField()
+
+    def __init__(self, *args, **kwargs):
+        super(InvoiceOrdersSerializer, self).__init__(*args, **kwargs)
+        self.now = utils.now()
+
+    def get_invoices(self, client):
+        data = [self.collect_empty_orders(client.to_orders)] + client.to_invoices
+        return Test(instance=data, many=True).data
+
+    def collect_empty_orders(self, orders):
+        invoice = models.AccountantInvoice(
+            id=-1,
+            created_at=self.now,
+            updated_at=self.now,
+        )
+        setattr(invoice, 'to_orders', orders)
+
+        return invoice

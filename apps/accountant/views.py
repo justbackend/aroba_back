@@ -68,14 +68,20 @@ class InvoiceOrders(generics.ListAPIView):
     serializer_class = serializers.InvoiceOrdersSerializer
     orders_qs = (
         orders_models.Order.objects
-        .filter(payment_type=OrderPaymentTypes.TRANSFER)
+        .filter(
+            payment_type=OrderPaymentTypes.TRANSFER,
+            status__in=(
+                OrderStatus.STARTED, OrderStatus.AT_FACTORY,
+                OrderStatus.LOADED, OrderStatus.LOCATION_ASSIGNED,
+            )
+        )
         .annotate(loading_name=F('loading__name'), unloading_name=F('unloading__name'))
     )
 
     invoices_qs = (
         models.AccountantInvoice.objects
         .prefetch_related(Prefetch('orders', queryset=orders_qs, to_attr='to_orders'))
-        .all()
+        .all().order_by('-id')
     )
 
     def get_queryset(self):
