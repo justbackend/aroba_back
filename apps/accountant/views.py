@@ -66,19 +66,25 @@ class FinishedOrdersExcel(ExcelListView, FinishedOrders):
 
 class InvoiceOrders(generics.ListAPIView):
     serializer_class = serializers.InvoiceOrdersSerializer
-
-    invoices_qs = models.AccountantInvoice.objects.filter()
-
     orders_qs = (
         orders_models.Order.objects
-        .filter(payment_type=OrderPaymentTypes.TRANSFER, invoice__isnull=True)
+        .filter(payment_type=OrderPaymentTypes.TRANSFER)
         .annotate(loading_name=F('loading__name'), unloading_name=F('unloading__name'))
+    )
+
+    invoices_qs = (
+        models.AccountantInvoice.objects
+        .prefetch_related(Prefetch('orders', queryset=orders_qs, to_attr='to_orders'))
+        .all()
     )
 
     def get_queryset(self):
         clients_qs = (
             client_models.Client.objects
-            .prefetch_related(Prefetch('orders', queryset=self.orders_qs, to_attr='to_orders'))
+            .prefetch_related(
+                Prefetch('orders', queryset=self.orders_qs.filter(invoice__isnull=True), to_attr='to_orders'),
+                Prefetch('invoices', queryset=self.invoices_qs, to_attr='to_invoices'),
+            )
             .filter(orders__payment_type=OrderPaymentTypes.TRANSFER)
             .order_by('-id').distinct()
         )
