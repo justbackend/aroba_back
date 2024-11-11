@@ -50,6 +50,10 @@ class Order(BaseModel):
         related_name='orders_dispatcher', verbose_name="Dispatcher",
         null=True, blank=True,
     )
+    invoice = models.ForeignKey(
+        'accountant.AccountantInvoice', on_delete=models.PROTECT,
+        related_name='orders', verbose_name="Invoice", null=True, blank=True,
+    )
 
     class Meta:
         verbose_name = 'Order'
