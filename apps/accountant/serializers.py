@@ -30,7 +30,11 @@ class FinishedOrdersSerializer(serializers.Serializer):
 
 
 class Test2(serializers.Serializer):
+    id = serializers.IntegerField()
     code = serializers.CharField()
+    total_amount = serializers.DecimalField(max_digits=15, decimal_places=2)
+    loading_name = serializers.CharField()
+    unloading_name = serializers.CharField()
 
 
 class Test(serializers.Serializer):
