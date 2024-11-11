@@ -1,11 +1,11 @@
 from django.db.models import F, Prefetch
-from rest_framework import generics, mixins
+from rest_framework import generics
 
-from apps.orders import models as orders_models
 from apps.clients import models as client_models
+from apps.orders import models as orders_models
 from utils.choices import *
-from . import serializers
 from utils.excel import ExcelListView
+from . import serializers, models
 
 
 class TransClientsViewList(generics.ListAPIView):
@@ -66,6 +66,9 @@ class FinishedOrdersExcel(ExcelListView, FinishedOrders):
 
 class InvoiceOrders(generics.ListAPIView):
     serializer_class = serializers.InvoiceOrdersSerializer
+
+    invoices_qs = models.AccountantInvoice.objects.filter()
+
     orders_qs = (
         orders_models.Order.objects
         .filter(payment_type=OrderPaymentTypes.TRANSFER, invoice__isnull=True)

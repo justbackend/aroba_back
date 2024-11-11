@@ -67,3 +67,9 @@ class TransactionStatuses(models.TextChoices):
     PENDING = 'pending', 'Pending'
     CANCELLED = 'cancelled', 'Cancelled'
     APPROVED = 'approved', 'Approved'
+
+
+class InvoiceStatuses(models.TextChoices):
+    PENDING = 'pending', 'Pending'
+    APPROVED = 'approved', 'Approved'
+    CANCELLED = 'cancelled', 'Cancelled'
