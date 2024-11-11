@@ -1,6 +1,8 @@
 from django.db.models import F, Prefetch
-from rest_framework import generics
+from rest_framework import generics, status
+from rest_framework.response import Response
 
+import utils
 from apps.clients import models as client_models
 from apps.orders import models as orders_models
 from utils.choices import *
@@ -96,3 +98,25 @@ class InvoiceOrders(generics.ListAPIView):
         )
 
         return clients_qs
+
+
+class CreateInvoice(generics.GenericAPIView):
+    serializer_class = serializers.CreateInvoiceSerializer
+
+    def post(self, request, client_id: int, *args, **kwargs):
+        client = utils.get_object(client_models.Client, id=client_id)
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        orders_id = serializer.validated_data['orders']
+        invoice = self.create_invoice(client)
+        orders_models.Order.objects.filter(id__in=orders_id).update(invoice_id=invoice.id)
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
+
+    @classmethod
+    def create_invoice(cls, client) -> models.AccountantInvoice:
+        return models.AccountantInvoice.objects.create(
+            client=client,
+            accounting_phone=client.accounting_phone,
+            customer=client.customer,
+            inn=client.inn,
+        )

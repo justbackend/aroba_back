@@ -2,6 +2,7 @@ from rest_framework import serializers
 
 import utils
 from apps.clients import models as client_models
+from apps.orders import models as order_models
 from . import models
 
 
@@ -70,3 +71,8 @@ class InvoiceOrdersSerializer(serializers.Serializer):
         setattr(invoice, 'to_orders', orders)
 
         return invoice
+
+
+class CreateInvoiceSerializer(serializers.Serializer):
+    orders = serializers.ListField(child=serializers.IntegerField(min_value=1), required=True)
+

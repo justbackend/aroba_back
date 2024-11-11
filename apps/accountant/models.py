@@ -1,6 +1,6 @@
-from django.db import models
 from utils import BaseModel, PhoneValidator
 from utils.choices import *
+from django.db import models
 
 
 class AccountantInvoice(BaseModel):

@@ -14,4 +14,5 @@ urlpatterns = [
 
     # invoice orders
     path('invoice-oredrs/', views.InvoiceOrders.as_view(), name='accountant-invoices'),
+    path('invoices/<int:client_id>/', views.CreateInvoice.as_view(), name='accountant-invoices-create'),
 ]
