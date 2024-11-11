@@ -70,13 +70,11 @@ class InvoiceOrders(generics.ListAPIView):
     serializer_class = serializers.InvoiceOrdersSerializer
     orders_qs = (
         orders_models.Order.objects
-        .filter(
-            payment_type=OrderPaymentTypes.TRANSFER,
-            status__in=(
-                OrderStatus.STARTED, OrderStatus.AT_FACTORY,
-                OrderStatus.LOADED, OrderStatus.LOCATION_ASSIGNED,
-            )
-        )
+        .filter(payment_type=OrderPaymentTypes.TRANSFER,
+                status__in=(
+                    OrderStatus.STARTED, OrderStatus.AT_FACTORY,
+                    OrderStatus.LOADED, OrderStatus.LOCATION_ASSIGNED,
+                ))
         .annotate(loading_name=F('loading__name'), unloading_name=F('unloading__name'))
     )
 
