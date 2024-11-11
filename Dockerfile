@@ -11,7 +11,7 @@ ENV PYTHONUNBUFFERED=1
 # Paket ro'yxatini yangilang va kerakli kutubxonalarni o'rnating
 RUN apt-get update && \
     apt-get -qy install gcc libjpeg-dev libxslt-dev libpq-dev libmariadb-dev \
-    libmariadb-dev-compat gettext cron openssh-client locales vim postgresql-client-16 nano
+    libmariadb-dev-compat gettext cron openssh-client locales vim postgresql-client nano
 
 # Upgrade pip
 RUN pip install --upgrade pip
