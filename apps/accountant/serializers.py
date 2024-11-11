@@ -34,6 +34,7 @@ class Test2(serializers.Serializer):
 
 
 class Test(serializers.Serializer):
+    id = serializers.IntegerField()
     created_at = serializers.DateTimeField()
     to_orders = Test2(many=True)
 
