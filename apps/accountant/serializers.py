@@ -41,6 +41,7 @@ class ChildOrders(serializers.Serializer):
 class ParentInvoice(serializers.Serializer):
     id = serializers.IntegerField()
     created_at = serializers.DateTimeField()
+    status = serializers.CharField()
     to_orders = ChildOrders(many=True)
 
 
@@ -64,6 +65,7 @@ class InvoiceOrdersSerializer(serializers.Serializer):
             id=-1,
             created_at=self.now,
             updated_at=self.now,
+            status=None
         )
         setattr(invoice, 'to_orders', orders)
 
