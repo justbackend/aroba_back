@@ -2,7 +2,7 @@ version: '3.8'
 
 services:
   aroba_db:
-    image: postgres:16
+    image: postgres:15
     container_name: aroba_db
     env_file:
       - .env
