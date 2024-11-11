@@ -118,3 +118,10 @@ class CreateInvoice(generics.GenericAPIView):
             customer=client.customer,
             inn=client.inn,
         )
+
+
+class UpdateInvoice(generics.UpdateAPIView):
+    serializer_class = serializers.UpdateInvoiceSerializer
+
+    def get_object(self):
+        return utils.get_object(model=models.AccountantInvoice, id=self.kwargs['pk'])

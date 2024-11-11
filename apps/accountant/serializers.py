@@ -76,3 +76,11 @@ class InvoiceOrdersSerializer(serializers.Serializer):
 class CreateInvoiceSerializer(serializers.Serializer):
     orders = serializers.ListField(child=serializers.IntegerField(min_value=1), required=True)
 
+
+class UpdateInvoiceSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.AccountantInvoice
+        fields = (
+            'id',
+            'status',
+        )
