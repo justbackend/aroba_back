@@ -1,4 +1,4 @@
-from django.db.models import F
+from django.db.models import F, Prefetch
 from rest_framework import generics, mixins
 
 from apps.orders import models as orders_models
@@ -62,3 +62,22 @@ class FinishedOrdersExcel(ExcelListView, FinishedOrders):
                 loading_name=F('loading__name'),
                 unloading_name=F('unloading__name'),
             ))
+
+
+class InvoiceOrders(generics.ListAPIView):
+    serializer_class = serializers.InvoiceOrdersSerializer
+    orders_qs = (
+        orders_models.Order.objects
+        .filter(payment_type=OrderPaymentTypes.TRANSFER, invoice__isnull=True)
+        .annotate(loading_name=F('loading__name'), unloading_name=F('unloading__name'))
+    )
+
+    def get_queryset(self):
+        clients_qs = (
+            client_models.Client.objects
+            .prefetch_related(Prefetch('orders', queryset=self.orders_qs, to_attr='to_orders'))
+            .filter(orders__payment_type=OrderPaymentTypes.TRANSFER)
+            .order_by('-id').distinct()
+        )
+
+        return clients_qs

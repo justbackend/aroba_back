@@ -17,8 +17,6 @@ class TransClientSerializer(serializers.ModelSerializer):
         )
 
 
-
-
 class FinishedOrdersSerializer(serializers.Serializer):
     client_name = serializers.CharField(source='client.name')
     date = serializers.DateField()
@@ -26,3 +24,7 @@ class FinishedOrdersSerializer(serializers.Serializer):
     unloading = serializers.CharField(source='unloading.name')
     car_number = serializers.CharField()
     total_amount = serializers.IntegerField()
+
+
+class InvoiceOrdersSerializer(serializers.Serializer):
+    pass

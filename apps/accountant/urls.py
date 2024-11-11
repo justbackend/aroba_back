@@ -11,4 +11,7 @@ urlpatterns = [
     # report orders
     path('finished-orders/', views.FinishedOrders.as_view(), name='accountant-finished-orders'),
     path('finished-orders-excel/', views.FinishedOrdersExcel.as_view(), name='accountant-finished-orders-excel'),
+
+    # invoice orders
+    path('invoice-oredrs/', views.Invoices.as_view(), name='accountant-invoices'),
 ]
