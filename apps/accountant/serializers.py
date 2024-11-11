@@ -29,18 +29,19 @@ class FinishedOrdersSerializer(serializers.Serializer):
     total_amount = serializers.IntegerField()
 
 
-class Test2(serializers.Serializer):
+class ChildOrders(serializers.Serializer):
     id = serializers.IntegerField()
     code = serializers.CharField()
     total_amount = serializers.DecimalField(max_digits=15, decimal_places=2)
     loading_name = serializers.CharField()
     unloading_name = serializers.CharField()
+    car_number = serializers.CharField()
 
 
-class Test(serializers.Serializer):
+class ParentInvoice(serializers.Serializer):
     id = serializers.IntegerField()
     created_at = serializers.DateTimeField()
-    to_orders = Test2(many=True)
+    to_orders = ChildOrders(many=True)
 
 
 class InvoiceOrdersSerializer(serializers.Serializer):
@@ -56,7 +57,7 @@ class InvoiceOrdersSerializer(serializers.Serializer):
 
     def get_invoices(self, client):
         data = [self.collect_empty_orders(client.to_orders)] + client.to_invoices
-        return Test(instance=data, many=True).data
+        return ParentInvoice(instance=data, many=True).data
 
     def collect_empty_orders(self, orders):
         invoice = models.AccountantInvoice(
