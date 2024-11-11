@@ -53,7 +53,7 @@ class InvoiceOrdersSerializer(serializers.Serializer):
     invoices = serializers.SerializerMethodField()
 
     def __init__(self, *args, **kwargs):
-        super(InvoiceOrdersSerializer, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
         self.now = utils.now()
 
     def get_invoices(self, client):
