@@ -3,6 +3,7 @@ __all__ = (
     'Module',
     'User',
     'Role',
+    'APIRoute'
 )
 
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin, Permission
