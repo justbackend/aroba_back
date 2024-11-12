@@ -13,7 +13,6 @@ class RoleViewSet(viewsets.ModelViewSet):
 
 
 class ModuleViewSet(viewsets.ModelViewSet):
-    permission_classes = (RolePermission,)
     queryset = models.Module.objects.prefetch_related('actions').all().order_by('-id')
     serializer_class = serializers.ModuleSerializer
     pagination_class = None
