@@ -63,9 +63,6 @@ class Order(BaseModel):
     def __str__(self):
         return self.code
 
-    # @classmethod
-    # def generate_code(cls, serial_id: int) -> str:
-    #     return str(serial_id)[:2] + ''.join(chr(int(i) + 65) for i in str(serial_id)[2:])
 
     @classmethod
     def generate_code(cls):
