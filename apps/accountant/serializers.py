@@ -2,7 +2,6 @@ from rest_framework import serializers
 
 import utils
 from apps.clients import models as client_models
-from apps.orders import models as order_models
 from . import models
 
 
