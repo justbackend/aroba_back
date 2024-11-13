@@ -14,3 +14,5 @@ django_crontab
 python-dotenv
 pillow
 openpyxl
+channels
+channels-redis
