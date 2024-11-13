@@ -41,6 +41,8 @@ DUMP_BOT_TOKEN = os.getenv("DUMP_BOT_TOKEN")
 # Application definition
 DJANGO_APPS = [
     "unfold",  # before django.contrib.admin
+    'daphne',
+    'channels',
     "django.contrib.admin",  # required
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -110,7 +112,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = "core.wsgi.application"
+WSGI_APPLICATION = "core.asgi.application"
 
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
@@ -181,6 +183,17 @@ CACHES = {
         },
         "KEY_PREFIX": "aroba",
     }
+}
+
+
+CHANNEL_LAYERS = {
+    'default': {
+        'BACKEND': 'channels_redis.core.RedisChannelLayer',
+        'CONFIG': {
+            'hosts': [('127.0.0.1', 6379, 2)],
+            'prefix': 'main',
+        },
+    },
 }
 
 # CELERY CONFIGURATION

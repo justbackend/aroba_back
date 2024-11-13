@@ -16,3 +16,4 @@ pillow
 openpyxl
 channels
 channels-redis
+daphne
