@@ -2,9 +2,16 @@ from rest_framework import serializers
 from .. import models
 
 
+class APIRouteSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.APIRoute
+        fields = '__all__'
+
+
 class ActionNameSerializer(serializers.Serializer):
     id = serializers.IntegerField(read_only=True)
     name = serializers.CharField(read_only=True)
+    apis = APIRouteSerializer(many=True, read_only=True)
 
 
 class PermissionSerializer(serializers.ModelSerializer):

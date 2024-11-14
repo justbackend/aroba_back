@@ -30,7 +30,7 @@ class UserViewSet(viewsets.ModelViewSet):
 class SectionViewSet(viewsets.ModelViewSet):
     queryset = (
         models.Section.objects
-        .prefetch_related('modules', 'modules__actions')
+        .prefetch_related('modules', 'modules__actions', 'modules__actions__apis')
         .all().order_by('order')
     )
     serializer_class = serializers.SectionSerializer
