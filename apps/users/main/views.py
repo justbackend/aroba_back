@@ -28,6 +28,10 @@ class UserViewSet(viewsets.ModelViewSet):
 
 
 class SectionViewSet(viewsets.ModelViewSet):
-    queryset = models.Section.objects.all().order_by('-id')
+    queryset = (
+        models.Section.objects
+        .prefetch_related('modules', 'modules__actions')
+        .all().order_by('order')
+    )
     serializer_class = serializers.SectionSerializer
     pagination_class = None

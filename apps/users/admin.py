@@ -25,7 +25,7 @@ class ContentTypeAdmin(u_admin.ModelAdmin):
         model = models.Action
         extra = 1
 
-    list_display = ('id', 'name',)
+    list_display = ('id', 'name', 'section')
     inlines = (ActionsInline,)
 
 
@@ -41,4 +41,9 @@ class APIRouteAdmin(u_admin.ModelAdmin):
 
 @admin.register(models.Section)
 class SectionAdmin(u_admin.ModelAdmin):
+    class ModuleInline(u_admin.StackedInline):
+        model = models.Module
+        extra = 1
+
     list_display = ('id', 'name')
+    inlines = (ModuleInline,)
