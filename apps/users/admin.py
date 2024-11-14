@@ -21,7 +21,7 @@ class ActionAdmin(u_admin.ModelAdmin):
 
 @admin.register(models.Module)
 class ContentTypeAdmin(u_admin.ModelAdmin):
-    class ActionsInline(admin.StackedInline):
+    class ActionsInline(u_admin.StackedInline):
         model = models.Action
         extra = 1
 
