@@ -42,6 +42,7 @@ class RollbackOrderView(generics.GenericAPIView):
 
     def patch(self, request, order_id, *args, **kwargs):
         order = get_object(models.Order, ~Q(status=OrderStatus.NEW), id=order_id)
+        first_status = order.status
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         comment = serializer.validated_data['comment']
@@ -61,6 +62,8 @@ class RollbackOrderView(generics.GenericAPIView):
         )
         SocketSendOrders.ws_dispatcher_orders(action='c', order=order)
 
+        method_name = 'ws_filling_orders' if first_status == OrderStatus.FILLING else 'ws_status_orders'
+        getattr(SocketSendOrders, method_name)(order, 'd')
         return Response({'msg': "Success"})
 
 
@@ -81,6 +84,8 @@ class UpdateOrderStatusView(generics.UpdateAPIView):
         if old_status != new_status:
             comment = self.log_comment.format(old_status, new_status)
             instance.create_log(user=self.request.user, comment=comment, action=OrderLogActions.UPDATE)
+
+        SocketSendOrders.ws_status_orders(action='u', order=instance)
 
 
 class DeleteOrderStatusView(generics.GenericAPIView):
