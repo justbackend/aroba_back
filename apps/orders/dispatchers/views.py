@@ -1,15 +1,13 @@
 from django.contrib.postgres.aggregates import ArrayAgg
 from django.db.models import Func, Value, Q, TextField
 from django.db.models.functions import Concat
-from django_filters.rest_framework import DjangoFilterBackend
-from rest_framework import generics, views, status
+from rest_framework import generics, views
 from rest_framework.response import Response
 
 from utils import *
 from utils.choices import *
-from utils.excel import ExcelListView
 from . import serializers
-from .. import models
+from .. import models, utils
 
 
 class NewOrdersListView(generics.ListAPIView):
@@ -40,6 +38,8 @@ class BookOrRollbackOrderView(views.APIView):
         order.dispatcher = None if order.dispatcher else user
         order.status = OrderStatus.FILLING
         order.save()
+
+        utils.SocketSendOrders.ws_dispatcher_orders(order, action='u')
         return Response()
 
 
@@ -74,4 +74,7 @@ class FillingOrderView(generics.UpdateAPIView):
     def get_object(self):
         return get_object(models.Order, id=self.kwargs['order_id'], status=OrderStatus.FILLING)
 
+    def perform_update(self, serializer):
+        serializer.save()
+        utils.SocketSendOrders.ws_dispatcher_orders(order=serializer.instance, action='d')
 
