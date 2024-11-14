@@ -1,0 +1,532 @@
+[
+  {
+    "id": 5,
+    "name": "Kontaklar",
+    "modules": []
+  },
+  {
+    "id": 1,
+    "name": "Dispetcher",
+    "modules": [
+      {
+        "id": 3,
+        "name": "Buyurtmalar",
+        "actions": [
+          {
+            "id": 5,
+            "name": "ko'rish",
+            "apis": [
+              {
+                "id": 88,
+                "route": "/api/v1/dispatchers/",
+                "name": "new-orders/",
+                "dynamic": false,
+                "method": "GET"
+              }
+            ]
+          },
+          {
+            "id": 6,
+            "name": "band qilish",
+            "apis": [
+              {
+                "id": 89,
+                "route": "/api/v1/dispatchers/",
+                "name": "book-order/$/",
+                "dynamic": true,
+                "method": "GET"
+              }
+            ]
+          },
+          {
+            "id": 7,
+            "name": "qo'shish",
+            "apis": [
+              {
+                "id": 85,
+                "route": "/api/v1/orders/",
+                "name": "create-order/",
+                "dynamic": false,
+                "method": "POST"
+              },
+              {
+                "id": 86,
+                "route": "/api/v1/orders/",
+                "name": "clients/",
+                "dynamic": false,
+                "method": "GET"
+              },
+              {
+                "id": 87,
+                "route": "/api/v1/orders/",
+                "name": "create-order-routes/$/",
+                "dynamic": true,
+                "method": "GET"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": 4,
+        "name": "To'ldirish",
+        "actions": [
+          {
+            "id": 8,
+            "name": "ko'rish",
+            "apis": [
+              {
+                "id": 90,
+                "route": "/api/v1/dispatchers/",
+                "name": "filling-orders/",
+                "dynamic": false,
+                "method": "GET"
+              },
+              {
+                "id": 83,
+                "route": "/api/v1/auth/",
+                "name": "profile/",
+                "dynamic": false,
+                "method": "GET"
+              }
+            ]
+          },
+          {
+            "id": 9,
+            "name": "o'chirish",
+            "apis": [
+              {
+                "id": 95,
+                "route": "/api/v1/managers/",
+                "name": "delete-order/$/",
+                "dynamic": true,
+                "method": "DELETE"
+              }
+            ]
+          },
+          {
+            "id": 10,
+            "name": "qaytarish",
+            "apis": [
+              {
+                "id": 96,
+                "route": "/api/v1/managers/",
+                "name": "rollback-order/$/",
+                "dynamic": true,
+                "method": "PATCH"
+              }
+            ]
+          },
+          {
+            "id": 11,
+            "name": "summa qo'shib berish",
+            "apis": [
+              {
+                "id": 92,
+                "route": "/api/v1/managers/",
+                "name": "additional-amount/$/",
+                "dynamic": true,
+                "method": "PATCH"
+              }
+            ]
+          },
+          {
+            "id": 12,
+            "name": "tasdiqlash",
+            "apis": [
+              {
+                "id": 91,
+                "route": "/api/v1/dispatchers/",
+                "name": "fill-order/$/",
+                "dynamic": true,
+                "method": "PATCH"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": 5,
+        "name": "Statusi",
+        "actions": [
+          {
+            "id": 13,
+            "name": "ko'rish",
+            "apis": [
+              {
+                "id": 93,
+                "route": "/api/v1/managers/",
+                "name": "status-orders/",
+                "dynamic": false,
+                "method": "GET"
+              }
+            ]
+          },
+          {
+            "id": 14,
+            "name": "statusini o'zgartirish",
+            "apis": [
+              {
+                "id": 94,
+                "route": "/api/v1/managers/",
+                "name": "status-orders/$/",
+                "dynamic": true,
+                "method": "PATCH"
+              }
+            ]
+          },
+          {
+            "id": 15,
+            "name": "o'chirish",
+            "apis": [
+              {
+                "id": 95,
+                "route": "/api/v1/managers/",
+                "name": "delete-order/$/",
+                "dynamic": true,
+                "method": "DELETE"
+              }
+            ]
+          },
+          {
+            "id": 16,
+            "name": "qaytarish",
+            "apis": [
+              {
+                "id": 96,
+                "route": "/api/v1/managers/",
+                "name": "rollback-order/$/",
+                "dynamic": true,
+                "method": "PATCH"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": 2,
+    "name": "Menejer",
+    "modules": [
+      {
+        "id": 6,
+        "name": "Buyurtmachi",
+        "actions": [
+          {
+            "id": 17,
+            "name": "ko'rish",
+            "apis": [
+              {
+                "id": 97,
+                "route": "/api/v1/clients/",
+                "name": "",
+                "dynamic": false,
+                "method": "GET"
+              }
+            ]
+          },
+          {
+            "id": 18,
+            "name": "qo'shish",
+            "apis": [
+              {
+                "id": 98,
+                "route": "/api/v1/clients/",
+                "name": "",
+                "dynamic": false,
+                "method": "POST"
+              },
+              {
+                "id": 102,
+                "route": "/api/v1/clients/",
+                "name": "routes/",
+                "dynamic": false,
+                "method": "POST"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": 7,
+        "name": "Hisobot",
+        "actions": [
+          {
+            "id": 19,
+            "name": "ko'rish",
+            "apis": [
+              {
+                "id": 120,
+                "route": "/api/v1/checkout/",
+                "name": "balance-info/",
+                "dynamic": false,
+                "method": "GET"
+              },
+              {
+                "id": 121,
+                "route": "/api/v1/checkout/",
+                "name": "cash-summary/",
+                "dynamic": false,
+                "method": "GET"
+              },
+              {
+                "id": 114,
+                "route": "/api/v1/checkout/",
+                "name": "report-orders/",
+                "dynamic": false,
+                "method": "GET"
+              },
+              {
+                "id": 122,
+                "route": "/api/v1/checkout/",
+                "name": "cash-summary-excel/",
+                "dynamic": false,
+                "method": "GET"
+              }
+            ]
+          },
+          {
+            "id": 20,
+            "name": "tasdiqlash",
+            "apis": [
+              {
+                "id": 115,
+                "route": "/api/v1/checkout/",
+                "name": "pay-cash-order/$/",
+                "dynamic": true,
+                "method": "GET"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": 8,
+        "name": "Kassa",
+        "actions": [
+          {
+            "id": 21,
+            "name": "korish",
+            "apis": [
+              {
+                "id": 120,
+                "route": "/api/v1/checkout/",
+                "name": "balance-info/",
+                "dynamic": false,
+                "method": "GET"
+              },
+              {
+                "id": 116,
+                "route": "/api/v1/checkout/",
+                "name": "transactions/",
+                "dynamic": false,
+                "method": "GET"
+              },
+              {
+                "id": 118,
+                "route": "/api/v1/checkout/",
+                "name": "transactions-excel/",
+                "dynamic": false,
+                "method": "GET"
+              }
+            ]
+          },
+          {
+            "id": 22,
+            "name": "chiqim qo'shish",
+            "apis": [
+              {
+                "id": 117,
+                "route": "/api/v1/checkout/",
+                "name": "transactions/",
+                "dynamic": false,
+                "method": "POST"
+              }
+            ]
+          },
+          {
+            "id": 23,
+            "name": "tasdiqlash",
+            "apis": [
+              {
+                "id": 119,
+                "route": "/api/v1/checkout/",
+                "name": "transactions/$/",
+                "dynamic": true,
+                "method": "PATCH"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": 3,
+    "name": "Buxgalteriya",
+    "modules": [
+      {
+        "id": 9,
+        "name": "Shartnoma",
+        "actions": []
+      },
+      {
+        "id": 10,
+        "name": "Faktura",
+        "actions": []
+      },
+      {
+        "id": 11,
+        "name": "Reyestr",
+        "actions": []
+      }
+    ]
+  },
+  {
+    "id": 4,
+    "name": "Admin",
+    "modules": [
+      {
+        "id": 12,
+        "name": "Foydalanuvchilar",
+        "actions": [
+          {
+            "id": 24,
+            "name": "ko'rish",
+            "apis": [
+              {
+                "id": 78,
+                "route": "/api/v1/users/",
+                "name": "users/",
+                "dynamic": false,
+                "method": "GET"
+              }
+            ]
+          },
+          {
+            "id": 25,
+            "name": "boshqarish",
+            "apis": [
+              {
+                "id": 80,
+                "route": "/api/v1/users/",
+                "name": "users/$/",
+                "dynamic": true,
+                "method": "DELETE"
+              },
+              {
+                "id": 81,
+                "route": "/api/v1/users/",
+                "name": "users/$/",
+                "dynamic": true,
+                "method": "PATCH"
+              },
+              {
+                "id": 79,
+                "route": "/api/v1/users/",
+                "name": "users/",
+                "dynamic": false,
+                "method": "POST"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": 13,
+        "name": "Rollar",
+        "actions": [
+          {
+            "id": 26,
+            "name": "boshqarish",
+            "apis": [
+              {
+                "id": 68,
+                "route": "/api/v1/users/",
+                "name": "roles/",
+                "dynamic": false,
+                "method": "GET"
+              },
+              {
+                "id": 69,
+                "route": "/api/v1/users/",
+                "name": "roles/",
+                "dynamic": false,
+                "method": "POST"
+              },
+              {
+                "id": 70,
+                "route": "/api/v1/users/",
+                "name": "roles/$/",
+                "dynamic": true,
+                "method": "DELETE"
+              },
+              {
+                "id": 135,
+                "route": "/api/v1/users/",
+                "name": "sections/",
+                "dynamic": false,
+                "method": "GET"
+              },
+              {
+                "id": 72,
+                "route": "/api/v1/users/",
+                "name": "roles/$/",
+                "dynamic": true,
+                "method": "PATCH"
+              },
+              {
+                "id": 78,
+                "route": "/api/v1/users/",
+                "name": "users/",
+                "dynamic": false,
+                "method": "GET"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": 14,
+        "name": "Joylar",
+        "actions": [
+          {
+            "id": 27,
+            "name": "boshqarish",
+            "apis": [
+              {
+                "id": 112,
+                "route": "/api/v1/common/",
+                "name": "points/$/",
+                "dynamic": true,
+                "method": "PATCH"
+              },
+              {
+                "id": 109,
+                "route": "/api/v1/common/",
+                "name": "points/",
+                "dynamic": false,
+                "method": "GET"
+              },
+              {
+                "id": 110,
+                "route": "/api/v1/common/",
+                "name": "points/",
+                "dynamic": false,
+                "method": "POST"
+              },
+              {
+                "id": 111,
+                "route": "/api/v1/common/",
+                "name": "points/$/",
+                "dynamic": true,
+                "method": "DELETE"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+]
