@@ -40,7 +40,7 @@ class SocketSendOrders:
         send_socket_data(
             channel='status_group',
             data=cls.get_order_data(order, action),
-            method='send_filling_orders'
+            method='send_status_orders'
         )
 
     @classmethod
