@@ -18,7 +18,15 @@ class ModuleSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = models.Module
-        fields = '__all__'
+        fields = ('id', 'name', 'actions')
+
+
+class SectionSerializer(serializers.ModelSerializer):
+    modules = ModuleSerializer(many=True)
+
+    class Meta:
+        model = models.Section
+        fields = ('id', 'name', 'modules')
 
 
 class RoleSerializer(serializers.ModelSerializer):

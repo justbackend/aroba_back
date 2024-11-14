@@ -37,3 +37,8 @@ class PermissionAdmin(u_admin.ModelAdmin):
 @admin.register(models.APIRoute)
 class APIRouteAdmin(u_admin.ModelAdmin):
     list_display = ('id', 'name', 'dynamic', 'method')
+
+
+@admin.register(models.Section)
+class SectionAdmin(u_admin.ModelAdmin):
+    list_display = ('id', 'name')

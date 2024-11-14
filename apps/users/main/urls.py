@@ -3,7 +3,6 @@ from . import views
 
 app_name = 'users'
 
-
 # roles
 role_lc = views.RoleViewSet.as_view({'get': 'list', 'post': 'create'})
 role_udd = views.RoleViewSet.as_view({'get': 'retrieve', 'patch': 'partial_update', 'delete': 'destroy'})
@@ -12,9 +11,10 @@ role_udd = views.RoleViewSet.as_view({'get': 'retrieve', 'patch': 'partial_updat
 modules_lc = views.ModuleViewSet.as_view({'get': 'list', 'post': 'create'})
 modules_udd = views.ModuleViewSet.as_view({'get': 'retrieve', 'patch': 'partial_update', 'delete': 'destroy'})
 
-
 users_lc = views.UserViewSet.as_view({'get': 'list', 'post': 'create'})
 users_udd = views.UserViewSet.as_view({'patch': 'partial_update', 'delete': 'destroy'})
+
+sections_lc = views.SectionViewSet.as_view({'get': 'list', 'post': 'create'})
 
 urlpatterns = [
 
@@ -29,5 +29,9 @@ urlpatterns = [
     # users
     path('users/', users_lc, name='users'),
     path('users/<int:pk>/', users_udd, name='users'),
+
+
+    # sections
+    path('sections/', sections_lc, name='sections'),
 
 ]

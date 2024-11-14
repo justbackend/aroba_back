@@ -129,6 +129,16 @@ class Role(BaseModel):
         return self.name
 
 
+class Section(models.Model):
+    name = models.CharField(_("name"), max_length=150)
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        db_table = "sections"
+
+
 class Module(models.Model):
     """
     Model representing a module within the application.
@@ -140,6 +150,11 @@ class Module(models.Model):
         db_table (str): Specifies the database table name as "modules".
     """
     name = models.CharField(_("name"), max_length=150, )
+    section = models.ForeignKey(
+        Section, on_delete=models.SET_NULL,
+        null=True, blank=True,
+        verbose_name=_("section"), related_name='modules'
+    )
 
     class Meta:
         db_table = "modules"

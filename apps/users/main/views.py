@@ -25,3 +25,9 @@ class UserViewSet(viewsets.ModelViewSet):
 
     def get_object(self):
         return models.User.objects.filter(id=self.kwargs['pk']).first()
+
+
+class SectionViewSet(viewsets.ModelViewSet):
+    queryset = models.Section.objects.all().order_by('-id')
+    serializer_class = serializers.SectionSerializer
+    pagination_class = None
