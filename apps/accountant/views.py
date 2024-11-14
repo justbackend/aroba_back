@@ -1,4 +1,4 @@
-from django.db.models import F, Prefetch
+from django.db.models import F, Prefetch, Sum
 from rest_framework import generics, status
 from rest_framework.response import Response
 
@@ -106,17 +106,20 @@ class CreateInvoice(generics.GenericAPIView):
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         orders_id = serializer.validated_data['orders']
-        invoice = self.create_invoice(client)
-        orders_models.Order.objects.filter(id__in=orders_id).update(invoice_id=invoice.id)
+        orders = orders_models.Order.objects.filter(id__in=orders_id)
+        total_amount = orders.aggregate(total=Sum('total_amount'))['total']
+        invoice = self.create_invoice(client, total_amount)
+        orders.update(invoice_id=invoice.id)
         return Response(serializer.data, status=status.HTTP_201_CREATED)
 
     @classmethod
-    def create_invoice(cls, client) -> models.AccountantInvoice:
+    def create_invoice(cls, client, total_amount) -> models.AccountantInvoice:
         return models.AccountantInvoice.objects.create(
             client=client,
             accounting_phone=client.accounting_phone,
             customer=client.customer,
             inn=client.inn,
+            total_amount=total_amount,
         )
 
 

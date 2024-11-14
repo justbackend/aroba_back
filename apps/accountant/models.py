@@ -4,6 +4,7 @@ from django.db import models
 
 
 class AccountantInvoice(BaseModel):
+    total_amount = models.DecimalField(max_digits=30, decimal_places=2, default=0, verbose_name="Amount")
     status = models.CharField(choices=InvoiceStatuses.choices, default=InvoiceStatuses.PENDING)
     customer = models.CharField('Customer', max_length=50)
     inn = models.CharField(max_length=15, verbose_name="Inner client")

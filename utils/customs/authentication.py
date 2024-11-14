@@ -72,7 +72,7 @@ class JWTAuthentication(jwt_authentication):
         if perms:
             return AuthUser.objects.filter(id=user_id).first()
 
-        elif perms is None:
+        elif not perms:
             user = (
                 AuthUser.objects
                 .filter(id=user_id)
