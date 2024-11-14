@@ -62,7 +62,7 @@ class FillingOrdersListView(generics.ListAPIView):
                     Value('amount'), 'payments__amount',
                     Value('comment'), 'payments__comment',
                     Value('file'),
-                    Concat(Value(f'{abs_uri}/media/'), 'payments__file'),
+                    Concat(Value(f'{abs_uri}media/'), 'payments__file'),
                     function='JSON_BUILD_OBJECT',
                     output_field=TextField()
                 ), filter=Q(payments__type=PaymentTypes.EXTRA)))
