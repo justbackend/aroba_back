@@ -4,6 +4,12 @@ from utils.choices import *
 from .. import models
 
 
+class PaymentTypeSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.OrderPayment
+        fields = '__all__'
+
+
 class AdditionalAmountSerializer(serializers.Serializer):
     amount = serializers.IntegerField()
     comment = serializers.CharField(required=False)
@@ -17,13 +23,16 @@ class AdditionalAmountSerializer(serializers.Serializer):
     def update(self, instance, validated_data):
         user = self.context['request'].user
 
-        instance.create_payment(_type=PaymentTypes.EXTRA, **validated_data)
+        self.payment = instance.create_payment(_type=PaymentTypes.EXTRA, **validated_data)
 
         log_comment = (f"Summa qo'shib berildi: {validated_data['amount']}  \n"
                        f"Komentariya: {validated_data.get('comment')}")
 
         instance.create_log(user, OrderLogActions.ADDITIONAL_AMOUNT, comment=log_comment)
         return validated_data
+
+    def to_representation(self, instance):
+        return PaymentTypeSerializer(self.payment, context=self.context).data
 
 
 class StatusOrdersListSerializer(serializers.ModelSerializer):
@@ -54,6 +63,3 @@ class UpdateOrderStatusSerializer(serializers.ModelSerializer):
 
 class DeleteOrderStatusSerializer(serializers.Serializer):
     comment = serializers.CharField(required=True)
-
-
-
