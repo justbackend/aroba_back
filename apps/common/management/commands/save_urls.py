@@ -15,7 +15,8 @@ class Command(BaseCommand):
         for url_info in urls:
             for method in url_info['methods']:
                 cleaned_url = self.process_url(url=url_info['url'], method=method)
-                APIRoute.objects.get_or_create(**cleaned_url)
+                obj, create = APIRoute.objects.get_or_create(**cleaned_url)
+                print(obj.id, obj)
 
     @staticmethod
     def list_api_v1_urls_with_specific_methods():
@@ -72,7 +73,6 @@ class Command(BaseCommand):
 
         pattern = re.compile(r"(api/v1/.+?/)(.*)")
         match = pattern.match(url)
-        print(url, method)
 
         if not match:
             raise ValueError("URL format is incorrect")
