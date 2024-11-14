@@ -40,7 +40,8 @@ class BookOrRollbackOrderView(views.APIView):
         order.status = OrderStatus.FILLING
         order.save()
 
-        SocketSendOrders.ws_dispatcher_orders(order, action='u')
+        SocketSendOrders.ws_dispatcher_orders(order, action='d')
+        SocketSendOrders.ws_filling_orders(order, action='c')
         return Response()
 
 

@@ -33,7 +33,7 @@ class FillingOrdersListSerializer(serializers.ModelSerializer):
     extra_amount = serializers.SerializerMethodField()
 
     def get_extra_amount(self, obj):
-        return obj.extra_amount[0] if obj.extra_amount else None
+        return obj.extra_amount[0] if hasattr(obj, 'extra_amount') and obj.extra_amount else None
 
     class Meta:
         model = models.Order
