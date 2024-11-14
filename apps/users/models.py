@@ -4,7 +4,8 @@ __all__ = (
     'User',
     'Role',
     'APIRoute',
-    'Action'
+    'Action',
+    'Section',
 )
 
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin, Permission
