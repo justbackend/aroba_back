@@ -15,5 +15,7 @@ if not User.objects.filter(username='a').exists():
     User.objects.create_superuser('a', 'a')
 EOF
 
-exec gunicorn core.wsgi:application --bind 0.0.0.0:8001 --workers 4
+exec gunicorn core.wsgi:application --bind 0.0.0.0:8001 --workers 4 &
+
+exec daphne -u /tmp/daphne.sock core.asgi:application --bind 0.0.0.0 --port 8002
 
