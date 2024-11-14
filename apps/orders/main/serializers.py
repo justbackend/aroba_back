@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .. import models
+from .. import models, utils
 import utils
 from apps.common import models as common_models
 from apps.clients import models as client_models
@@ -40,6 +40,11 @@ class CreateOrderSerializer(serializers.Serializer):
         logs = list(map(lambda order: models.OrderLog(order=order, user_id=user.id, comment=comment), orders))
         models.OrderLog.objects.bulk_create(logs)
         return logs
+
+    def send_ws_dispatcher_orders(self, orders):
+
+        for order in orders:
+            utils.SocketSendOrders.ws_dispatcher_orders(order=order, action='c')
 
     def to_representation(self, instance):
         return dict(codes=self.codes)
