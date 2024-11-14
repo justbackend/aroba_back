@@ -1,5 +1,7 @@
 from asgiref.sync import async_to_sync
 from channels.layers import get_channel_layer
+
+from .dispatchers.serializers import NewOrdersListSerializer
 from .serializers import FullOrderSerializer
 
 
@@ -29,7 +31,7 @@ class SocketSendOrders:
 
         send_socket_data(
             channel='filling_group',
-            data=cls.get_order_data(order, action),
+            data=cls.get_order_data(order, action, serializer=NewOrdersListSerializer),
             method='send_filling_orders'
         )
 
