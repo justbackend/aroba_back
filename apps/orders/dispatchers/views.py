@@ -80,4 +80,5 @@ class FillingOrderView(generics.UpdateAPIView):
     def perform_update(self, serializer):
         serializer.save()
         SocketSendOrders.ws_filling_orders(order=serializer.instance, action='d')
+        SocketSendOrders.ws_status_orders(order=serializer.instance, action='c')
 
