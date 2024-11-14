@@ -45,6 +45,6 @@ class SocketSendOrders(object):
     def ws_dispatcher_orders(cls, order, action='c'):
         send_socket_data(
             channel='dispatcher_group',
-            data=cls.get_order_data(order, action, serializer=serializers.DispatcherSerializer),
+            data=cls.get_order_data(order, action),
             method='send_dispatcher_orders',
         )
