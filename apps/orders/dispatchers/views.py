@@ -47,6 +47,7 @@ class FillingOrdersListView(generics.ListAPIView):
     serializer_class = serializers.FillingOrdersListSerializer
 
     def get_queryset(self):
+        abs_uri = self.request.build_absolute_uri('/')
         return (
             models.Order.objects.filter(status=OrderStatus.FILLING)
             .select_related('client', 'loading', 'unloading')
@@ -59,7 +60,7 @@ class FillingOrdersListView(generics.ListAPIView):
                     Value('amount'), 'payments__amount',
                     Value('comment'), 'payments__comment',
                     Value('file'),
-                    Concat(Value('http://localhost:8000/media/'), 'payments__file'),
+                    Concat(Value(f'{abs_uri}/media/'), 'payments__file'),
                     function='JSON_BUILD_OBJECT',
                     output_field=TextField()
                 ), filter=Q(payments__type=PaymentTypes.EXTRA)))
@@ -76,5 +77,5 @@ class FillingOrderView(generics.UpdateAPIView):
 
     def perform_update(self, serializer):
         serializer.save()
-        utils.SocketSendOrders.ws_dispatcher_orders(order=serializer.instance, action='d')
+        utils.SocketSendOrders.ws_filling_orders(order=serializer.instance, action='d')
 
