@@ -29,6 +29,7 @@ load_dotenv(dotenv_path=BASE_DIR / ".env")  # .env faylni yuklash
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = os.getenv("SECRET_KEY")
+REDIS_HOST = os.getenv("REDIS_HOST")
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.getenv("DEBUG") == "1"
@@ -190,7 +191,7 @@ CHANNEL_LAYERS = {
     'default': {
         'BACKEND': 'channels_redis.core.RedisChannelLayer',
         'CONFIG': {
-            'hosts': [('127.0.0.1', 6379, 2)],
+            'hosts': [(REDIS_HOST, 6379, 2)],
             'prefix': 'main',
         },
     },
