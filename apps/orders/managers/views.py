@@ -64,6 +64,7 @@ class RollbackOrderView(generics.GenericAPIView):
 
         method_name = 'ws_filling_orders' if first_status == OrderStatus.FILLING else 'ws_status_orders'
         getattr(SocketSendOrders, method_name)(order, 'd')
+
         return Response({'msg': "Success"})
 
 
