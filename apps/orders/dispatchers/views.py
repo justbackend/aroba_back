@@ -7,7 +7,8 @@ from rest_framework.response import Response
 from utils import *
 from utils.choices import *
 from . import serializers
-from .. import models, utils
+from .. import models
+from ..utils import SocketSendOrders
 
 
 class NewOrdersListView(generics.ListAPIView):
@@ -77,5 +78,5 @@ class FillingOrderView(generics.UpdateAPIView):
 
     def perform_update(self, serializer):
         serializer.save()
-        utils.SocketSendOrders.ws_filling_orders(order=serializer.instance, action='d')
+        SocketSendOrders.ws_filling_orders(order=serializer.instance, action='d')
 
