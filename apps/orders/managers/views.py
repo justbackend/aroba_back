@@ -8,6 +8,7 @@ from . import serializers
 from .. import models
 from ..models import Order
 from ...checkout.models import MainCheckout
+from ..utils import SocketSendOrders
 
 
 class AdditionalAmountView(generics.UpdateAPIView):
@@ -58,6 +59,7 @@ class RollbackOrderView(generics.GenericAPIView):
             user=request.user,
             comment=log_com,
         )
+        SocketSendOrders.ws_dispatcher_orders(action='c', order=order)
 
         return Response({'msg': "Success"})
 
