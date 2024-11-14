@@ -14,7 +14,7 @@ modules_udd = views.ModuleViewSet.as_view({'get': 'retrieve', 'patch': 'partial_
 users_lc = views.UserViewSet.as_view({'get': 'list', 'post': 'create'})
 users_udd = views.UserViewSet.as_view({'patch': 'partial_update', 'delete': 'destroy'})
 
-sections_lc = views.SectionViewSet.as_view({'get': 'list', 'post': 'create'})
+sections_lc = views.SectionViewSet.as_view({'get': 'list'})
 
 urlpatterns = [
 
