@@ -1,4 +1,4 @@
-from django.db.models import Q, Sum
+from django.db.models import Q
 from rest_framework import generics, status
 from rest_framework.response import Response
 
@@ -6,8 +6,6 @@ from utils import *
 from utils.choices import *
 from . import serializers
 from .. import models
-from ..models import Order
-from ...checkout.models import MainCheckout
 from ..utils import SocketSendOrders
 
 
