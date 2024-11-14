@@ -14,7 +14,7 @@ def send_socket_data(channel, method, data, channel_layer=None):
     )
 
 
-class SocketSendOrders(object):
+class SocketSendOrders:
 
     @classmethod
     def get_order_data(cls, order, action, serializer=None):
