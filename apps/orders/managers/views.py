@@ -1,5 +1,5 @@
 from django.db.models import Q, Sum
-from rest_framework import generics
+from rest_framework import generics, status
 from rest_framework.response import Response
 
 from utils import *
@@ -92,8 +92,9 @@ class UpdateOrderStatusView(generics.UpdateAPIView):
 class DeleteOrderStatusView(generics.GenericAPIView):
     serializer_class = serializers.DeleteOrderStatusSerializer
 
-    def post(self, request, order_id, *args, **kwargs):
+    def delete(self, request, order_id, *args, **kwargs):
         order = get_object(models.Order, id=order_id)
+        first_status = order.status
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         comment = serializer.validated_data['comment']
@@ -108,4 +109,7 @@ class DeleteOrderStatusView(generics.GenericAPIView):
             user=request.user,
             comment=log_com,
         )
-        return Response({'msg': "Success"})
+        method_name = 'ws_filling_orders' if first_status == OrderStatus.FILLING else 'ws_status_orders'
+        getattr(SocketSendOrders, method_name)(order, 'd')
+
+        return Response({'msg': "Success"}, status=status.HTTP_204_NO_CONTENT)
