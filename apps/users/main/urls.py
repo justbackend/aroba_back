@@ -5,7 +5,7 @@ app_name = 'users'
 
 # roles
 role_lc = views.RoleViewSet.as_view({'get': 'list', 'post': 'create'})
-role_udd = views.RoleViewSet.as_view({'get': 'retrieve', 'patch': 'partial_update', 'delete': 'destroy'})
+role_udd = views.RoleViewSet.as_view({'patch': 'partial_update', 'delete': 'destroy'})
 
 # content type
 modules_lc = views.ModuleViewSet.as_view({'get': 'list', 'post': 'create'})
