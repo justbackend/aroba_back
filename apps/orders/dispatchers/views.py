@@ -57,7 +57,7 @@ class FillingOrdersListView(generics.ListAPIView):
             query.pop('dispatcher', None)
 
         return (
-            models.Order.objects.filter(status=OrderStatus.FILLING, dispatcher=self.request.user)
+            models.Order.objects.filter(**query)
             .select_related('client', 'loading', 'unloading')
             .only(
                 'id', 'code', 'date', 'comment', 'payment_type', 'created_at', 'loading__name',
