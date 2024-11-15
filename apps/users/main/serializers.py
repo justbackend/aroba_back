@@ -1,4 +1,6 @@
 from rest_framework import serializers
+
+from utils.utility import clear_users_perms
 from .. import models
 
 
@@ -40,6 +42,12 @@ class RoleSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Role
         fields = '__all__'
+
+    def update(self, instance, validated_data):
+        role = super().update(instance, validated_data)
+        users = models.User.objects.filter(roles=role)
+        clear_users_perms(users)
+        return role
 
 
 class CreateUserSerializer(serializers.ModelSerializer):
