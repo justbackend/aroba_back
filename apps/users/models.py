@@ -16,6 +16,7 @@ from rest_framework_simplejwt.tokens import RefreshToken
 
 from utils.base import BaseModel
 from utils.choices import *
+from utils.utility import clear_users_perms
 from utils.validators import PhoneValidator
 from . import managers
 
@@ -108,7 +109,10 @@ class User(AbstractBaseUser, PermissionsMixin, BaseModel):
         return dict(refresh=str(refresh), access=str(refresh.access_token))
 
     def restart_actions(self):
-        pass
+        related_actions = Action.objects.filter(roles__in=self.roles.all()).distinct()
+        self.actions.set(related_actions)
+
+        clear_users_perms((self,))
 
 
 class Role(BaseModel):

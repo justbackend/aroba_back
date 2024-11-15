@@ -46,11 +46,10 @@ class RoleSerializer(serializers.ModelSerializer):
     def update(self, instance, validated_data):
         role = super().update(instance, validated_data)
         users = models.User.objects.filter(roles=role)
-        clear_users_perms(users)
-        return role
+        for user in users:
+            user.restart_actions()
 
-    def set_actions(self, user):
-        pass
+        return role
 
 
 class CreateUserSerializer(serializers.ModelSerializer):
