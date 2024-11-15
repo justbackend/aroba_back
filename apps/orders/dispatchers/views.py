@@ -40,8 +40,8 @@ class BookOrRollbackOrderView(views.APIView):
         order.status = OrderStatus.FILLING
         order.save()
 
-        SocketSendOrders.ws_dispatcher_orders(order, action='d')
-        SocketSendOrders.ws_filling_orders(order, action='c')
+        SocketSendOrders.ws_dispatcher_orders(order, action='u')
+        # SocketSendOrders.ws_filling_orders(order, action='c')
         return Response()
 
 
@@ -85,5 +85,6 @@ class FillingOrderView(generics.UpdateAPIView):
 
     def perform_update(self, serializer):
         serializer.save()
-        SocketSendOrders.ws_filling_orders(order=serializer.instance, action='d')
-        SocketSendOrders.ws_status_orders(order=serializer.instance, action='c')
+        # SocketSendOrders.ws_filling_orders(order=serializer.instance, action='d')
+        # SocketSendOrders.ws_status_orders(order=serializer.instance, action='c')
+        SocketSendOrders.ws_status_orders(order=serializer.instance, action='d')
