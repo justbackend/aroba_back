@@ -61,10 +61,10 @@ class RolePermission(permissions.BasePermission):
 
         if isinstance(has_perms, dict):
             has_perms[request.path] = True
-            cache.set(f'has_perm_{user.id}', has_perms)
+            cache.set(f'has_perms_{user.id}', has_perms)
             return
 
-        cache.set(f'has_perm_{user.id}', {request.path: True})
+        cache.set(f'has_perms_{user.id}', {request.path: True})
 
 
 class IsActive(permissions.BasePermission):
