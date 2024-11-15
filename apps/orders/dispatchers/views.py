@@ -18,7 +18,7 @@ class NewOrdersListView(generics.ListAPIView):
 
     def get_queryset(self):
         return (
-            models.Order.objects.filter(status=OrderStatus.NEW)
+            models.Order.objects.filter(status__in=(OrderStatus.NEW, OrderStatus.FILLING))
             .select_related('client', 'loading', 'unloading', 'dispatcher')
             .only(
                 'id', 'code', 'date', 'comment', 'payment_type', 'created_at', 'loading__name',
