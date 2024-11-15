@@ -27,10 +27,17 @@ class StatusOrdersListView(generics.ListAPIView):
     search_fields = ('car_number', 'code', 'driver_phone')
 
     def get_queryset(self):
+        user = self.request.user
+        query = dict(dispatcher=user)
+
+        if 1 in user.roles.all().values_list('id', flat=True):
+            query = dict()
+
         return (
             models.Order.objects.filter(
                 status__in=(OrderStatus.STARTED, OrderStatus.AT_FACTORY,
-                            OrderStatus.LOADED, OrderStatus.LOCATION_ASSIGNED)
+                            OrderStatus.LOADED, OrderStatus.LOCATION_ASSIGNED),
+                **query
             ).select_related('loading', 'client', 'unloading').order_by('-id')
         )
 
