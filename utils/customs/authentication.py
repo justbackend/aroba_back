@@ -1,4 +1,4 @@
-from typing import Union
+from typing import Union, Optional, Tuple
 
 from django.contrib.postgres.aggregates import ArrayAgg
 from django.core.cache import cache
@@ -10,6 +10,8 @@ from rest_framework_simplejwt.exceptions import InvalidToken, AuthenticationFail
 from rest_framework_simplejwt.settings import api_settings
 from rest_framework_simplejwt.tokens import Token, AccessToken
 from rest_framework_simplejwt.utils import get_md5_hash_password
+from rest_framework.request import Request
+
 
 from apps.users.models import User as AuthUser
 from utils.choices import APIRoutes

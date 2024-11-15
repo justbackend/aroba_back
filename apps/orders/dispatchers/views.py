@@ -50,8 +50,14 @@ class FillingOrdersListView(generics.ListAPIView):
 
     def get_queryset(self):
         abs_uri = self.request.build_absolute_uri('/')
+        user = self.request.user
+        query = dict(status=OrderStatus.FILLING, dispatcher=user)
+
+        if 1 in user.roles.all().values_list('id', flat=True):
+            query.pop('dispatcher', None)
+
         return (
-            models.Order.objects.filter(status=OrderStatus.FILLING)
+            models.Order.objects.filter(status=OrderStatus.FILLING, dispatcher=self.request.user)
             .select_related('client', 'loading', 'unloading')
             .only(
                 'id', 'code', 'date', 'comment', 'payment_type', 'created_at', 'loading__name',
@@ -81,4 +87,3 @@ class FillingOrderView(generics.UpdateAPIView):
         serializer.save()
         SocketSendOrders.ws_filling_orders(order=serializer.instance, action='d')
         SocketSendOrders.ws_status_orders(order=serializer.instance, action='c')
-
