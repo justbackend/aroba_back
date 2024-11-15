@@ -11,6 +11,9 @@ def role_action_change(sender, instance, **kwargs):
     users = instance.users.all()
     clear_users_perms(users)
 
+    for user in users:
+        user.restart_actions()
+
 
 @receiver(m2m_changed, sender=models.Action.apis.through)
 def action_apis_change(sender, instance, **kwargs):
@@ -43,4 +46,3 @@ def api_route_signals(sender, instance, **kwargs):
     if instance.pk:
         users = models.User.objects.filter(actions__apis=instance)
         clear_users_perms(users)
-
