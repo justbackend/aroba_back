@@ -51,13 +51,13 @@ class RolePermission(permissions.BasePermission):
     @staticmethod
     def has_perm(request) -> bool:
         user = request.user
-        has_perms = cache.get(f'has_perm_{user.id}')
+        has_perms = cache.get(f'has_perms_{user.id}')
         return isinstance(has_perms, dict) and has_perms.get(request.path)
 
     @staticmethod
     def set_has_perm(request):
         user = request.user
-        has_perms = cache.get(f'has_perm_{user.id}')
+        has_perms = cache.get(f'has_perms_{user.id}')
 
         if isinstance(has_perms, dict):
             has_perms[request.path] = True
