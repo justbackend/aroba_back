@@ -49,6 +49,9 @@ class RoleSerializer(serializers.ModelSerializer):
         clear_users_perms(users)
         return role
 
+    def set_actions(self, user):
+        pass
+
 
 class CreateUserSerializer(serializers.ModelSerializer):
     # roles = serializers.CharField(write_only=True, required=False)

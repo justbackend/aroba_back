@@ -107,6 +107,9 @@ class User(AbstractBaseUser, PermissionsMixin, BaseModel):
         refresh = RefreshToken.for_user(self)
         return dict(refresh=str(refresh), access=str(refresh.access_token))
 
+    def restart_actions(self):
+        pass
+
 
 class Role(BaseModel):
     """
