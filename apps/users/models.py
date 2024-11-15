@@ -195,7 +195,7 @@ class Action(models.Model):
         db_table = "module_actions"
 
     def __str__(self):
-        return self.name
+        return f'{self.id}-{self.name}'
 
 
 class APIRoute(models.Model):
