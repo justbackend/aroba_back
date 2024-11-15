@@ -43,14 +43,6 @@ class RoleSerializer(serializers.ModelSerializer):
         model = models.Role
         fields = '__all__'
 
-    def update(self, instance, validated_data):
-        role = super().update(instance, validated_data)
-        users = models.User.objects.filter(roles=role)
-        for user in users:
-            user.restart_actions()
-
-        return role
-
 
 class CreateUserSerializer(serializers.ModelSerializer):
     # roles = serializers.CharField(write_only=True, required=False)
