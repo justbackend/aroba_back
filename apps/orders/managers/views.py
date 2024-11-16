@@ -46,7 +46,7 @@ class RollbackOrderView(generics.GenericAPIView):
     serializer_class = serializers.DeleteOrderStatusSerializer
 
     def patch(self, request, order_id, *args, **kwargs):
-        order = get_object(models.Order, ~Q(status=OrderStatus.NEW), id=order_id)
+        order = get_object(models.Order, ~Q(status__in=(OrderStatus.NEW, OrderStatus.FILLING)), id=order_id)
         first_status = order.status
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
