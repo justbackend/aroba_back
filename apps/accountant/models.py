@@ -16,9 +16,11 @@ class AccountantInvoice(BaseModel):
     client = models.ForeignKey(
         'clients.Client', on_delete=models.PROTECT, related_name='invoices', verbose_name='Client'
     )
+
     creator = models.ForeignKey(
         'users.User', on_delete=models.PROTECT, related_name='invoices', verbose_name='Creator', default=1
     )
+
     past_orders = models.ManyToManyField(
         'orders.Order', related_name='invoices', verbose_name='Past orders'
     )
