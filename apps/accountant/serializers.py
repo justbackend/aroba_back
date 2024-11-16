@@ -37,9 +37,7 @@ class ChildOrdersSerializer(serializers.Serializer):
     loading_name = serializers.CharField()
     unloading_name = serializers.CharField()
     car_number = serializers.CharField()
-    paid = serializers.BooleanField()
     status = serializers.IntegerField()
-    invoice_id = serializers.IntegerField(default=-1)
 
 
 class ParentInvoiceSerializers(serializers.Serializer):
