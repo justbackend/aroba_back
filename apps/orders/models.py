@@ -63,7 +63,6 @@ class Order(BaseModel):
     def __str__(self):
         return self.code
 
-
     @classmethod
     def generate_code(cls):
         while True:

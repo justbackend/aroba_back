@@ -90,6 +90,7 @@ class User(AbstractBaseUser, PermissionsMixin, BaseModel):
                 last_name=user.last_name,
                 photo=user.photo.url if user.photo else None,
                 phone=user.phone,
+                is_superuser=user.is_superuser,
             )
             cache.set(f'user_profile_{user_id}', data)
         return data
