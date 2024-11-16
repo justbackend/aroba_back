@@ -29,7 +29,7 @@ class FinishedOrdersSerializer(serializers.Serializer):
     total_amount = serializers.IntegerField()
 
 
-class ChildOrders(serializers.Serializer):
+class ChildOrdersSerializer(serializers.Serializer):
     id = serializers.IntegerField()
     code = serializers.CharField()
     total_amount = serializers.DecimalField(max_digits=15, decimal_places=2)
@@ -39,11 +39,12 @@ class ChildOrders(serializers.Serializer):
     paid = serializers.BooleanField()
 
 
-class ParentInvoice(serializers.Serializer):
+class ParentInvoiceSerializers(serializers.Serializer):
     id = serializers.IntegerField()
     created_at = serializers.DateTimeField()
     status = serializers.CharField()
-    to_orders = ChildOrders(many=True)
+    total_amount = serializers.DecimalField(max_digits=30, decimal_places=2)
+    to_orders = ChildOrdersSerializer(many=True)
 
 
 class InvoiceOrdersSerializer(serializers.Serializer):
@@ -59,7 +60,7 @@ class InvoiceOrdersSerializer(serializers.Serializer):
 
     def get_invoices(self, client):
         data = [self.collect_empty_orders(client.to_orders)] + client.to_invoices
-        return ParentInvoice(instance=data, many=True).data
+        return ParentInvoiceSerializers(instance=data, many=True).data
 
     def collect_empty_orders(self, orders):
         invoice = models.AccountantInvoice(
