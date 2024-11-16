@@ -14,6 +14,6 @@ urlpatterns = [
 
     # invoice orders
     path('invoice-orders/', views.InvoiceOrders.as_view(), name='accountant-invoices'),
-    path('create-invoice/<int:client_id>/', views.CreateInvoice.as_view(), name='accountant-invoices-create'),
+    path('create-invoice/', views.CreateInvoice.as_view(), name='accountant-invoices-create'),
     path('update-invoice/<int:pk>/', views.UpdateInvoice.as_view(), name='accountant-invoices-create'),
 ]

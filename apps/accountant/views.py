@@ -101,12 +101,13 @@ class InvoiceOrders(generics.ListAPIView):
 class CreateInvoice(generics.GenericAPIView):
     serializer_class = serializers.CreateInvoiceSerializer
 
-    def post(self, request, client_id: int, *args, **kwargs):
-        client = utils.get_object(client_models.Client, id=client_id)
+    def post(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         orders_id = serializer.validated_data['orders']
         orders = orders_models.Order.objects.filter(id__in=orders_id)
+        client = orders[0].client
+
         total_amount = orders.aggregate(total=Sum('total_amount'))['total']
         invoice = self.create_invoice(client, total_amount)
         orders.update(invoice_id=invoice.id)
