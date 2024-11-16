@@ -100,3 +100,30 @@ class UpdateInvoiceSerializer(serializers.ModelSerializer):
             'id',
             'status',
         )
+
+    def update(self, instance, validated_data):
+        methods = {
+            InvoiceStatuses.APPROVED: self.approved,
+            InvoiceStatuses.PENDING: self.pending,
+            InvoiceStatuses.CANCELLED: self.cancelled,
+        }
+
+        status = validated_data.get('status', instance.status)
+        instance.status = status
+        instance.save()
+        methods[status](instance)
+        return instance
+
+    @staticmethod
+    def approved(instance):
+        instance.orders.all().update(paid=True)
+
+    @staticmethod
+    def pending(instance):
+        pass
+
+    @staticmethod
+    def cancelled(instance):
+        instance.orders.all().update(invoice=None)
+
+
