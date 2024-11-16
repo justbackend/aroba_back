@@ -63,9 +63,11 @@ class InvoiceOrdersSerializer(serializers.Serializer):
         self.now = utils.now()
 
     def get_invoices(self, client):
+
         data = client.to_invoices
         if client.to_orders:
             data = [self.collect_empty_orders(client.to_orders)] + client.to_invoices
+
         return ParentInvoiceSerializers(instance=data, many=True).data
 
     def collect_empty_orders(self, orders):
