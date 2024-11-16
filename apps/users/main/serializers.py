@@ -41,7 +41,18 @@ class SectionSerializer(serializers.ModelSerializer):
 class RoleSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Role
-        fields = '__all__'
+        fields = ('id', 'name', 'actions')
+
+    def update(self, instance, validated_data):
+        role = super().update(instance, validated_data)
+
+        users = role.users.all()
+        clear_users_perms(users)
+
+        for user in users:
+            user.restart_actions()
+
+        return role
 
 
 class CreateUserSerializer(serializers.ModelSerializer):
