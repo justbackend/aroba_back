@@ -44,19 +44,13 @@ class RoleSerializer(serializers.ModelSerializer):
         fields = ('id', 'name', 'actions')
 
     def update(self, instance, validated_data):
-        role = super().update(instance, validated_data)
-
-        users = role.users.all()
-        clear_users_perms(users)
-
-        for user in users:
-            user.restart_actions()
-
-        return role
+        instance.name = validated_data.get('name', instance.name)
+        instance.actions.set(validated_data['actions'])
+        instance.save()
+        return instance
 
 
 class CreateUserSerializer(serializers.ModelSerializer):
-    # roles = serializers.CharField(write_only=True, required=False)
 
     class Meta:
         model = models.User

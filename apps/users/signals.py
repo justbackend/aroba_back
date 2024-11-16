@@ -8,12 +8,10 @@ from utils.utility import clear_users_perms, clear_user_profile_data
 
 @receiver(m2m_changed, sender=models.Role.actions.through)
 def role_action_change(sender, instance, **kwargs):
-    print(11111, 'signal')
     users = instance.users.all()
     clear_users_perms(users)
 
     for user in users:
-        print(user)
         user.restart_actions()
 
 
