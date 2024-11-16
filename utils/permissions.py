@@ -14,15 +14,20 @@ class RolePermission(permissions.BasePermission):
 
         if user and user.is_authenticated:
 
-            if user.is_superuser:
-                return True
+            # if user.is_superuser:
+            #     return True
 
             perm = self.has_perm(request)
             if perm is not None:
                 return perm
 
-            perms, api_route_len = self.get_filtered_perms_and_route(request)
-            path = request.path[api_route_len:]
+            perms, route = self.get_filtered_perms_and_route(request)
+
+            if not route:
+                return False
+            route_len = len(route)
+
+            path = request.path[route_len:]
 
             for perm in perms:
 
@@ -44,7 +49,7 @@ class RolePermission(permissions.BasePermission):
     def get_filtered_perms_and_route(cls, request):
         data = get_user_perms(request.user.id)
         route = cls.get_route(request)
-        return tuple(filter(lambda perm: perm['method'] == request.method and perm['route'] == route, data)), len(route)
+        return tuple(filter(lambda perm: perm['method'] == request.method and perm['route'] == route, data)), route
 
     @staticmethod
     def get_route(request):
