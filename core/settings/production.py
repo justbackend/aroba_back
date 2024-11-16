@@ -36,9 +36,9 @@ REST_FRAMEWORK.update(
     ),
 )
 
-REST_FRAMEWORK.update(
-    DEFAULT_PERMISSION_CLASSES=('utils.RolePermission',),
-)
+# REST_FRAMEWORK.update(
+#     DEFAULT_PERMISSION_CLASSES=('utils.RolePermission',),
+# )
 
 ROOT_URLCONF = "core.urls.production"
 
