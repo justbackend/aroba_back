@@ -105,23 +105,26 @@ class CreateInvoice(generics.GenericAPIView):
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         orders_id = serializer.validated_data['orders']
-        orders = orders_models.Order.objects.filter(id__in=orders_id)
+        orders = orders_models.Order.objects.filter(id__in=orders_id, invoice__isnull=True)
+        if not orders.exists():
+            raise utils.APIException('Orders does not exists')
+
         client = orders[0].client
 
         total_amount = orders.aggregate(total=Sum('total_amount'))['total']
         invoice = self.create_invoice(client, total_amount)
         orders.update(invoice_id=invoice.id)
         invoice.past_orders.set(orders)
-        return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(dict(client_id=client.id), status=status.HTTP_201_CREATED)
 
-    @classmethod
-    def create_invoice(cls, client, total_amount) -> models.AccountantInvoice:
+    def create_invoice(self, client, total_amount) -> models.AccountantInvoice:
         return models.AccountantInvoice.objects.create(
             client=client,
             accounting_phone=client.accounting_phone,
             customer=client.customer,
             inn=client.inn,
             total_amount=total_amount,
+            creator=self.request.user,
         )
 
 
