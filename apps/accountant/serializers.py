@@ -1,6 +1,7 @@
 from rest_framework import serializers
 
 import utils
+from utils.choices import *
 from apps.clients import models as client_models
 from . import models
 
@@ -52,6 +53,7 @@ class InvoiceOrdersSerializer(serializers.Serializer):
     name = serializers.CharField()
     inn = serializers.CharField()
     accounting_phone = serializers.CharField()
+    amounts = serializers.SerializerMethodField()
     invoices = serializers.SerializerMethodField()
 
     def __init__(self, *args, **kwargs):
@@ -72,6 +74,18 @@ class InvoiceOrdersSerializer(serializers.Serializer):
         setattr(invoice, 'to_orders', orders)
 
         return invoice
+
+    def get_amounts(self, client):
+        amounts = {
+            InvoiceStatuses.PENDING: 0,
+            InvoiceStatuses.APPROVED: 0,
+        }
+        for invoice in client.to_invoices:
+            amounts[invoice.status] += invoice.total_amount
+
+        amounts['unsent'] = sum(map(lambda x: x.total_amount, client.to_orders))
+
+        return amounts
 
 
 class CreateInvoiceSerializer(serializers.Serializer):

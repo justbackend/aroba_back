@@ -81,7 +81,7 @@ class InvoiceOrders(generics.ListAPIView):
     invoices_qs = (
         models.AccountantInvoice.objects
         .prefetch_related(Prefetch('orders', queryset=orders_qs, to_attr='to_orders'))
-        .all().order_by('-id')
+        .filter(status__in=(InvoiceStatuses.PENDING, InvoiceStatuses.APPROVED)).order_by('-id')
     )
 
     def get_queryset(self):
