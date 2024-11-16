@@ -38,6 +38,7 @@ class ChildOrdersSerializer(serializers.Serializer):
     unloading_name = serializers.CharField()
     car_number = serializers.CharField()
     status = serializers.IntegerField()
+    invoice_id = serializers.IntegerField()
 
 
 class ParentInvoiceSerializers(serializers.Serializer):
@@ -130,5 +131,3 @@ class UpdateInvoiceSerializer(serializers.ModelSerializer):
     @staticmethod
     def cancelled(instance):
         instance.orders.all().update(invoice=None)
-
-
