@@ -84,6 +84,7 @@ class User(AbstractBaseUser, PermissionsMixin, BaseModel):
         if data is None:
             user = cls.objects.filter(pk=user_id).first()
             data = dict(
+                id=user_id,
                 username=user.username,
                 first_name=user.first_name,
                 last_name=user.last_name,
