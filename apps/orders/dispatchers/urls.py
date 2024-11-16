@@ -1,6 +1,6 @@
 from django.urls import path
 from . import views
-
+from ..managers.views import DeleteOrderStatusView
 
 urlpatterns = [
     # new orders
@@ -12,6 +12,8 @@ urlpatterns = [
     # filling orders
     path('filling-orders/', views.FillingOrdersListView.as_view(), name='filling-orders'),
     path('fill-order/<int:order_id>/', views.FillingOrderView.as_view(), name='filling-orders'),
+
+    path('delete-order/<int:order_id>/', DeleteOrderStatusView.as_view(), name='fill-status-orders-update'),
 
 ]
 
