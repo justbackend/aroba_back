@@ -53,6 +53,7 @@ class InvoiceOrdersSerializer(serializers.Serializer):
     id = serializers.IntegerField()
     name = serializers.CharField()
     inn = serializers.CharField()
+    customer = serializers.CharField()
     accounting_phone = serializers.CharField()
     amounts = serializers.SerializerMethodField()
     invoices = serializers.SerializerMethodField()
