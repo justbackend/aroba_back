@@ -110,6 +110,7 @@ class CreateInvoice(generics.GenericAPIView):
         total_amount = orders.aggregate(total=Sum('total_amount'))['total']
         invoice = self.create_invoice(client, total_amount)
         orders.update(invoice_id=invoice.id)
+        invoice.past_orders.set(orders)
         return Response(serializer.data, status=status.HTTP_201_CREATED)
 
     @classmethod
