@@ -30,18 +30,17 @@ class NewOrdersListView(generics.ListAPIView):
 class BookOrRollbackOrderView(views.APIView):
 
     def get(self, request, order_id, *args, **kwargs):
-        order = get_object(models.Order, id=order_id, status=OrderStatus.NEW)
+        order = get_object(models.Order, id=order_id, status__in=(OrderStatus.NEW, OrderStatus.FILLING))
         user = request.user
 
         if order.dispatcher and order.dispatcher != user:
             raise APIException('User is not allowed to book orders.')
 
         order.dispatcher = None if order.dispatcher else user
-        order.status = OrderStatus.FILLING
+        order.status = OrderStatus.FILLING if order.status == OrderStatus.NEW else OrderStatus.NEW
         order.save()
 
         SocketSendOrders.ws_dispatcher_orders(order, action='u')
-        # SocketSendOrders.ws_filling_orders(order, action='c')
         return Response()
 
 
