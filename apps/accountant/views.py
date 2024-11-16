@@ -84,7 +84,7 @@ class InvoiceOrders(generics.ListAPIView):
         .filter(
             status__in=(InvoiceStatuses.PENDING, InvoiceStatuses.APPROVED),
             orders__isnull=False,
-        ).order_by('-id').distinct()
+        ).order_by('-status').distinct()
     )
 
     def get_queryset(self):
