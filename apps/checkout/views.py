@@ -23,7 +23,6 @@ class ReportOrdersListAPI(generics.ListAPIView):
                 payment_type=payment_type,
                 status__in=(OrderStatus.STARTED, OrderStatus.AT_FACTORY,
                             OrderStatus.LOADED, OrderStatus.LOCATION_ASSIGNED),
-                paid=False
             )
             .annotate(loading_name=F('loading__name'), unloading_name=F('unloading__name'))
         )
@@ -40,14 +39,8 @@ class PayCashOrder(views.APIView):
 
     def get(self, request, order_id: int, *args, **kwargs):
 
-        order = utils.get_object(
-            order_models.Order,
-            Q(status__in=(
-                OrderStatus.STARTED, OrderStatus.AT_FACTORY, OrderStatus.LOADED, OrderStatus.LOCATION_ASSIGNED
-            )), paid=False, id=order_id)
-
+        order = utils.get_object(order_models.Order, paid=False, id=order_id)
         order.paid = True
-        order.status = OrderStatus.FINISHED
         order.save()
         return Response(data={'order_id': order_id, 'client_id': order.client_id})
 
