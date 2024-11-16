@@ -58,14 +58,15 @@ class RollbackOrderView(generics.GenericAPIView):
         order.paid = False
         order.save()
 
-        log_com = (f"Buyurtma Qaytarildi!!! \n"
-                   f"Comment: {comment}\n")
-        order.create_log(
-            action=OrderLogActions.ROLLBACK,
-            user=request.user,
-            comment=log_com,
-        )
-        SocketSendOrders.ws_dispatcher_orders(action='c', order=order)
+        if comment:
+            log_com = (f"Buyurtma Qaytarildi!!! \n"
+                       f"Comment: {comment}\n")
+            order.create_log(
+                action=OrderLogActions.ROLLBACK,
+                user=request.user,
+                comment=log_com,
+            )
+        SocketSendOrders.ws_dispatcher_orders(action='u', order=order)
 
         method_name = 'ws_filling_orders' if first_status == OrderStatus.FILLING else 'ws_status_orders'
         getattr(SocketSendOrders, method_name)(order, 'd')
