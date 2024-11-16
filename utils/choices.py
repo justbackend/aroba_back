@@ -41,6 +41,7 @@ class APIRoutes(models.TextChoices):
     MANAGERS = '/api/v1/managers/', 'Managers'
     DISPATCHERS = '/api/v1/dispatchers/', 'Dispatchers'
     CHECKOUT = '/api/v1/checkout/', 'Checkout'
+    ACCOUNTANT = '/api/v1/accountant/', 'Accountant'
 
 
 class ClientRouteTypes(models.TextChoices):
