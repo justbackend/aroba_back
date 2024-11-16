@@ -69,23 +69,24 @@ class InvoiceOrdersSerializer(serializers.Serializer):
             id=-1,
             created_at=self.now,
             updated_at=self.now,
-            status=None
+            status=None,
+            total_amount=self.amounts['unsent']
         )
         setattr(invoice, 'to_orders', orders)
 
         return invoice
 
     def get_amounts(self, client):
-        amounts = {
+        self.amounts = {
             InvoiceStatuses.PENDING: 0,
             InvoiceStatuses.APPROVED: 0,
         }
         for invoice in client.to_invoices:
-            amounts[invoice.status] += invoice.total_amount
+            self.amounts[invoice.status] += invoice.total_amount
 
-        amounts['unsent'] = sum(map(lambda x: x.total_amount, client.to_orders))
+        self.amounts['unsent'] = sum(map(lambda x: x.total_amount, client.to_orders))
 
-        return amounts
+        return self.amounts
 
 
 class CreateInvoiceSerializer(serializers.Serializer):
