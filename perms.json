@@ -64,6 +64,19 @@
                 "method": "GET"
               }
             ]
+          },
+          {
+            "id": 15,
+            "name": "o'chirish",
+            "apis": [
+              {
+                "id": 95,
+                "route": "/api/v1/managers/",
+                "name": "delete-order/$/",
+                "dynamic": true,
+                "method": "DELETE"
+              }
+            ]
           }
         ]
       },
@@ -88,19 +101,6 @@
                 "name": "profile/",
                 "dynamic": false,
                 "method": "GET"
-              }
-            ]
-          },
-          {
-            "id": 9,
-            "name": "o'chirish",
-            "apis": [
-              {
-                "id": 95,
-                "route": "/api/v1/managers/",
-                "name": "delete-order/$/",
-                "dynamic": true,
-                "method": "DELETE"
               }
             ]
           },
@@ -172,19 +172,6 @@
                 "name": "status-orders/$/",
                 "dynamic": true,
                 "method": "PATCH"
-              }
-            ]
-          },
-          {
-            "id": 15,
-            "name": "o'chirish",
-            "apis": [
-              {
-                "id": 95,
-                "route": "/api/v1/managers/",
-                "name": "delete-order/$/",
-                "dynamic": true,
-                "method": "DELETE"
               }
             ]
           },
@@ -380,6 +367,110 @@
         "id": 11,
         "name": "Reyestr",
         "actions": []
+      },
+      {
+        "id": 15,
+        "name": "Shartnoma",
+        "actions": [
+          {
+            "id": 28,
+            "name": "ko'rish",
+            "apis": [
+              {
+                "id": 129,
+                "route": "/api/v1/accountant/",
+                "name": "clients-excel/",
+                "dynamic": false,
+                "method": "GET"
+              },
+              {
+                "id": 127,
+                "route": "/api/v1/accountant/",
+                "name": "clients/",
+                "dynamic": false,
+                "method": "GET"
+              }
+            ]
+          },
+          {
+            "id": 29,
+            "name": "tasdiqlash",
+            "apis": [
+              {
+                "id": 128,
+                "route": "/api/v1/accountant/",
+                "name": "clients/$/",
+                "dynamic": true,
+                "method": "PATCH"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": 16,
+        "name": "Faktura",
+        "actions": [
+          {
+            "id": 30,
+            "name": "ko'rish",
+            "apis": [
+              {
+                "id": 132,
+                "route": "/api/v1/accountant/",
+                "name": "invoice-orders/",
+                "dynamic": false,
+                "method": "GET"
+              }
+            ]
+          },
+          {
+            "id": 31,
+            "name": "boshqarish",
+            "apis": [
+              {
+                "id": 133,
+                "route": "/api/v1/accountant/",
+                "name": "create-invoice/$/",
+                "dynamic": true,
+                "method": "POST"
+              },
+              {
+                "id": 134,
+                "route": "/api/v1/accountant/",
+                "name": "update-invoice/$/",
+                "dynamic": true,
+                "method": "PATCH"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": 17,
+        "name": "Reyestr",
+        "actions": [
+          {
+            "id": 32,
+            "name": "ko'rish",
+            "apis": [
+              {
+                "id": 130,
+                "route": "/api/v1/accountant/",
+                "name": "finished-orders/",
+                "dynamic": false,
+                "method": "GET"
+              },
+              {
+                "id": 131,
+                "route": "/api/v1/accountant/",
+                "name": "finished-orders-excel/",
+                "dynamic": false,
+                "method": "GET"
+              }
+            ]
+          }
+        ]
       }
     ]
   },
