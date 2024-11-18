@@ -1,9 +1,9 @@
 from django.db import models
 from django.db.models.signals import post_migrate
 from django.dispatch import receiver
+
 from utils import BaseModel
 from utils.choices import TransactionTypes, TransactionStatuses
-from decimal import Decimal
 
 
 class Checkout(BaseModel):
