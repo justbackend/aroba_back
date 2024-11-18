@@ -90,7 +90,7 @@ class BalanceView(views.APIView):
 
         unpaid_orders = (
             order_models.Order.objects.filter(
-                paid=False,
+                client_paid=False,
                 status__gte=OrderStatus.STARTED
                 )
             .values('payment_type')
