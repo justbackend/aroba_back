@@ -65,8 +65,11 @@ class ClientRouteSerializer(serializers.ModelSerializer):
 
 
 class CreateClientRouteSerializer(ClientRouteSerializer):
+    loading = serializers.CharField(required=True, write_only=True)
+    unloading = serializers.CharField(required=True, write_only=True)
 
     def validate(self, v):
+        v['loading'], v['unloading'] = ClientSerializer.get_points(v['loading'], v['unloading'])
         if not self.instance:
             checking = models.ClientRoute.objects.filter(
                 client=v['client'], loading=v['loading'],
