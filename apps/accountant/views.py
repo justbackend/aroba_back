@@ -35,6 +35,7 @@ class TransClientsViewExcel(ExcelListView, TransClientsViewList):
 
 class FinishedOrders(generics.ListAPIView):
     serializer_class = serializers.FinishedOrdersSerializer
+    filterset_fields = ('client_paid',)
 
     def get_queryset(self):
         return (
