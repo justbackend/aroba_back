@@ -33,7 +33,7 @@ class FinishedOrdersSerializer(serializers.Serializer):
 class ChildOrdersSerializer(serializers.Serializer):
     id = serializers.IntegerField()
     code = serializers.CharField()
-    total_amount = serializers.DecimalField(max_digits=15, decimal_places=2)
+    income = serializers.DecimalField(max_digits=15, decimal_places=2)
     loading_name = serializers.CharField()
     unloading_name = serializers.CharField()
     car_number = serializers.CharField()
@@ -90,7 +90,7 @@ class InvoiceOrdersSerializer(serializers.Serializer):
         for invoice in client.to_invoices:
             self.amounts[invoice.status] += invoice.total_amount
 
-        self.amounts['unsent'] = sum(map(lambda x: x.total_amount, client.to_orders))
+        self.amounts['unsent'] = sum(map(lambda x: x.income, client.to_orders))
 
         return self.amounts
 
