@@ -67,7 +67,7 @@ class CreateClientRouteSerializer(ClientRouteSerializer):
         if not self.instance:
             checking = models.ClientRoute.objects.filter(
                 client=v['client'], loading=v['loading'],
-                unloading=v['unloading'], type=v['type']
+                unloading=v['unloading']
             )
             if checking.exists():
                 raise utils.APIException('The object already exists.')
