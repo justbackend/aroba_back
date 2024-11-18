@@ -99,7 +99,6 @@ class DeleteOrderStatusView(generics.GenericAPIView):
 
     def delete(self, request, order_id, *args, **kwargs):
         order = get_object(models.Order, id=order_id)
-        first_status = order.status
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         comment = serializer.validated_data['comment']
