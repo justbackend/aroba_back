@@ -42,7 +42,7 @@ class FinishedOrders(generics.ListAPIView):
             .select_related('loading', 'unloading', 'client')
             .filter(
                 payment_type=OrderPaymentTypes.TRANSFER,
-                status=OrderStatus.FINISHED,
+                status__gte=OrderStatus.STARTED,
             ).order_by('-id')
         )
 
@@ -51,7 +51,7 @@ class FinishedOrdersExcel(ExcelListView, FinishedOrders):
     filename = 'finished_orders'
     fields = (
         'client_name', 'date', 'loading_name',
-        'unloading_name', 'car_number', 'total_amount'
+        'unloading_name', 'car_number', 'income'
     )
     default_widths = 30
 

@@ -32,7 +32,8 @@ class FinishedOrdersSerializer(serializers.Serializer):
     loading = serializers.CharField(source='loading.name')
     unloading = serializers.CharField(source='unloading.name')
     car_number = serializers.CharField()
-    total_amount = serializers.IntegerField()
+    income = serializers.IntegerField()
+    client_paid = serializers.BooleanField()
 
 
 class ChildOrdersSerializer(serializers.Serializer):
