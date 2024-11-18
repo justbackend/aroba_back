@@ -8,7 +8,6 @@ from . import models, serializers
 
 class ClientViewSet(viewsets.ModelViewSet):
     serializer_class = serializers.ClientSerializer
-    filterset_fields = ('routes__type',)
     search_fields = ('name', 'phone', 'accounting_phone')
 
     routes_qs = (
@@ -18,9 +17,10 @@ class ClientViewSet(viewsets.ModelViewSet):
     )
 
     def get_queryset(self):
+        _type = self.request.query_params.get('routes__type')
         return (
             models.Client.active_objects
-            .prefetch_related(Prefetch('routes', queryset=self.routes_qs))
+            .prefetch_related(Prefetch('routes', queryset=self.routes_qs.filter(type=_type)))
             .all()
         )
 

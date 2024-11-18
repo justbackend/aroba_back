@@ -116,5 +116,6 @@ class DeleteOrderStatusView(generics.GenericAPIView):
         )
         method_name = 'ws_filling_orders' if first_status == OrderStatus.FILLING else 'ws_status_orders'
         getattr(SocketSendOrders, method_name)(order, 'd')
+        SocketSendOrders.ws_dispatcher_orders(action='d', order=order)
 
         return Response({'msg': "Success"}, status=status.HTTP_204_NO_CONTENT)

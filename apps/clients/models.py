@@ -14,6 +14,12 @@ class Client(BaseModel):
     deleted = models.BooleanField(default=False, verbose_name="Deleted")
     inn = models.CharField(max_length=15, verbose_name="Inner client", null=True, blank=True)
     customer = models.CharField(max_length=255, verbose_name="Customer", null=True, blank=True)
+    type = models.CharField(
+        max_length=15,
+        verbose_name="Route type",
+        choices=choices.ClientRouteTypes.choices,
+        default=choices.ClientRouteTypes.CASH
+    )
     accounting_phone = models.CharField(
         max_length=20, verbose_name="Accounting phone number",
         validators=[utils.PhoneValidator()], null=True, blank=True
@@ -33,12 +39,6 @@ class Client(BaseModel):
 
 class ClientRoute(BaseModel):
     amount = models.DecimalField(max_digits=15, decimal_places=2, verbose_name="Amount")
-    type = models.CharField(
-        max_length=15,
-        verbose_name="Route type",
-        choices=choices.ClientRouteTypes.choices,
-        default=choices.ClientRouteTypes.CASH
-    )
     loading = models.ForeignKey(
         'common.Point',
         on_delete=models.PROTECT,
