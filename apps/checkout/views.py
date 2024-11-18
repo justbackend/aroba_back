@@ -35,7 +35,7 @@ class ReportOrdersListAPI(generics.ListAPIView):
         )
 
 
-class PayCashOrder(views.APIView):
+class PayOrder(views.APIView):
 
     def get(self, request, order_id: int, *args, **kwargs):
 
