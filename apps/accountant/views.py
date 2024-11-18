@@ -70,10 +70,7 @@ class InvoiceOrders(generics.ListAPIView):
     orders_qs = (
         orders_models.Order.objects
         .filter(payment_type=OrderPaymentTypes.TRANSFER,
-                status__in=(
-                    OrderStatus.STARTED, OrderStatus.AT_FACTORY,
-                    OrderStatus.LOADED, OrderStatus.LOCATION_ASSIGNED,
-                ))
+                status__gte=OrderStatus.STARTED)
         .annotate(loading_name=F('loading__name'), unloading_name=F('unloading__name'))
     )
 
