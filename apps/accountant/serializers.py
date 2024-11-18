@@ -11,7 +11,11 @@ class TransClientSerializer(serializers.ModelSerializer):
         model = client_models.Client
         fields = (
             'id',
+            'name',
+            'requisite',
+            'requisite_file',
             'customer',
+            'phone',
             'accounting_phone',
             'inn',
         )
