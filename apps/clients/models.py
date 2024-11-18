@@ -63,7 +63,7 @@ class ClientRoute(BaseModel):
         verbose_name_plural = "Client routes"
         db_table = "clients_route"
         constraints = [
-            models.UniqueConstraint(fields=["loading", "unloading", 'client', 'type'], name="unique_client_router"),
+            models.UniqueConstraint(fields=["loading", "unloading", 'client'], name="unique_client_router"),
         ]
 
     def __str__(self):
