@@ -16,8 +16,7 @@ class TransClientsViewList(generics.ListAPIView):
     def get_queryset(self):
         return (
             client_models.Client.objects
-            .filter(type=ClientRouteTypes.TRANSFER)
-            .distinct()
+            .filter(type=ClientRouteTypes.TRANSFER, inn__isnull=True, customer__isnull=True)
         )
 
 
