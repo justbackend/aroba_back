@@ -11,14 +11,15 @@ class TransClientSerializer(serializers.ModelSerializer):
         model = client_models.Client
         fields = (
             'id',
-            'name',
-            'requisite',
-            'requisite_file',
             'customer',
-            'phone',
             'accounting_phone',
             'inn',
         )
+        extra_kwargs = {
+            'accounting_phone': {'required': True},
+            'customer': {'required': True},
+            'inn': {'required': True},
+        }
 
 
 class FinishedOrdersSerializer(serializers.Serializer):
