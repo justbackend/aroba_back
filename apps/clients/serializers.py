@@ -15,7 +15,6 @@ class RouteListSerializer(serializers.Serializer):
 
 class ClientSerializer(serializers.ModelSerializer):
     routes = RouteListSerializer(many=True, read_only=True)
-    type = serializers.ChoiceField(choices=ClientRouteTypes.choices, write_only=True, required=True)
     amount = serializers.IntegerField(write_only=True, required=True)
     loading = serializers.PrimaryKeyRelatedField(
         write_only=True, required=True, queryset=Point.objects.all()
@@ -41,13 +40,12 @@ class ClientSerializer(serializers.ModelSerializer):
         )
 
     def create(self, validated_data):
-        _type = validated_data.pop('type')
         amount = validated_data.pop('amount')
         loading = validated_data.pop('loading')
         unloading = validated_data.pop('unloading')
 
         obj = super().create(validated_data)
-        models.ClientRoute.objects.create(client=obj, amount=amount, loading=loading, unloading=unloading, type=_type)
+        models.ClientRoute.objects.create(client=obj, amount=amount, loading=loading, unloading=unloading)
         return obj
 
 
@@ -60,7 +58,6 @@ class ClientRouteSerializer(serializers.ModelSerializer):
             'loading',
             'unloading',
             'client',
-            'type',
         )
 
 
