@@ -14,7 +14,7 @@ class ClientViewSet(viewsets.ModelViewSet):
     routes_qs = (
         models.ClientRoute.objects
         .select_related('unloading', 'loading')
-        .only('amount', 'type', 'loading__name', 'unloading__name', 'client_id')
+        .only('amount', 'loading__name', 'unloading__name', 'client_id')
     )
 
     def get_queryset(self):
