@@ -45,6 +45,15 @@ class PayCashOrder(views.APIView):
         return Response(data={'order_id': order_id, 'client_id': order.client_id})
 
 
+class PayClientOrder(views.APIView):
+    def get(self, request, order_id: int, *args, **kwargs):
+
+        order = utils.get_object(order_models.Order, client_paid=False, id=order_id)
+        order.client_paid = True
+        order.save()
+        return Response(data={'order_id': order_id, 'client_id': order.client_id})
+
+
 class CreateTransactionAPI(generics.ListCreateAPIView):
     queryset = models.Transaction.objects.all().order_by('-id')
     filterset_fields = ('type', 'status')
