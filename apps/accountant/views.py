@@ -80,7 +80,7 @@ class InvoiceOrders(generics.ListAPIView):
         .filter(
             status__in=(InvoiceStatuses.PENDING, InvoiceStatuses.APPROVED),
             orders__isnull=False,
-        ).order_by('-status').distinct()
+        ).order_by('-status', '-created_at').distinct()
     )
 
     def get_queryset(self):
