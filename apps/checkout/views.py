@@ -106,13 +106,11 @@ class CashSummaryListView(generics.ListAPIView):
         return (
             order_models.Order.objects.filter(
                 payment_type=OrderPaymentTypes.CASH,
-                paid=True,
-                status=OrderStatus.FINISHED,
             )
             .select_related('loading', 'unloading', 'client')
             .only(
                 'id', 'code', 'date', 'car_number', 'loading__name', 'payment_type',
-                'unloading__name', 'client__name', 'total_amount', 'income',
+                'unloading__name', 'client__name', 'total_amount',
             ).order_by('-id')
         )
 
