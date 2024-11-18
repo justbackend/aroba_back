@@ -106,9 +106,9 @@ class BalanceView(views.APIView):
         return Response(response)
 
 
-class CashSummaryListView(generics.ListAPIView):
+class SummaryListView(generics.ListAPIView):
     serializer_class = serializers.CashSummarySerializer
-    filterset_fields = ('client', 'loading', 'unloading',)
+    filterset_fields = ('client', 'loading', 'unloading', 'payment_type')
     search_fields = ('code', 'car_number', 'driver_phone',)
 
     def get_queryset(self):
@@ -119,7 +119,7 @@ class CashSummaryListView(generics.ListAPIView):
             .select_related('loading', 'unloading', 'client')
             .only(
                 'id', 'code', 'date', 'car_number', 'loading__name', 'payment_type',
-                'unloading__name', 'client__name', 'total_amount',
+                'unloading__name', 'client__name', 'total_amount', 'paid'
             ).order_by('-id')
         )
 

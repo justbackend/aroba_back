@@ -17,7 +17,7 @@ urlpatterns = [
     path('balance-info/', views.BalanceView.as_view(), name='balance'),
 
     # chash summary
-    path('cash-summary/', views.CashSummaryListView.as_view(), name='checkout'),
-    path('cash-summary-excel/', views.CashSummaryExcelView.as_view(), name='checkout'),
+    path('summary/', views.SummaryListView.as_view(), name='checkout'),
+    path('summary-excel/', views.CashSummaryExcelView.as_view(), name='checkout'),
 
 ]
