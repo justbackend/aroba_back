@@ -21,8 +21,7 @@ class ReportOrdersListAPI(generics.ListAPIView):
         orders_qs = (
             order_models.Order.objects.filter(
                 payment_type=payment_type,
-                status__in=(OrderStatus.STARTED, OrderStatus.AT_FACTORY,
-                            OrderStatus.LOADED, OrderStatus.LOCATION_ASSIGNED),
+                status__gte=OrderStatus.STARTED,
             )
             .annotate(loading_name=F('loading__name'), unloading_name=F('unloading__name'))
             .exclude(paid=True, client_paid=True)
@@ -92,10 +91,8 @@ class BalanceView(views.APIView):
         unpaid_orders = (
             order_models.Order.objects.filter(
                 paid=False,
-                status__in=(
-                    OrderStatus.STARTED, OrderStatus.AT_FACTORY,
-                    OrderStatus.LOADED, OrderStatus.LOCATION_ASSIGNED
-                ))
+                status__gte=OrderStatus.STARTED
+                )
             .values('payment_type')
             .annotate(total=Sum('income', default=0))
         )
@@ -115,10 +112,7 @@ class SummaryListView(generics.ListAPIView):
         return (
             order_models.Order.objects.filter(
                 payment_type=OrderPaymentTypes.CASH,
-                status__in=(
-                    OrderStatus.STARTED, OrderStatus.AT_FACTORY,
-                    OrderStatus.LOADED, OrderStatus.FINISHED, OrderStatus.LOCATION_ASSIGNED,
-                )
+                status__gte=OrderStatus.STARTED
             )
             .select_related('loading', 'unloading', 'client')
             .only(
@@ -128,7 +122,7 @@ class SummaryListView(generics.ListAPIView):
         )
 
 
-class CashSummaryExcelView(ExcelListView):
+class SummaryExcelView(ExcelListView):
     fields = ('id', 'code', 'date', 'car_number', 'loading_name', 'unloading_name', 'client_name')
     filename = 'cash_summary'
 
@@ -137,7 +131,6 @@ class CashSummaryExcelView(ExcelListView):
             order_models.Order.objects.filter(
                 payment_type=OrderPaymentTypes.CASH,
                 paid=True,
-                status=OrderStatus.FINISHED,
             )
             .values(
                 'id', 'code', 'date', 'car_number',

@@ -18,6 +18,6 @@ urlpatterns = [
 
     # chash summary
     path('summary/', views.SummaryListView.as_view(), name='checkout'),
-    path('summary-excel/', views.CashSummaryExcelView.as_view(), name='checkout'),
+    path('summary-excel/', views.SummaryExcelView.as_view(), name='checkout'),
 
 ]
