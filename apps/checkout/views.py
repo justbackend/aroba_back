@@ -111,7 +111,6 @@ class SummaryListView(generics.ListAPIView):
     def get_queryset(self):
         return (
             order_models.Order.objects.filter(
-                payment_type=OrderPaymentTypes.CASH,
                 status__gte=OrderStatus.STARTED
             )
             .select_related('loading', 'unloading', 'client')
