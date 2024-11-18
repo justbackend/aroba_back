@@ -14,8 +14,8 @@ class CreateOrderView(generics.CreateAPIView):
 
 
 class ClientsListView(generics.ListAPIView):
-    serializer_class = utils.create_serializer({'id': int, 'name': str})
-    queryset = clients_models.Client.active_objects.all().only('id', 'name').order_by('-id')
+    serializer_class = utils.create_serializer({'id': int, 'name': str, 'type': str})
+    queryset = clients_models.Client.active_objects.all().only('id', 'name', 'type').order_by('-id')
     pagination_class = None
 
 
