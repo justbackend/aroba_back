@@ -115,6 +115,10 @@ class SummaryListView(generics.ListAPIView):
         return (
             order_models.Order.objects.filter(
                 payment_type=OrderPaymentTypes.CASH,
+                status__in=(
+                    OrderStatus.STARTED, OrderStatus.AT_FACTORY,
+                    OrderStatus.LOADED, OrderStatus.FINISHED, OrderStatus.LOCATION_ASSIGNED,
+                )
             )
             .select_related('loading', 'unloading', 'client')
             .only(
