@@ -16,6 +16,7 @@ class ReportOrdersSerializer(serializers.Serializer):
     income = serializers.IntegerField(read_only=True)
     total_amount = serializers.IntegerField(read_only=True)
     paid = serializers.BooleanField(read_only=True)
+    client_paid = serializers.BooleanField(read_only=True)
     status = serializers.IntegerField(read_only=True)
 
 

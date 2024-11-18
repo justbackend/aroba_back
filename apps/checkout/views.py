@@ -1,4 +1,4 @@
-from django.db.models import Prefetch, F, Sum, Q
+from django.db.models import Prefetch, F, Sum, Q, Exists, OuterRef
 from rest_framework import generics, views
 from rest_framework.response import Response
 
@@ -25,12 +25,14 @@ class ReportOrdersListAPI(generics.ListAPIView):
                             OrderStatus.LOADED, OrderStatus.LOCATION_ASSIGNED),
             )
             .annotate(loading_name=F('loading__name'), unloading_name=F('unloading__name'))
+            .exclude(paid=True, client_paid=True)
         )
 
         return (
             client_models.Client.objects
             .prefetch_related(Prefetch('orders', queryset=orders_qs))
-            .filter(orders__isnull=False)
+            .annotate(has_orders=Exists(orders_qs.filter(client=OuterRef('pk'))))
+            .filter(orders__isnull=False, has_orders=True)
             .distinct()
         )
 
@@ -38,7 +40,6 @@ class ReportOrdersListAPI(generics.ListAPIView):
 class PayOrder(views.APIView):
 
     def get(self, request, order_id: int, *args, **kwargs):
-
         order = utils.get_object(order_models.Order, paid=False, id=order_id)
         order.paid = True
         order.save()
@@ -47,7 +48,6 @@ class PayOrder(views.APIView):
 
 class PayClientOrder(views.APIView):
     def get(self, request, order_id: int, *args, **kwargs):
-
         order = utils.get_object(order_models.Order, client_paid=False, id=order_id)
         order.client_paid = True
         order.save()
