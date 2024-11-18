@@ -1,9 +1,9 @@
 from rest_framework import serializers
-from .. import models
+
 import utils
-from apps.common import models as common_models
 from apps.clients import models as client_models
-from utils import choices
+from apps.common import models as common_models
+from .. import models
 from ..utils import SocketSendOrders
 
 
@@ -20,7 +20,6 @@ class CreateOrderSerializer(serializers.Serializer):
             loading=attrs['loading'],
             unloading=attrs['unloading'],
             client=attrs['client'],
-            type=attrs['payment_type'],
         ).exists()
         if not checking:
             raise utils.APIException("The client route does not exist")
