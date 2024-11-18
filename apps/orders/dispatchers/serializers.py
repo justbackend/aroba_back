@@ -80,13 +80,13 @@ class FillOrderSerializer(serializers.ModelSerializer):
 
         instance.create_payment(amount=instance.total_amount, _type=instance.payment_type)
         log_comment = (
-            f"Buyurtma qoldirldi\n"
-            f"Client: {validated_data.get('client')}"
-            f"Loading: {validated_data.get('loading')}"
-            f"Unloading: {validated_data.get('unloading')}"
-            f"Driver Phone: {validated_data.get('driver_phone')}"
-            f"Car Number: {validated_data.get('car_number')}"
-            f"Total Amount: {validated_data.get('total_amount')}"
+            f"Buyurtma qoldirldi:  \n"
+            f"Client: {validated_data.get('client')}  \n\n"
+            f"Loading: {validated_data.get('loading')}  \n\n"
+            f"Unloading: {validated_data.get('unloading')}  \n\n"
+            f"Driver Phone: {validated_data.get('driver_phone')}  \n\n"
+            f"Car Number: {validated_data.get('car_number')}  \n\n"
+            f"Total Amount: {validated_data.get('total_amount')}  \n\n"
         )
         instance.create_log(
             comment=log_comment, action=OrderLogActions.FILLED, user=self.context['request'].user

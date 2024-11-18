@@ -2,6 +2,7 @@ from asgiref.sync import async_to_sync
 from channels.layers import get_channel_layer
 
 from .dispatchers.serializers import NewOrdersListSerializer, FillingOrdersListSerializer
+from .managers.serializers import StatusOrdersListSerializer
 from .serializers import FullOrderSerializer
 
 
@@ -39,7 +40,7 @@ class SocketSendOrders:
     def ws_status_orders(cls, order, action='c'):
         send_socket_data(
             channel='status_group',
-            data=cls.get_order_data(order, action),
+            data=cls.get_order_data(order, action, serializer=StatusOrdersListSerializer),
             method='send_status_orders'
         )
 
