@@ -114,7 +114,7 @@ class CreateInvoice(generics.GenericAPIView):
 
         client = orders[0].client
 
-        total_amount = orders.aggregate(total=Sum('total_amount'))['total']
+        total_amount = orders.aggregate(total=Sum('income', default=0))['total']
         invoice = self.create_invoice(client, total_amount)
         orders.update(invoice_id=invoice.id)
         invoice.past_orders.set(orders)
