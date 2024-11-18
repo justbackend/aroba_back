@@ -16,12 +16,8 @@ class RouteListSerializer(serializers.Serializer):
 class ClientSerializer(serializers.ModelSerializer):
     routes = RouteListSerializer(many=True, read_only=True)
     amount = serializers.IntegerField(write_only=True, required=True)
-    loading = serializers.PrimaryKeyRelatedField(
-        write_only=True, required=True, queryset=Point.objects.all()
-    )
-    unloading = serializers.PrimaryKeyRelatedField(
-        write_only=True, required=True, queryset=Point.objects.all()
-    )
+    loading = serializers.CharField(required=True, write_only=True)
+    unloading = serializers.CharField(required=True, write_only=True)
 
     class Meta:
         model = models.Client
@@ -43,10 +39,17 @@ class ClientSerializer(serializers.ModelSerializer):
         amount = validated_data.pop('amount')
         loading = validated_data.pop('loading')
         unloading = validated_data.pop('unloading')
+        loading, unloading = self.get_points(loading, unloading)
 
         obj = super().create(validated_data)
         models.ClientRoute.objects.create(client=obj, amount=amount, loading=loading, unloading=unloading)
         return obj
+
+    @staticmethod
+    def get_points(loading, unloading):
+        loading = Point.objects.get_or_create(name=loading)[0]
+        unloading = Point.objects.get_or_create(name=unloading)[0]
+        return loading, unloading
 
 
 class ClientRouteSerializer(serializers.ModelSerializer):
