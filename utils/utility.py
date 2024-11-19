@@ -4,7 +4,16 @@ from django.http import Http404
 
 
 def get_object(model, filters=None, select_related=None, prefetch_related=None, *args, **kwargs):
-    obj = model.objects.filter(*args, **kwargs).first()
+    filters = filters or {}
+    select_related = select_related or []
+    prefetch_related = prefetch_related or []
+
+    obj = (
+        model.objects
+        .prefetch_related(*prefetch_related)
+        .select_related(*select_related)
+        .filter(*args, **kwargs, **filters).first()
+    )
     if not obj:
         raise Http404
     return obj
