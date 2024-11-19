@@ -34,6 +34,7 @@ class TransactionsView(generics.ListCreateAPIView):
 class UpdateTransactionView(generics.UpdateAPIView):
     permission_classes = (IMBPermission,)
     authentication_classes = (IMBAuthentication,)
+    serializer_class = serializers.IMBUpdateTransactionSerializer
 
     def get_object(self):
         return get_object(

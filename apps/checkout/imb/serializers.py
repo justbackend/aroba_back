@@ -1,6 +1,8 @@
 from rest_framework import serializers
 
+from utils.choices import TransactionStatuses
 from .. import models
+from ..models import MainCheckout
 
 
 class IMBTransactionSerializer(serializers.ModelSerializer):
@@ -20,3 +22,30 @@ class IMBTransactionSerializer(serializers.ModelSerializer):
         extra_kwargs = {
             'type': {'read_only': True},
         }
+
+
+class IMBUpdateTransactionSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.Transaction
+        fields = (
+            'id',
+            'status',
+            'rejected'
+        )
+
+    def update(self, instance, validated_data):
+        {
+            TransactionStatuses.CANCELLED: self.cancelled,
+            TransactionStatuses.APPROVED: self.approved,
+        }[validated_data['status']](instance)
+
+        obj = super().update(instance, validated_data)
+        return obj
+
+    @staticmethod
+    def approved(instance):
+        MainCheckout.add(instance.amount)
+
+    @staticmethod
+    def cancelled(instance):
+        pass
