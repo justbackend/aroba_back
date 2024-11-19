@@ -128,7 +128,7 @@ class UpdateInvoiceSerializer(serializers.ModelSerializer):
 
     @staticmethod
     def approved(instance):
-        instance.orders.all().update(paid=True)
+        instance.orders.all().update(client_paid=True)
 
     @staticmethod
     def pending(instance):
@@ -136,4 +136,4 @@ class UpdateInvoiceSerializer(serializers.ModelSerializer):
 
     @staticmethod
     def cancelled(instance):
-        instance.orders.all().update(invoice=None)
+        instance.orders.all().update(invoice=None, client_paid=False)
