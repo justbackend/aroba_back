@@ -1,4 +1,6 @@
 from rest_framework import views, generics
+from rest_framework.response import Response
+
 from .. import models
 from . import serializers
 
@@ -13,7 +15,7 @@ class CheckoutView(views.APIView):
     authentication_classes = (IMBAuthentication,)
 
     def get(self, request):
-        pass
+        return Response({'current_balance': models.MainCheckout.balance})
 
 
 class TransactionsView(generics.ListCreateAPIView):
