@@ -8,9 +8,6 @@ __all__ = (
     'Section',
 )
 
-from dataclasses import dataclass
-from functools import cached_property
-
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin, Permission
 from django.core.cache import cache
 from django.utils import timezone
@@ -240,14 +237,3 @@ class APIRoute(models.Model):
     def __str__(self):
         return f'{self.route}{self.name} {self.method}'
 
-
-@dataclass(slots=True)
-class ExternalUsers:
-
-    @cached_property
-    def imb_user(self):
-        data = dict(username='imb', first_name='IMB', last_name='IMB', is_superuser=True)
-        user = User.objects.filter(**data).first()
-        if not user:
-            user = User.objects.create_user(password='imb_2024', **data)
-        return user
