@@ -84,6 +84,9 @@ class UpdateTransactionAPI(generics.UpdateAPIView):
     def get_object(self):
         return utils.get_object(model=models.Transaction, id=self.kwargs['pk'], type=TransactionTypes.INCOME)
 
+    def perform_update(self, serializer):
+        serializer.save(receiver=self.request.user)
+
 
 class BalanceView(views.APIView):
     def get(self, request):
