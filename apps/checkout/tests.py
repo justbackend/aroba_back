@@ -1,25 +1,25 @@
 import time
 import hashlib
 
-SECRET_KEY = 'some_secret_key'
+SECRET_KEY = '038b3ef0-bfd2-4a7d-8014-97603f62cf08'
 
 
 def generate_token(secret_key):
     timestamp = int(time.time())
+    print(timestamp)
     token_data = f"{timestamp}{secret_key}"
     token = hashlib.sha1(token_data.encode('utf-8')).hexdigest()
     return token, timestamp
 
 
 _token, _timestamp = generate_token(SECRET_KEY)
-print(_token)
+print(f"{2034}:{_token}:{_timestamp}")
 
 
 def verify_token(secret_key, token, timestamp):
     token_data = f"{timestamp}{secret_key}"
 
     expected_token = hashlib.sha1(token_data.encode('utf-8')).hexdigest()
-    print(expected_token)
     return expected_token == token
 
 

@@ -165,7 +165,7 @@ class IMBAuthentication(BaseAuthentication):
         # If all checks pass, return the authenticated user (merchant_user_id) and None as the auth object
         return user_id, None
 
-    def is_timestamp_valid(self, timestamp, max_age=60):
+    def is_timestamp_valid(self, timestamp, max_age=5):
         """
         Check if the provided timestamp is within the allowed timeframe.
         :param timestamp: The timestamp from the request.
