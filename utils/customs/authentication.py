@@ -1,7 +1,7 @@
 import hashlib
 import time
 from typing import Union
-
+from django.conf import settings
 from django.contrib.postgres.aggregates import ArrayAgg
 from django.core.cache import cache
 from django.db.models import Func, Value, TextField
@@ -15,6 +15,8 @@ from rest_framework_simplejwt.utils import get_md5_hash_password
 
 from apps.users.models import User as AuthUser
 from utils.choices import APIRoutes
+
+IMB_SECRETS = settings.IMB_SECRETS
 
 
 class JWTAuthentication(jwt_authentication):
@@ -141,14 +143,14 @@ class CustomAuthentication(BaseAuthentication):
 
         try:
             # Split the Auth header into merchant_user_id, token, and timestamp
-            merchant_user_id, token, timestamp = auth_header.split(":")
+            user_id, token, timestamp = auth_header.split(":")
             timestamp = int(timestamp)  # Ensure timestamp is an integer
         except ValueError:
             raise AuthenticationFailed("Invalid Auth header format")
 
         # Retrieve the merchant details using merchant_user_id
         # merchant = VIA.get("service1")  # Currently hardcoded to "service1" (can be made dynamic)
-        if not merchant or merchant["merchant_user_id"] != merchant_user_id:
+        if IMB_SECRETS["user_id"] != user_id:
             raise AuthenticationFailed("Invalid merchant user ID")
 
         # Validate the timestamp to ensure the token hasn't expired
@@ -156,12 +158,12 @@ class CustomAuthentication(BaseAuthentication):
             raise AuthenticationFailed("Token has expired")
 
         # Generate the expected token and compare it with the provided token
-        expected_token = self.generate_token(timestamp, merchant["secret_key"])
+        expected_token = self.generate_token(timestamp, IMB_SECRETS["secret_key"])
         if token != expected_token:
             raise AuthenticationFailed("Invalid token")
 
         # If all checks pass, return the authenticated user (merchant_user_id) and None as the auth object
-        return merchant_user_id, None
+        return user_id, None
 
     def is_timestamp_valid(self, timestamp, max_age=60):
         """

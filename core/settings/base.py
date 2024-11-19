@@ -16,7 +16,7 @@ from pathlib import Path
 from dotenv import load_dotenv
 
 from ..cronjobs import CRON_TASKS  # noqa
-from ..unfold import * # noqa
+from ..unfold import *  # noqa
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
@@ -39,6 +39,8 @@ ALLOWED_HOSTS = ["*"]
 # the dump secrets
 DUMP_CHAT_ID = os.getenv("DUMP_CHAT_ID")
 DUMP_BOT_TOKEN = os.getenv("DUMP_BOT_TOKEN")
+
+
 # Application definition
 DJANGO_APPS = [
     "unfold",  # before django.contrib.admin
@@ -186,7 +188,6 @@ CACHES = {
     }
 }
 
-
 CHANNEL_LAYERS = {
     'default': {
         'BACKEND': 'channels_redis.core.RedisChannelLayer',
@@ -227,3 +228,9 @@ SIMPLE_JWT = {
 }
 
 CRONJOBS = CRON_TASKS
+
+
+IMB_SECRETS = {
+    'secret_key': os.getenv("IMB_SECRET_KEY"),
+    'user_id': os.getenv("IMB_USER_ID"),
+}
