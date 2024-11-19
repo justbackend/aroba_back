@@ -56,7 +56,7 @@ class Transaction(BaseModel):
         'users.User', verbose_name="Creator",
         on_delete=models.PROTECT, related_name="transactions_creator"
     )
-    checker = models.ForeignKey(
+    receiver = models.ForeignKey(
         'users.User', verbose_name="Checker",
         on_delete=models.PROTECT, related_name="transactions_checker",
         null=True, blank=True
