@@ -35,6 +35,7 @@ class ReportSerializer(serializers.Serializer):
 
 
 class CreateTransactionSerializer(serializers.ModelSerializer):
+    created_at = serializers.DateTimeField(read_only=True, format='%d.%m.%Y')
     creator = serializers.HiddenField(default=serializers.CurrentUserDefault())
 
     class Meta:
@@ -59,12 +60,6 @@ class CreateTransactionSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
         trans = super().create(validated_data)
         return trans
-
-    def to_representation(self, instance):
-        data = super().to_representation(instance)
-        data['created_at'] = instance.created_at.strftime('%d.%m.%Y')
-        return data
-
 
 class TransactionListSerializer(serializers.ModelSerializer):
     created_at = serializers.DateTimeField(read_only=True, format='%d.%m.%Y')
