@@ -79,7 +79,7 @@ class TransactionsExcel(ExcelListView):
 
 class UpdateTransactionAPI(generics.UpdateAPIView):
     serializer_class = serializers.TransactionStatusUpdateSerializer
-    http_method_names = 'patch',
+    http_method_names = 'put',
 
     def get_object(self):
         return utils.get_object(model=models.Transaction, id=self.kwargs['pk'])
