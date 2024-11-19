@@ -90,7 +90,7 @@ class TransactionStatusUpdateSerializer(serializers.ModelSerializer):
         if validated_data['status'] == TransactionStatuses.APPROVED:
             if MainCheckout.balance < instance.amount:
                 raise utils.APIException("Asosiy balansda mablag' yetarli emas")
-            MainCheckout.add(-instance.amount)
+            MainCheckout.add(instance.amount)
 
         obj = super().update(instance, validated_data)
         return obj

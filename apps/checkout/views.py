@@ -82,7 +82,7 @@ class UpdateTransactionAPI(generics.UpdateAPIView):
     http_method_names = 'put',
 
     def get_object(self):
-        return utils.get_object(model=models.Transaction, id=self.kwargs['pk'])
+        return utils.get_object(model=models.Transaction, id=self.kwargs['pk'], type=TransactionTypes.INCOME)
 
 
 class BalanceView(views.APIView):
