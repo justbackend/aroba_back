@@ -8,7 +8,7 @@ from django.conf import settings
 from .models import User
 
 
-@dataclass(slots=True)
+@dataclass
 class ExternalUsers:
 
     @cached_property
