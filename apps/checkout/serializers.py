@@ -96,7 +96,6 @@ class TransactionStatusUpdateSerializer(serializers.ModelSerializer):
 
     @staticmethod
     def approved(instance):
-
         MainCheckout.add(instance.amount)
 
     @staticmethod
