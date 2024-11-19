@@ -3,6 +3,7 @@ from rest_framework import generics, views
 from rest_framework.response import Response
 
 import utils
+from utils import *
 from apps.clients import models as client_models
 from apps.orders import models as order_models
 from utils.choices import *
@@ -81,6 +82,9 @@ class UpdateTransactionAPI(generics.UpdateAPIView):
     serializer_class = serializers.TransactionStatusUpdateSerializer
     http_method_names = 'patch',
 
+    def get_object(self):
+        return utils.get_object(model=models.Transaction, id=self.kwargs['pk'])
+
 
 class BalanceView(views.APIView):
     def get(self, request):
@@ -92,7 +96,7 @@ class BalanceView(views.APIView):
             order_models.Order.objects.filter(
                 client_paid=False,
                 status__gte=OrderStatus.STARTED
-                )
+            )
             .values('payment_type')
             .annotate(total=Sum('income', default=0))
         )
