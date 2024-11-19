@@ -1,3 +1,5 @@
+import hashlib
+import time
 from typing import Union
 
 from django.contrib.postgres.aggregates import ArrayAgg
@@ -125,3 +127,58 @@ class PayloadAuthentication(BaseAuthentication):
 
     def authenticate_header(self, request):
         return 'Bearer realm="api"'
+
+
+class CustomAuthentication(BaseAuthentication):
+    def authenticate(self, request):
+        """
+        Authenticate the incoming request by verifying the custom Auth header.
+        """
+        # Extract the "Auth" header from the request
+        auth_header = request.headers.get("Auth")
+        if not auth_header:
+            raise AuthenticationFailed("Auth header is missing")
+
+        try:
+            # Split the Auth header into merchant_user_id, token, and timestamp
+            merchant_user_id, token, timestamp = auth_header.split(":")
+            timestamp = int(timestamp)  # Ensure timestamp is an integer
+        except ValueError:
+            raise AuthenticationFailed("Invalid Auth header format")
+
+        # Retrieve the merchant details using merchant_user_id
+        # merchant = VIA.get("service1")  # Currently hardcoded to "service1" (can be made dynamic)
+        if not merchant or merchant["merchant_user_id"] != merchant_user_id:
+            raise AuthenticationFailed("Invalid merchant user ID")
+
+        # Validate the timestamp to ensure the token hasn't expired
+        if not self.is_timestamp_valid(timestamp):
+            raise AuthenticationFailed("Token has expired")
+
+        # Generate the expected token and compare it with the provided token
+        expected_token = self.generate_token(timestamp, merchant["secret_key"])
+        if token != expected_token:
+            raise AuthenticationFailed("Invalid token")
+
+        # If all checks pass, return the authenticated user (merchant_user_id) and None as the auth object
+        return merchant_user_id, None
+
+    def is_timestamp_valid(self, timestamp, max_age=60):
+        """
+        Check if the provided timestamp is within the allowed timeframe.
+        :param timestamp: The timestamp from the request.
+        :param max_age: Maximum age of the token in seconds (default: 60 seconds).
+        :return: True if the timestamp is valid, False otherwise.
+        """
+        current_time = int(time.time())
+        return current_time - timestamp <= max_age
+
+    def generate_token(self, timestamp, secret_key):
+        """
+        Generate a token based on the timestamp and secret key.
+        :param timestamp: The timestamp to use for token generation.
+        :param secret_key: The secret key associated with the merchant.
+        :return: A SHA-1 hash as the generated token.
+        """
+        token_data = f"{timestamp}{secret_key}"
+        return hashlib.sha1(token_data.encode("utf-8")).hexdigest()
