@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from apps.users.external import EXTERNAL_USERS
+
 from .. import models
 
 
@@ -20,7 +20,3 @@ class IMBTransactionSerializer(serializers.ModelSerializer):
         extra_kwargs = {
             'type': {'read_only': True},
         }
-
-    def create(self, validated_data):
-        validated_data['creator'] = EXTERNAL_USERS.imb_user
-        return super().create(validated_data)
