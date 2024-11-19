@@ -39,7 +39,7 @@ def get_object(
         model.objects
         .prefetch_related(*prefetch_related)
         .select_related(*select_related)
-        .filter(q_objects, **filters)  # Merge filters and kwargs
+        .filter(q_objects, *args, **filters)  # Merge filters and kwargs
     )
 
     obj = queryset.first()
