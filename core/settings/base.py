@@ -234,3 +234,9 @@ IMB_SECRETS = {
     'secret_key': os.getenv("IMB_SECRET_KEY"),
     'user_id': os.getenv("IMB_USER_ID"),
 }
+
+
+IMB_USER_SECRETS = {
+    'pass': os.getenv("IMB_PASS"),
+    'username': os.getenv("IMB_USERNAME"),
+}
