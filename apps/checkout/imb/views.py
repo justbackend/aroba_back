@@ -10,7 +10,7 @@ from utils.choices import TransactionTypes
 from apps.users.external import EXTERNAL_USERS
 
 
-class CheckoutView(views.APIView):
+class CheckoutBalanceView(views.APIView):
     permission_classes = (IMBPermission,)
     authentication_classes = (IMBAuthentication,)
 

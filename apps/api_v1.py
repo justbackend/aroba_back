@@ -50,6 +50,12 @@ urlpatterns = [
     ),
 
     path(
+        'imb/',
+        include('apps.checkout.imb.urls'),
+        name='imb',
+    ),
+
+    path(
         'contacts/',
         include('apps.contacts.urls'),
         name='contacts',
