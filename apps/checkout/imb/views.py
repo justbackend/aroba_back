@@ -4,7 +4,7 @@ from rest_framework.response import Response
 from .. import models
 from . import serializers
 
-from utils import IMBPermission
+from utils import IMBPermission, get_object
 from utils.customs import IMBAuthentication
 from utils.choices import TransactionTypes
 from apps.users.external import EXTERNAL_USERS
@@ -28,4 +28,16 @@ class TransactionsView(generics.ListCreateAPIView):
         serializer.save(
             type=TransactionTypes.INCOME,
             creator=EXTERNAL_USERS.imb_user
+        )
+
+
+class UpdateTransactionView(generics.UpdateAPIView):
+    permission_classes = (IMBPermission,)
+    authentication_classes = (IMBAuthentication,)
+
+    def get_object(self):
+        return get_object(
+            model=models.Transaction,
+            id=self.kwargs['pk'],
+            type=TransactionTypes.EXPENSE,
         )
