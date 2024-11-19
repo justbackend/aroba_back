@@ -42,3 +42,6 @@ class UpdateTransactionView(generics.UpdateAPIView):
             id=self.kwargs['pk'],
             type=TransactionTypes.EXPENSE,
         )
+
+    def perform_update(self, serializer):
+        serializer.save(receiver=EXTERNAL_USERS.imb_user)
