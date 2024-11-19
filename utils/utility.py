@@ -10,7 +10,8 @@ def get_object(
         select_related: list = None,
         prefetch_related: list = None,
         q_objects: Q = None,
-        *args, **kwargs,
+        *args,
+        **kwargs,
 ):
     """
     Retrieve a single object from the database with optional filters,
