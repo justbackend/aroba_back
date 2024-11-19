@@ -5,6 +5,7 @@ from rest_framework import permissions
 from apps.users.utils import get_user_perms
 from .choices import APIRoutes
 from django.core.cache import cache
+from django.conf import settings
 
 
 class RolePermission(permissions.BasePermission):
@@ -87,3 +88,9 @@ class IsActive(permissions.BasePermission):
 class PayloadPermission(permissions.BasePermission):
     def has_permission(self, request, view):
         return bool(request.auth)
+
+
+class IMBPermission(permissions.BasePermission):
+
+    def has_permission(self, request, view):
+        return request.user and request.user == settings.IMB_SECRETS['user_id']

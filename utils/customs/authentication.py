@@ -131,7 +131,7 @@ class PayloadAuthentication(BaseAuthentication):
         return 'Bearer realm="api"'
 
 
-class CustomAuthentication(BaseAuthentication):
+class IMBAuthentication(BaseAuthentication):
     def authenticate(self, request):
         """
         Authenticate the incoming request by verifying the custom Auth header.
