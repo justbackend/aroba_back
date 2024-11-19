@@ -3,7 +3,7 @@ from django.core.cache import cache
 from django.http import Http404
 
 
-def get_object(model, *args, **kwargs):
+def get_object(model, filters=None, select_related=None, prefetch_related=None, *args, **kwargs):
     obj = model.objects.filter(*args, **kwargs).first()
     if not obj:
         raise Http404
