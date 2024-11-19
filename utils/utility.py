@@ -1,19 +1,48 @@
 import requests
 from django.core.cache import cache
+from django.db.models import Q
 from django.http import Http404
 
 
-def get_object(model, filters=None, select_related=None, prefetch_related=None, *args, **kwargs):
+def get_object(
+        model,
+        filters: dict = None,
+        select_related: list = None,
+        prefetch_related: list = None,
+        q_objects: Q = None,
+        **kwargs,
+):
+    """
+    Retrieve a single object from the database with optional filters,
+    select_related, and prefetch_related optimizations.
+
+    Args:
+        model: Django model class to query.
+        filters (dict): Additional keyword filters to apply.
+        select_related (list): Related fields for SQL JOIN optimization.
+        prefetch_related (list): Related fields for queryset prefetching.
+        q_objects: Positional arguments for filtering (e.g., Q objects).
+        **kwargs: Additional keyword arguments for filtering.
+
+    Returns:
+        obj: The retrieved object, or raises Http404 if not found.
+    """
     filters = filters or {}
     select_related = select_related or []
     prefetch_related = prefetch_related or []
+    q_objects = q_objects or Q()
 
-    obj = (
+    filters.update(**kwargs)
+
+    # Apply filters and relations
+    queryset = (
         model.objects
         .prefetch_related(*prefetch_related)
         .select_related(*select_related)
-        .filter(*args, **kwargs, **filters).first()
+        .filter(q_objects, **filters)  # Merge filters and kwargs
     )
+
+    obj = queryset.first()
     if not obj:
         raise Http404
     return obj
@@ -46,4 +75,3 @@ def clear_user_profile_data(users):
             cache.delete(f"user_profile_{user}")
         else:
             cache.delete(f"user_profile_{user.id}")
-
