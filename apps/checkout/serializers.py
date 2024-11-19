@@ -61,6 +61,7 @@ class CreateTransactionSerializer(serializers.ModelSerializer):
         trans = super().create(validated_data)
         return trans
 
+
 class TransactionListSerializer(serializers.ModelSerializer):
     created_at = serializers.DateTimeField(read_only=True, format='%d.%m.%Y')
 
