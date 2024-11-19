@@ -34,17 +34,20 @@ class IMBUpdateTransactionSerializer(serializers.ModelSerializer):
         )
 
     def update(self, instance, validated_data):
-        {
-            TransactionStatuses.CANCELLED: self.cancelled,
-            TransactionStatuses.APPROVED: self.approved,
-        }[validated_data['status']](instance)
+        status = validated_data['status']
+
+        if status != TransactionStatuses.PENDING:
+            {
+                TransactionStatuses.CANCELLED: self.cancelled,
+                TransactionStatuses.APPROVED: self.approved,
+            }[status](instance)
 
         obj = super().update(instance, validated_data)
         return obj
 
     @staticmethod
     def approved(instance):
-        MainCheckout.add(instance.amount)
+        MainCheckout.add(-instance.amount)
 
     @staticmethod
     def cancelled(instance):
