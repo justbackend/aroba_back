@@ -42,6 +42,7 @@ class PayOrder(views.APIView):
     def get(self, request, order_id: int, *args, **kwargs):
         order = utils.get_object(order_models.Order, paid=False, id=order_id)
         order.paid = True
+        order.status = OrderStatus.FINISHED
         order.save()
         return Response(data={'order_id': order_id, 'client_id': order.client_id})
 
@@ -50,6 +51,7 @@ class PayClientOrder(views.APIView):
     def get(self, request, order_id: int, *args, **kwargs):
         order = utils.get_object(order_models.Order, client_paid=False, id=order_id)
         order.client_paid = True
+        order.status = OrderStatus.FINISHED
         order.save()
         return Response(data={'order_id': order_id, 'client_id': order.client_id})
 
