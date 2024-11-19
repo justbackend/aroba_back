@@ -52,7 +52,7 @@ class CreateTransactionSerializer(serializers.ModelSerializer):
         }
 
     def validate(self, data):
-        if MainCheckout.balance < data['amount']:
+        if MainCheckout.balance < data['amount'] or data['amount'] == 0:
             raise utils.APIException("Asosiy balansda mablag' yetarli emas")
         return data
 
