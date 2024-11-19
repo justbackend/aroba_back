@@ -6,6 +6,7 @@ __all__ = (
     'RolePermission',
     'IsActive',
     'PayloadPermission',
+    'IMBPermission',
     'BaseModel',
     'Manager',
     'now',
@@ -23,9 +24,14 @@ from .paginations import PageNumberPagination
 from .exceptions import APIException
 from .validators import PhoneValidator, VehicleNumberValidator
 from .utility import get_object, send_me
-from .permissions import IsActive, RolePermission, PayloadPermission
 from .creators import create_serializer
 from .managers import Manager
+from .permissions import (
+    IsActive,
+    RolePermission,
+    PayloadPermission,
+    IMBPermission
+)
 from .serializers import (
     UserNameSerializer,
     PointNameSerializer,
