@@ -142,14 +142,13 @@ class IMBAuthentication(BaseAuthentication):
             raise AuthenticationFailed("Auth header is missing")
 
         try:
-            # Split the Auth header into merchant_user_id, token, and timestamp
+            # Split the Auth header into user_id, token, and timestamp
             user_id, token, timestamp = auth_header.split(":")
             timestamp = int(timestamp)  # Ensure timestamp is an integer
         except ValueError:
             raise AuthenticationFailed("Invalid Auth header format")
 
-        # Retrieve the merchant details using merchant_user_id
-        # merchant = VIA.get("service1")  # Currently hardcoded to "service1" (can be made dynamic)
+        # Retrieve the secrets details using user_id
         if IMB_SECRETS["user_id"] != user_id:
             raise AuthenticationFailed("Invalid merchant user ID")
 
@@ -162,7 +161,7 @@ class IMBAuthentication(BaseAuthentication):
         if token != expected_token:
             raise AuthenticationFailed("Invalid token")
 
-        # If all checks pass, return the authenticated user (merchant_user_id) and None as the auth object
+        # If all checks pass, return the authenticated user (user_id) and None as the auth object
         return user_id, None
 
     def is_timestamp_valid(self, timestamp, max_age=5):
