@@ -86,14 +86,22 @@ class TransactionStatusUpdateSerializer(serializers.ModelSerializer):
         }
 
     def update(self, instance, validated_data):
-
-        if validated_data['status'] == TransactionStatuses.APPROVED:
-            if MainCheckout.balance < instance.amount:
-                raise utils.APIException("Asosiy balansda mablag' yetarli emas")
-            MainCheckout.add(instance.amount)
+        {
+            TransactionStatuses.CANCELLED: self.cancelled,
+            TransactionStatuses.APPROVED: self.approved,
+        }[validated_data['status']](instance)
 
         obj = super().update(instance, validated_data)
         return obj
+
+    @staticmethod
+    def approved(instance):
+
+        MainCheckout.add(instance.amount)
+
+    @staticmethod
+    def cancelled(instance):
+        pass
 
 
 class CashSummarySerializer(serializers.Serializer):
