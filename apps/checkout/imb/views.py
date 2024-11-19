@@ -11,7 +11,9 @@ from apps.users.external import EXTERNAL_USERS
 class CheckoutView(views.APIView):
     permission_classes = (IMBPermission,)
     authentication_classes = (IMBAuthentication,)
-    pass
+
+    def get(self, request):
+        pass
 
 
 class TransactionsView(generics.ListCreateAPIView):
