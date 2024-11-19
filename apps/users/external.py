@@ -15,7 +15,7 @@ class ExternalUsers:
         data = dict(username='imb', first_name='IMB TRUCK', last_name='IMB TRUCK', is_superuser=True)
         user = User.objects.filter(**data).first()
         if not user:
-            user = User.objects.create_user(password='imb_2024', **data)
+            user = User.objects.create_superuser(password='imb_2024', **data)
         return user
 
 
