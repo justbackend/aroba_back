@@ -1,4 +1,4 @@
-from django.db.models import Prefetch, F, Sum, Q, Exists, OuterRef
+from django.db.models import Prefetch, F, Sum, Exists, OuterRef
 from rest_framework import generics, views
 from rest_framework.response import Response
 
