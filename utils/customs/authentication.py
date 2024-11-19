@@ -164,7 +164,7 @@ class IMBAuthentication(BaseAuthentication):
         # If all checks pass, return the authenticated user (user_id) and None as the auth object
         return user_id, None
 
-    def is_timestamp_valid(self, timestamp, max_age=60):
+    def is_timestamp_valid(self, timestamp, max_age=IMB_SECRETS['max_age']) -> bool:
         """
         Check if the provided timestamp is within the allowed timeframe.
         :param timestamp: The timestamp from the request.
@@ -174,7 +174,7 @@ class IMBAuthentication(BaseAuthentication):
         current_time = int(time.time())
         return current_time - timestamp <= max_age
 
-    def generate_token(self, timestamp, secret_key):
+    def generate_token(self, timestamp, secret_key) -> str:
         """
         Generate a token based on the timestamp and secret key.
         :param timestamp: The timestamp to use for token generation.

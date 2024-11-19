@@ -233,6 +233,7 @@ CRONJOBS = CRON_TASKS
 IMB_SECRETS = {
     'secret_key': os.getenv("IMB_SECRET_KEY"),
     'user_id': os.getenv("IMB_USER_ID"),
+    'max_age': int(os.getenv("MAX_AGE")),
 }
 
 
