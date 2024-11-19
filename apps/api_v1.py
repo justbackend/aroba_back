@@ -45,7 +45,7 @@ urlpatterns = [
 
     path(
         'checkout/',
-        include('apps.checkout.urls'),
+        include('apps.checkout.main.urls'),
         name='checkout',
     ),
 

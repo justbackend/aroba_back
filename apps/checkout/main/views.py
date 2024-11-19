@@ -3,13 +3,13 @@ from rest_framework import generics, views
 from rest_framework.response import Response
 
 import utils
-from utils import *
 from apps.clients import models as client_models
 from apps.orders import models as order_models
 from utils.choices import *
 from utils.excel import *
-from . import serializers, models
-from .models import MainCheckout
+from apps.checkout import models
+from apps.checkout.main import serializers
+from apps.checkout.models import MainCheckout
 
 
 class ReportOrdersListAPI(generics.ListAPIView):

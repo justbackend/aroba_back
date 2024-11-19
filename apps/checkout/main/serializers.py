@@ -2,8 +2,8 @@ from rest_framework import serializers
 
 import utils
 from utils.choices import TransactionStatuses
-from . import models
-from .models import MainCheckout
+from apps.checkout import models
+from apps.checkout.models import MainCheckout
 
 
 class ReportOrdersSerializer(serializers.Serializer):
