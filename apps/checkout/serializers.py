@@ -97,7 +97,7 @@ class TransactionStatusUpdateSerializer(serializers.ModelSerializer):
 
 
 class CashSummarySerializer(serializers.Serializer):
-    id = serializers.IntegerField()
+    id = serializers.IntegerField(read_only=True)
     code = serializers.CharField(read_only=True)
     date = serializers.DateField(read_only=True)
     car_number = serializers.CharField(read_only=True)
