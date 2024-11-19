@@ -16,7 +16,7 @@ class AdditionalAmountView(generics.UpdateAPIView):
     def get_object(self):
         return get_object(
             models.Order,
-            ~Q(payments__type=PaymentTypes.EXTRA),
+            q_objects=~Q(payments__type=PaymentTypes.EXTRA),
             id=self.kwargs['order_id'],
         )
 
