@@ -57,6 +57,7 @@ class RollbackOrderView(generics.GenericAPIView):
         order.status = OrderStatus.NEW
         order.paid = False
         order.save()
+        order.payments.all().delete()
 
         log_com = (f"Buyurtma Qaytarildi!!! \n"
                    f"Comment: {comment}\n")
