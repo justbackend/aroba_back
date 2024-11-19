@@ -13,7 +13,13 @@ class OrderAdmin(u_admin.ModelAdmin):
         model = models.OrderLog
         extra = 0
 
-    list_display = ('id', 'code', 'date', 'status', 'total_amount', 'car_number', 'payment_type', 'client')
+    list_display = (
+        'id', 'code',
+        'date', 'status',
+        'total_amount', 'car_number',
+        'payment_type', 'client',
+        'car_number', 'driver_phone'
+    )
     list_display_links = ('id', 'code',)
     list_filter = ('date', 'status', 'total_amount', 'car_number', 'payment_type', 'client')
     inlines = (OrderPaymentInline, OrderLogInline)
