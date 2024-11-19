@@ -13,7 +13,9 @@ def generate_token(secret_key):
 
 
 _token, _timestamp = generate_token(SECRET_KEY)
-print(f"{2034}:{_token}:{_timestamp}")
+
+headers_auth = f"{2034}:{_token}:{_timestamp}"
+print(headers_auth)
 
 
 def verify_token(secret_key, token, timestamp):
