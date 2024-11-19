@@ -4,6 +4,7 @@ from . import serializers
 
 from utils import IMBPermission
 from utils.customs import IMBAuthentication
+from utils.choices import TransactionTypes
 
 
 class CheckoutView(views.APIView):
@@ -16,8 +17,7 @@ class TransactionsView(generics.ListCreateAPIView):
     permission_classes = (IMBPermission,)
     authentication_classes = (IMBAuthentication,)
     serializer_class = serializers.IMBTransactionSerializer
+    queryset = models.Transaction.objects.all().order_by('-id')
 
-    def get_serializer_class(self):
-        if self.request.method == 'GET':
-            pass
-        return
+    def perform_create(self, serializer):
+        serializer.save(type=TransactionTypes.INCOME)

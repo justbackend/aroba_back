@@ -1,3 +1,7 @@
+__all__ = (
+    'EXTERNAL_USERS',
+)
+
 from dataclasses import dataclass
 from functools import cached_property
 from .models import User
@@ -14,3 +18,5 @@ class ExternalUsers:
             user = User.objects.create_user(password='imb_2024', **data)
         return user
 
+
+EXTERNAL_USERS = ExternalUsers()
