@@ -23,6 +23,7 @@ class TransactionsView(generics.ListCreateAPIView):
     authentication_classes = (IMBAuthentication,)
     serializer_class = serializers.IMBTransactionSerializer
     queryset = models.Transaction.objects.all().order_by('-id')
+    filterset_fields = ('type',)
 
     def perform_create(self, serializer):
         serializer.save(
