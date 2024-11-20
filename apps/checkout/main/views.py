@@ -1,4 +1,4 @@
-from django.db.models import Prefetch, F, Sum, Exists, OuterRef
+from django.db.models import Prefetch, F, Sum, Exists, OuterRef, Q
 from rest_framework import generics, views
 from rest_framework.response import Response
 
@@ -35,7 +35,11 @@ class ReportOrdersListAPI(generics.ListAPIView):
         return (
             client_models.Client.objects
             .prefetch_related(Prefetch('orders', queryset=orders_qs))
-            .annotate(has_orders=Exists(orders_qs.filter(client=OuterRef('pk'))))
+            .annotate(
+                has_orders=Exists(orders_qs.filter(client=OuterRef('pk'))),
+                sum_total_amount=Sum('orders__total_amount', filter=Q(orders__paid=False), distinct=True),
+                sum_income=Sum('orders__income', filter=Q(orders__client_paid=False), distinct=True),
+            )
             .filter(orders__isnull=False, has_orders=True)
             .distinct()
         )
@@ -155,7 +159,7 @@ class SummaryListView(generics.ListAPIView):
             .select_related('loading', 'unloading', 'client')
             .only(
                 'id', 'code', 'date', 'car_number', 'loading__name', 'payment_type',
-                'unloading__name', 'client__name', 'total_amount', 'paid'
+                'unloading__name', 'client__name', 'total_amount', 'paid',
             ).order_by('-id')
         )
 

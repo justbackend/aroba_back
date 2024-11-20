@@ -24,15 +24,10 @@ class ReportOrdersSerializer(serializers.Serializer):
 class ReportSerializer(serializers.Serializer):
     id = serializers.IntegerField()
     name = serializers.CharField()
-    amounts = serializers.SerializerMethodField()
+    sum_income = serializers.IntegerField()
+    sum_total_amount = serializers.IntegerField()
     orders = ReportOrdersSerializer(many=True)
 
-    def get_amounts(self, obj):
-        result = dict(sum_income=0, sum_total_amount=0)
-        for order in obj.orders.all():
-            result["sum_income"] += order.income or 0
-            result["sum_total_amount"] += order.total_amount or 0
-        return result
 
 
 class CreateTransactionSerializer(serializers.ModelSerializer):
