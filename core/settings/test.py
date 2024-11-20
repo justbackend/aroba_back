@@ -5,11 +5,15 @@ DEBUG = True
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'test_aroba',
-        'USER': 'test_aroba',
-        'PASSWORD': 'test_aroba',
+        'NAME': 'aroba_test',
+        'USER': 'aroba_test',
+        'PASSWORD': 'aroba_test',
         'HOST': 'localhost',
         'PORT': '5432',
+        "ATOMIC_REQUESTS": True,
+        'TEST': {
+            'MIRROR': 'default',
+        },
     }
 }
 
