@@ -7,5 +7,4 @@ from utils.choices import APIRoutes
 @pytest.mark.django_db
 def test_new_orders(client, get_user, login_user):
     response = client.get(f'{APIRoutes.DISPATCHERS}new-orders/')
-    print(response.data)
 
