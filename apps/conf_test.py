@@ -1,7 +1,6 @@
 import pytest
 from django.contrib.auth import get_user_model
 from django.contrib.auth.hashers import make_password
-from rest_framework.test import APIClient
 from utils.choices import APIRoutes
 
 USERNAME = "test_user"
@@ -12,23 +11,27 @@ PASSWORD = "test_pass"
 def get_user():
     hashed_pass = make_password(PASSWORD)
     user, created = get_user_model().objects.get_or_create(
-        username=USERNAME, defaults=dict(password=hashed_pass)
+        username=USERNAME, defaults=dict(password=hashed_pass, is_superuser=True, is_staff=True)
     )
+
     return user
 
 
 @pytest.fixture
-def client() -> APIClient:
+def api_client():
+    from rest_framework.test import APIClient
     return APIClient()
 
 
 @pytest.fixture
-def login_user(get_user, client):
-    response = client.post(f'{APIRoutes.AUTH}login/', {
+def auth_client(get_user, api_client):
+    response = api_client.post(f'{APIRoutes.AUTH}login/', {
         'username': get_user.username,
         'password': PASSWORD
     })
 
+    assert response.status_code == 200, f"Login failed: {response.data}"
     token = response.data['access']
-    client.credentials(Authorization=f'Bearer {token}')
-    return client
+    api_client.credentials(HTTP_AUTHORIZATION=f'Bearer {token}')
+    return api_client
+

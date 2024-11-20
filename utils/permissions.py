@@ -15,8 +15,8 @@ class RolePermission(permissions.BasePermission):
 
         if user and user.is_authenticated:
 
-            # if user.is_superuser:
-            #     return True
+            if user.is_superuser:
+                return True
 
             perm = self.has_perm(request)
             if perm is not None:
