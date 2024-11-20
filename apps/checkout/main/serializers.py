@@ -26,6 +26,7 @@ class ReportSerializer(serializers.Serializer):
     name = serializers.CharField()
     sum_income = serializers.SerializerMethodField()
     sum_total_amount = serializers.IntegerField(required=False)
+    salom = serializers.IntegerField()
     to_orders = ReportOrdersSerializer(many=True)
 
     def get_sum_income(self, obj):

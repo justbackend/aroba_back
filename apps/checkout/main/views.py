@@ -38,6 +38,7 @@ class ReportOrdersListAPI(generics.ListAPIView):
             .annotate(
                 has_orders=Exists(orders_qs.filter(client=OuterRef('pk'))),
                 sum_total_amount=Sum('orders__total_amount', filter=Q(orders__paid=False), distinct=True),
+                salom=Sum('orders__income', filter=Q(orders__client_paid=False), distinct=True),
             )
             .filter(orders__isnull=False, has_orders=True)
             .distinct()
