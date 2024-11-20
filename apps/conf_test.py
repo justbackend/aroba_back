@@ -19,17 +19,17 @@ def get_user():
 
 
 @pytest.fixture
-def api_client() -> APIClient:
+def client() -> APIClient:
     return APIClient()
 
 
 @pytest.fixture
-def login_user(get_user, api_client):
+def login_user(get_user, client):
     response = api_client.post('/api/v1/auth/login/', {
         'username': get_user.username,
         'password': PASSWORD
     })
 
     token = response.data['access']
-    api_client.credentials(Authorization=f'Bearer {token}')
-    return api_client
+    client.credentials(Authorization=f'Bearer {token}')
+    return client
