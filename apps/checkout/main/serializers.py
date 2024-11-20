@@ -74,6 +74,7 @@ class TransactionListSerializer(serializers.ModelSerializer):
             'type',
             'comment',
             'created_at',
+            'rejected',
         )
 
 
