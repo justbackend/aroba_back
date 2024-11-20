@@ -40,7 +40,6 @@ class ReportSerializer(serializers.Serializer):
             if not order.client_paid:
                 amounts['sum_income'] += order.income
 
-
         return amounts
 
 
@@ -153,5 +152,3 @@ class SummaryOrderUpdateSerializer(serializers.ModelSerializer):
             'payment_type',
             'date',
         )
-
-
