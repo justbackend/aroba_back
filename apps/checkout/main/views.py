@@ -44,6 +44,11 @@ class PayOrder(views.APIView):
         order.paid = True
         order.status = OrderStatus.FINISHED
         order.save()
+        log_comment = (f"Furaga chiqim qilindi\n\n"
+                       f"{order.car_number}\n"
+                       f"{order.phone_number}\n"
+                       f"Summa: {order.total_amount}")
+        order.create_log(comment=log_comment, action=OrderLogActions.PAID, user=request.user)
 
         MainCheckout.add(-order.total_amount)
 
