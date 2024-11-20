@@ -59,6 +59,7 @@ class OrderLogActions(models.TextChoices):
     FILLED = 'filled', 'Filled'
     ROLLBACK = 'rollback', 'Rollback'
     PAID = 'paid', 'Paid'
+    CLIENT_PAID = 'client_paid', 'Client Paid'
 
 
 class TransactionTypes(models.TextChoices):

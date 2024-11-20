@@ -57,9 +57,17 @@ class PayOrder(views.APIView):
 
 class PayClientOrder(views.APIView):
     def get(self, request, order_id: int, *args, **kwargs):
-        order = utils.get_object(order_models.Order, client_paid=False, id=order_id)
+        order = utils.get_object(order_models.Order, client_paid=False, id=order_id, select_related=['client'])
         order.client_paid = True
         order.save()
+
+        log_comment = (f"Klient tomonidan kirim\n\n"
+                       f"Klient: {order.client.name}"
+                       f"{order.car_number}\n"
+                       f"{order.phone_number}\n"
+                       f"Summa: {order.income}")
+        order.create_log(comment=log_comment, action=OrderLogActions.PAID, user=request.user)
+
         return Response(data={'order_id': order_id, 'client_id': order.client_id})
 
 
