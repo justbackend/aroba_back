@@ -36,6 +36,7 @@ class UpdateTransactionView(generics.UpdateAPIView):
     permission_classes = (IMBPermission,)
     authentication_classes = (IMBAuthentication,)
     serializer_class = serializers.IMBUpdateTransactionSerializer
+    http_method_names = 'put',
 
     def get_object(self):
         return get_object(
