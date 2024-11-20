@@ -12,7 +12,7 @@ class CreateOrderSerializer(serializers.Serializer):
     unloading = serializers.PrimaryKeyRelatedField(queryset=common_models.Point.objects.all())
     creator = serializers.HiddenField(default=serializers.CurrentUserDefault())
     client = serializers.PrimaryKeyRelatedField(queryset=client_models.Client.objects.all())
-    car_count = serializers.IntegerField(default=1)
+    car_count = serializers.IntegerField(default=1, max_value=30)
     comment = serializers.CharField(required=False)
 
     def validate(self, attrs):
