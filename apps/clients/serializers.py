@@ -32,7 +32,9 @@ class ClientSerializer(serializers.ModelSerializer):
             'loading',
             'unloading',
             'amount',
-            'type'
+            'type',
+            'inn',
+            'customer',
         )
 
     def create(self, validated_data):
