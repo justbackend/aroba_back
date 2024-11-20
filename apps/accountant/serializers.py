@@ -132,7 +132,7 @@ class UpdateInvoiceSerializer(serializers.ModelSerializer):
 
     @staticmethod
     def pending(instance):
-        pass
+        instance.orders.all().update(client_paid=False)
 
     @staticmethod
     def cancelled(instance):
