@@ -1,6 +1,4 @@
 from apps.conf_test import *
-from utils.choices import APIRoutes
-import pytest
 
 
 @pytest.mark.django_db
