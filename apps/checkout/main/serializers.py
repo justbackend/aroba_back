@@ -3,6 +3,7 @@ from rest_framework import serializers
 import utils
 from utils.choices import TransactionStatuses
 from apps.checkout import models
+from apps.orders import models as order_models
 from apps.checkout.models import MainCheckout
 
 
@@ -120,3 +121,25 @@ class CashSummarySerializer(serializers.Serializer):
 
 class RollbackOrderCommentSerializer(serializers.Serializer):
     comment = serializers.CharField(required=True)
+
+
+class SummaryOrderUpdateSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = order_models.Order
+        fields = (
+            'id',
+            'client',
+            'loading',
+            'unloading',
+            'income',
+            'total_amount',
+            'paid',
+            'client_paid',
+            'car_number',
+            'comment',
+            'dispatcher',
+            'payment_type',
+            'date',
+        )
+
+

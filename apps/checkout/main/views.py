@@ -212,3 +212,14 @@ class SummaryExcelView(ExcelListView):
                 'id', 'code', 'date', 'car_number',
                 loading_name=F('loading__name'), unloading_name=F('unloading__name'), client_name=F('client__name'),
             ))
+
+
+class SummaryOrderUpdateAPI(generics.UpdateAPIView):
+    serializer_class = serializers.SummaryOrderUpdateSerializer
+    http_method_names = 'put',
+
+    def get_object(self):
+        return utils.get_object(
+            model=order_models.Order,
+            id=self.kwargs['order_id'],
+        )
