@@ -52,7 +52,7 @@ class FillingOrdersListView(generics.ListAPIView):
         user = self.request.user
         query = dict(status=OrderStatus.FILLING, dispatcher=user)
 
-        if 1 in user.roles.all().values_list('id', flat=True):
+        if user.is_superuser:
             query.pop('dispatcher', None)
 
         return (

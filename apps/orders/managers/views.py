@@ -30,7 +30,7 @@ class StatusOrdersListView(generics.ListAPIView):
         user = self.request.user
         query = dict(dispatcher=user)
 
-        if 1 in user.roles.all().values_list('id', flat=True):
+        if user.is_superuser:
             query = dict()
 
         return (
