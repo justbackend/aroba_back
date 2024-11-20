@@ -11,6 +11,3 @@ def test_new_orders(auth_client):
 
 
 
-
-
-
