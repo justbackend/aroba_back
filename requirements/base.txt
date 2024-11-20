@@ -17,3 +17,4 @@ openpyxl
 channels
 channels-redis
 daphne
+pytest-django
