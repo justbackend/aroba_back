@@ -18,6 +18,7 @@ class IMBTransactionSerializer(serializers.ModelSerializer):
             'comment',
             'rejected',
             'created_at',
+            'status',
         )
         extra_kwargs = {
             'type': {'read_only': True},
