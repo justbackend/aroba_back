@@ -35,7 +35,7 @@ class IMBAuthenticationScheme(OpenApiAuthenticationExtension):
     def get_security_definition(self, auto_schema):
         return {
             'type': 'apiKey',
-            'name': 'Auth',
+            'name': 'Authorization',
             'in': 'header',
             'description': 'Custom Auth header in the format: user_id:token:timestamp'
         }
