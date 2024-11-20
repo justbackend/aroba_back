@@ -29,7 +29,7 @@ class PayloadAuthenticationScheme(OpenApiAuthenticationExtension):
 
 class IMBAuthenticationScheme(OpenApiAuthenticationExtension):
     target_class = 'utils.customs.IMBAuthentication'
-    name = 'Auth'
+    name = 'Authorization'
     priority = 1
 
     def get_security_definition(self, auto_schema):
