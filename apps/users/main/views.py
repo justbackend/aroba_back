@@ -19,7 +19,7 @@ class ModuleViewSet(viewsets.ModelViewSet):
 
 class UserViewSet(viewsets.ModelViewSet):
     serializer_class = serializers.CreateUserSerializer
-    queryset = models.User.objects.all()
+    queryset = models.User.objects.filter(is_superuser=False)
     pagination_class = None
     parser_classes = (MultiPartParser, FormParser)
 
