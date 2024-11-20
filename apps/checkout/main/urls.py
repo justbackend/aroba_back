@@ -7,8 +7,8 @@ urlpatterns = [
     path('report-orders/', views.ReportOrdersListAPI.as_view(), name='report-orders-list'),
     path('pay-order/<int:order_id>/', views.PayOrder.as_view(), name='pay-cash-order'),
     path('pay-client-order/<int:order_id>/', views.PayClientOrder.as_view(), name='pay-cash-order'),
-    # path('rollback-paid-order/<int:order_id>/', views.PayClientOrder.as_view(), name='pay-cash-order'),
-    # path('rollback-paid-client-order/<int:order_id>/', views.PayClientOrder.as_view(), name='pay-cash-order'),
+    path('rollback-paid-order/<int:order_id>/', views.RollbackPaidOrder.as_view(), name='pay-cash-order'),
+    path('rollback-paid-client-order/<int:order_id>/', views.RollbackClientPaidOrder.as_view(), name='pay-cash-order'),
 
 
 
