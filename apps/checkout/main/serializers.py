@@ -25,13 +25,23 @@ class ReportOrdersSerializer(serializers.Serializer):
 class ReportSerializer(serializers.Serializer):
     id = serializers.IntegerField()
     name = serializers.CharField()
-    sum_income = serializers.SerializerMethodField()
-    sum_total_amount = serializers.IntegerField(required=False)
-    salom = serializers.IntegerField()
+    amounts = serializers.SerializerMethodField()
     to_orders = ReportOrdersSerializer(many=True)
 
-    def get_sum_income(self, obj):
-        return sum(map(lambda x: int(x.income), (filter(lambda x: x.client_paid is False, obj.to_orders))))
+    def get_amounts(self, obj):
+        orders = obj.to_orders
+        amounts = {
+            'sum_income': 0,
+            'sum_total_amount': 0,
+        }
+        for order in orders:
+            if not order.paid:
+                amounts['sum_total_amount'] += order.total_amount
+            if not order.client_paid:
+                amounts['sum_income'] += order.income
+
+
+        return amounts
 
 
 class CreateTransactionSerializer(serializers.ModelSerializer):
