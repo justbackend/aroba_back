@@ -25,6 +25,7 @@ class AdditionalAmountSerializer(serializers.Serializer):
         user = self.context['request'].user
 
         instance.total_amount += amount
+        instance.save()
 
         self.payment = instance.create_payment(_type=PaymentTypes.EXTRA, amount=amount, **validated_data)
 
