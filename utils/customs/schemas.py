@@ -25,3 +25,18 @@ class PayloadAuthenticationScheme(OpenApiAuthenticationExtension):
             'scheme': 'bearer',
             'bearerFormat': 'JWT',
         }
+
+
+class IMBAuthenticationScheme(OpenApiAuthenticationExtension):
+    target_class = 'utils.customs.IMBAuthentication'
+    name = 'Auth'
+    priority = 1
+
+    def get_security_definition(self, auto_schema):
+        return {
+            'type': 'apiKey',
+            'name': 'Auth',
+            'in': 'header',
+            'description': 'Custom Auth header in the format: user_id:token:timestamp'
+        }
+
