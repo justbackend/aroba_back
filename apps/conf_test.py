@@ -11,33 +11,25 @@ PASSWORD = "test_pass"
 
 @pytest.fixture
 def get_user():
-    """
-    Yangi foydalanuvchi yaratish uchun fixture.
-    """
     hashed_pass = make_password(PASSWORD)
-    user = get_user_model().objects.get_or_create(
+    user, created = get_user_model().objects.get_or_create(
         username=USERNAME, defaults=dict(password=hashed_pass)
     )
     return user
 
 
 @pytest.fixture
-def api_client():
-    """
-    APIClient fixture.
-    """
+def api_client() -> APIClient:
     return APIClient()
 
 
 @pytest.fixture
 def login_user(get_user, api_client):
-    """
-    Foydalanuvchini tizimga kirgan holda qaytarish.
-    """
     response = api_client.post('/api/v1/auth/login/', {
         'username': get_user.username,
         'password': PASSWORD
     })
-    token = response.data['access']  # tokenni olish (JWT)
+
+    token = response.data['access']
     api_client.credentials(Authorization=f'Bearer {token}')
     return api_client
