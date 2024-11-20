@@ -121,7 +121,7 @@ class RollbackClientPaidOrder(generics.GenericAPIView):
                        f"{order.driver_phone}\n"
                        f"Summa: {order.income}\n"
                        f"Komnetariya: {comment}")
-        order.create_log(comment=log_comment, action=OrderLogActions.CLIENT_PAID, user=request.user)
+        order.create_log(comment=log_comment, action=OrderLogActions.ROLLBACK_CLIENT_PAID, user=request.user)
         return Response(data={'order_id': order_id, 'client_id': order.client_id})
 
 
