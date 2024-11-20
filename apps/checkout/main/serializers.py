@@ -25,7 +25,7 @@ class ReportSerializer(serializers.Serializer):
     id = serializers.IntegerField()
     name = serializers.CharField()
     sum_income = serializers.IntegerField()
-    sum_total_amount = serializers.IntegerField()
+    sum_total_amount = serializers.IntegerField(required=False)
     orders = ReportOrdersSerializer(many=True)
 
 
