@@ -1,11 +1,11 @@
 import pytest
 
-from apps.conf_test import get_user, login_user, api_client
+from apps.conf_test import get_user, login_user, client
+from utils.choices import APIRoutes
 
 
 @pytest.mark.django_db
-def test_new_orders(api_client, get_user, login_user):
-    print(get_user)
-    response = api_client.get(f'/new-orders/')
-    print(response)
+def test_new_orders(client, get_user, login_user):
+    response = client.get(f'{APIRoutes.DISPATCHERS}new-orders/')
+    print(response.data)
 

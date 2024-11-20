@@ -1,8 +1,7 @@
 import pytest
+from django.contrib.auth import get_user_model
 from django.contrib.auth.hashers import make_password
 from rest_framework.test import APIClient
-from django.contrib.auth import get_user_model
-from django.core.management import call_command
 
 USERNAME = "test_user"
 PASSWORD = "test_pass"
@@ -10,7 +9,6 @@ PASSWORD = "test_pass"
 
 @pytest.fixture
 def get_user():
-    call_command('migrate')
     hashed_pass = make_password(PASSWORD)
     user, created = get_user_model().objects.get_or_create(
         username=USERNAME, defaults=dict(password=hashed_pass)
@@ -25,7 +23,7 @@ def client() -> APIClient:
 
 @pytest.fixture
 def login_user(get_user, client):
-    response = api_client.post('/api/v1/auth/login/', {
+    response = client.post('/api/v1/auth/login/', {
         'username': get_user.username,
         'password': PASSWORD
     })
