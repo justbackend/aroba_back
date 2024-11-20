@@ -29,7 +29,6 @@ class ReportSerializer(serializers.Serializer):
     orders = ReportOrdersSerializer(many=True)
 
 
-
 class CreateTransactionSerializer(serializers.ModelSerializer):
     created_at = serializers.DateTimeField(read_only=True, format='%d.%m.%Y')
     creator = serializers.HiddenField(default=serializers.CurrentUserDefault())
