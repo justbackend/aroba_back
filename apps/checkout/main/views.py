@@ -24,7 +24,11 @@ class ReportOrdersListAPI(generics.ListAPIView):
                 payment_type=payment_type,
                 status__gte=OrderStatus.STARTED,
             )
-            .annotate(loading_name=F('loading__name'), unloading_name=F('unloading__name'))
+            .annotate(
+                loading_name=F('loading__name'),
+                unloading_name=F('unloading__name'),
+                invoice_status=F('invoice__status'),
+            )
             .exclude(paid=True, client_paid=True)
         )
 
@@ -46,13 +50,19 @@ class PayOrder(views.APIView):
         order.save()
         log_comment = (f"Furaga chiqim qilindi\n\n"
                        f"{order.car_number}\n"
-                       f"{order.phone_number}\n"
+                       f"{order.driver_phone}\n"
                        f"Summa: {order.total_amount}")
         order.create_log(comment=log_comment, action=OrderLogActions.PAID, user=request.user)
 
         MainCheckout.add(-order.total_amount)
 
         return Response(data={'order_id': order_id, 'client_id': order.client_id})
+
+
+class RollbackPaidOrder(views.APIView):
+
+    def post(self, request, order_id: int, *args, **kwargs):
+        pass
 
 
 class PayClientOrder(views.APIView):
@@ -64,11 +74,17 @@ class PayClientOrder(views.APIView):
         log_comment = (f"Klient tomonidan kirim [Naqt]\n\n"
                        f"Klient: {order.client.name}\n"
                        f"{order.car_number}\n"
-                       f"{order.phone_number}\n"
+                       f"{order.driver_phone}\n"
                        f"Summa: {order.income}")
         order.create_log(comment=log_comment, action=OrderLogActions.CLIENT_PAID, user=request.user)
 
         return Response(data={'order_id': order_id, 'client_id': order.client_id})
+
+
+class RollbackClientPaidOrder(views.APIView):
+
+    def post(self, request, order_id: int, *args, **kwargs):
+        pass
 
 
 class CreateTransactionAPI(generics.ListCreateAPIView):
