@@ -44,6 +44,9 @@ class PayOrder(views.APIView):
         order.paid = True
         order.status = OrderStatus.FINISHED
         order.save()
+
+        MainCheckout.add(-order.total_amount)
+
         return Response(data={'order_id': order_id, 'client_id': order.client_id})
 
 
