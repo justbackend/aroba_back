@@ -20,9 +20,11 @@ class AdditionalAmountSerializer(serializers.Serializer):
             raise utils.APIException('Must be a comment or file')
         return attrs
 
-    def update(self, instance, validated_data):
+    def update(self, instance: models.Order, validated_data):
         amount = validated_data.pop('amount')
         user = self.context['request'].user
+
+        instance.total_amount += amount
 
         self.payment = instance.create_payment(_type=PaymentTypes.EXTRA, amount=amount, **validated_data)
 
