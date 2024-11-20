@@ -116,3 +116,7 @@ class CashSummarySerializer(serializers.Serializer):
     total_amount = serializers.IntegerField(read_only=True)
     payment_type = serializers.CharField(read_only=True)
     paid = serializers.BooleanField(read_only=True)
+
+
+class RollbackOrderCommentSerializer(serializers.Serializer):
+    comment = serializers.CharField(required=True)

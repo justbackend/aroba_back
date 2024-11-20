@@ -63,10 +63,28 @@ class PayOrder(views.APIView):
         return Response(data={'order_id': order_id, 'client_id': order.client_id})
 
 
-class RollbackPaidOrder(views.APIView):
+class RollbackPaidOrder(generics.GenericAPIView):
+    serializer_class = serializers.RollbackOrderCommentSerializer
 
     def post(self, request, order_id: int, *args, **kwargs):
-        pass
+        serializer = self.serializer_class(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        comment = serializer.validated_data['comment']
+
+        order = utils.get_object(order_models.Order, paid=True, id=order_id)
+        order.paid = False
+        order.status = OrderStatus.STARTED
+        order.save()
+        log_comment = (f"To'lov qilngan reys qaytarildi\n\n"
+                       f"{order.car_number}\n"
+                       f"{order.driver_phone}\n"
+                       f"Summa: {order.total_amount}\n"
+                       f"Komentariya: {comment}")
+        order.create_log(comment=log_comment, action=OrderLogActions.ROLLBACK_PAID, user=request.user)
+
+        MainCheckout.add(order.total_amount)
+
+        return Response(data={'order_id': order_id, 'client_id': order.client_id})
 
 
 class PayClientOrder(views.APIView):
@@ -85,10 +103,26 @@ class PayClientOrder(views.APIView):
         return Response(data={'order_id': order_id, 'client_id': order.client_id})
 
 
-class RollbackClientPaidOrder(views.APIView):
+class RollbackClientPaidOrder(generics.GenericAPIView):
+    serializer_class = serializers.RollbackOrderCommentSerializer
 
     def post(self, request, order_id: int, *args, **kwargs):
-        pass
+        serializer = self.serializer_class(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        comment = serializer.validated_data['comment']
+
+        order = utils.get_object(order_models.Order, client_paid=True, id=order_id, select_related=['client'])
+        order.client_paid = False
+        order.save()
+
+        log_comment = (f"Kirim bo'lgan buyurtma puli qaytarildi\n\n"
+                       f"Klient: {order.client.name}\n"
+                       f"{order.car_number}\n"
+                       f"{order.driver_phone}\n"
+                       f"Summa: {order.income}\n"
+                       f"Komnetariya: {comment}")
+        order.create_log(comment=log_comment, action=OrderLogActions.CLIENT_PAID, user=request.user)
+        return Response(data={'order_id': order_id, 'client_id': order.client_id})
 
 
 class CreateTransactionAPI(generics.ListCreateAPIView):
