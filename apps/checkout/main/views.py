@@ -61,7 +61,7 @@ class PayClientOrder(views.APIView):
         order.client_paid = True
         order.save()
 
-        log_comment = (f"Klient tomonidan kirim\n\n"
+        log_comment = (f"Klient tomonidan kirim [Naqt]\n\n"
                        f"Klient: {order.client.name}"
                        f"{order.car_number}\n"
                        f"{order.phone_number}\n"
