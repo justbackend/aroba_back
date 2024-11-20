@@ -34,10 +34,9 @@ class ReportOrdersListAPI(generics.ListAPIView):
 
         return (
             client_models.Client.objects
-            .prefetch_related(Prefetch('orders', queryset=orders_qs))
+            .prefetch_related(Prefetch('orders', queryset=orders_qs, to_attr='to_orders'))
             .annotate(
                 has_orders=Exists(orders_qs.filter(client=OuterRef('pk'))),
-                sum_income=Sum('orders__income', filter=Q(orders__client_paid=False), distinct=True),
                 sum_total_amount=Sum('orders__total_amount', filter=Q(orders__paid=False), distinct=True),
             )
             .filter(orders__isnull=False, has_orders=True)
