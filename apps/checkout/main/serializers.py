@@ -116,6 +116,7 @@ class CashSummarySerializer(serializers.Serializer):
     unloading = serializers.CharField(read_only=True, source='unloading.name')
     client = serializers.CharField(read_only=True, source='client.name')
     total_amount = serializers.IntegerField(read_only=True)
+    income = serializers.IntegerField(read_only=True)
     payment_type = serializers.CharField(read_only=True)
     paid = serializers.BooleanField(read_only=True)
 

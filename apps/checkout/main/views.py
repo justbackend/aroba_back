@@ -193,7 +193,7 @@ class SummaryListView(generics.ListAPIView):
             .select_related('loading', 'unloading', 'client')
             .only(
                 'id', 'code', 'date', 'car_number', 'loading__name', 'payment_type',
-                'unloading__name', 'client__name', 'total_amount', 'paid',
+                'unloading__name', 'client__name', 'total_amount', 'paid', 'income'
             ).order_by('-id')
         )
 
