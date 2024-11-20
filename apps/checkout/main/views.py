@@ -66,7 +66,7 @@ class PayClientOrder(views.APIView):
                        f"{order.car_number}\n"
                        f"{order.phone_number}\n"
                        f"Summa: {order.income}")
-        order.create_log(comment=log_comment, action=OrderLogActions.PAID, user=request.user)
+        order.create_log(comment=log_comment, action=OrderLogActions.CLIENT_PAID, user=request.user)
 
         return Response(data={'order_id': order_id, 'client_id': order.client_id})
 
