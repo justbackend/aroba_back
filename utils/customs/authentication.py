@@ -136,17 +136,18 @@ class IMBAuthentication(BaseAuthentication):
         """
         Authenticate the incoming request by verifying the custom Auth header.
         """
-        # Extract the "Auth" header from the request
-        auth_header = request.headers.get("Auth")
+        # Extract the "Authorization" header from the request
+        auth_header = request.headers.get("Authorization")
+
         if not auth_header:
-            raise AuthenticationFailed("Auth header is missing")
+            raise AuthenticationFailed("Authorization header is missing")
 
         try:
-            # Split the Auth header into user_id, token, and timestamp
+            # Split the Authorization header into user_id, token, and timestamp
             user_id, token, timestamp = auth_header.split(":")
             timestamp = int(timestamp)  # Ensure timestamp is an integer
         except ValueError:
-            raise AuthenticationFailed("Invalid Auth header format")
+            raise AuthenticationFailed("Invalid Authorization header format")
 
         # Retrieve the secrets details using user_id
         if IMB_SECRETS["user_id"] != user_id:
