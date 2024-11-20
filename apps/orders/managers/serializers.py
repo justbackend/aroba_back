@@ -21,9 +21,10 @@ class AdditionalAmountSerializer(serializers.Serializer):
         return attrs
 
     def update(self, instance, validated_data):
+        amount = validated_data.pop('amount')
         user = self.context['request'].user
 
-        self.payment = instance.create_payment(_type=PaymentTypes.EXTRA, **validated_data)
+        self.payment = instance.create_payment(_type=PaymentTypes.EXTRA, amount=amount, **validated_data)
 
         log_comment = (f"Summa qo'shib berildi: {validated_data['amount']}  \n"
                        f"Komentariya: {validated_data.get('comment')}")
