@@ -1,7 +1,6 @@
-import pytest
-
-from apps.conf_test import auth_client, get_user, api_client
+from apps.conf_test import *
 from utils.choices import APIRoutes
+import pytest
 
 
 @pytest.mark.django_db
