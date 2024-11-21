@@ -6,6 +6,8 @@ class IMBDatabaseManager(models.Manager):
     Custom manager to ensure all operations use the 'imb' database.
     """
 
+    use_in_migrations = False
+
     def get_queryset(self):
         """
         Override the default queryset to use 'imb' database.

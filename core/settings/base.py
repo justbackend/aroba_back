@@ -40,7 +40,6 @@ ALLOWED_HOSTS = ["*"]
 DUMP_CHAT_ID = os.getenv("DUMP_CHAT_ID")
 DUMP_BOT_TOKEN = os.getenv("DUMP_BOT_TOKEN")
 
-
 # Application definition
 DJANGO_APPS = [
     "unfold",  # before django.contrib.admin
@@ -239,15 +238,15 @@ SIMPLE_JWT = {
 
 CRONJOBS = CRON_TASKS
 
-
 IMB_SECRETS = {
     'secret_key': os.getenv("IMB_SECRET_KEY"),
     'user_id': os.getenv("IMB_USER_ID"),
     'max_age': int(os.getenv("MAX_AGE")),
 }
 
-
 IMB_USER_SECRETS = {
     'pass': os.getenv("IMB_PASS"),
     'username': os.getenv("IMB_USERNAME"),
 }
+
+DATABASE_ROUTERS = ['core.db_routers.DefaultDatabaseRouter']
