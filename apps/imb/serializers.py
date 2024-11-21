@@ -50,8 +50,8 @@ class IMBUpdateTransactionSerializer(serializers.ModelSerializer):
 
     @staticmethod
     def approved(instance):
-        MainCheckout.add(-instance.amount)
-        CheckoutIMB.add(instance.amount)
+        MainCheckout - instance.amount # noqa
+        CheckoutIMB + instance.amount # noqa
 
         IMBCheckout.create_transaction(
             amount=instance.amount,
