@@ -50,7 +50,7 @@ class FillingOrdersListView(generics.ListAPIView):
     def get_queryset(self):
         abs_uri = self.request.build_absolute_uri('/')
         user = self.request.user
-        query = dict(status=OrderStatus.FILLING, dispatcher=user)
+        query = dict(status__gte=OrderStatus.FILLING, dispatcher=user)
 
         if user.is_superuser:
             query.pop('dispatcher', None)
