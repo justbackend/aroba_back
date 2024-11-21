@@ -1,15 +1,15 @@
 from rest_framework import serializers
 
 from utils.choices import TransactionStatuses
-from .. import models
-from ..models import MainCheckout
+from apps.checkout import models as checkout_models
+from apps.checkout.models import MainCheckout
 
 
 class IMBTransactionSerializer(serializers.ModelSerializer):
     created_at = serializers.DateTimeField(read_only=True, format='%Y-%m-%d %H:%M:%S')
 
     class Meta:
-        model = models.Transaction
+        model = checkout_models.Transaction
         fields = (
             'id',
             'amount',
@@ -27,7 +27,7 @@ class IMBTransactionSerializer(serializers.ModelSerializer):
 
 class IMBUpdateTransactionSerializer(serializers.ModelSerializer):
     class Meta:
-        model = models.Transaction
+        model = checkout_models.Transaction
         fields = (
             'id',
             'status',

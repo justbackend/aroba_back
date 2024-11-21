@@ -45,13 +45,13 @@ urlpatterns = [
 
     path(
         'checkout/',
-        include('apps.checkout.main.urls'),
+        include('apps.checkout.urls'),
         name='checkout',
     ),
 
     path(
         'imb/',
-        include('apps.checkout.imb.urls'),
+        include('apps.imb.urls'),
         name='imb',
     ),
 

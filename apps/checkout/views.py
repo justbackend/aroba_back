@@ -1,4 +1,4 @@
-from django.db.models import Prefetch, F, Sum, Exists, OuterRef, Q
+from django.db.models import Prefetch, F, Sum, Exists, OuterRef
 from rest_framework import generics, views
 from rest_framework.response import Response
 
@@ -7,8 +7,7 @@ from apps.clients import models as client_models
 from apps.orders import models as order_models
 from utils.choices import *
 from utils.excel import *
-from apps.checkout import models
-from apps.checkout.main import serializers
+from apps.checkout import models, serializers
 from apps.checkout.models import MainCheckout
 
 
