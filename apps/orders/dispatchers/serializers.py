@@ -27,6 +27,7 @@ class NewOrdersListSerializer(serializers.ModelSerializer):
 
 
 class FillingOrdersListSerializer(serializers.ModelSerializer):
+    dispatcher = utils.UserNameSerializer()
     loading = utils.PointNameSerializer()
     unloading = utils.PointNameSerializer()
     client = utils.ClientNameSerializer()
@@ -44,14 +45,15 @@ class FillingOrdersListSerializer(serializers.ModelSerializer):
             'comment',
             'payment_type',
             'created_at',
-            'loading',
-            'unloading',
-            'client',
             'car_number',
             'driver_phone',
             'total_amount',
             'extra_amount',
             'status',
+            'dispatcher',
+            'loading',
+            'unloading',
+            'client',
         )
 
 

@@ -50,17 +50,18 @@ class FillingOrdersListView(generics.ListAPIView):
     def get_queryset(self):
         abs_uri = self.request.build_absolute_uri('/')
         user = self.request.user
-        query = dict(status__gte=OrderStatus.FILLING, dispatcher=user)
+        query = dict(status__gte=OrderStatus.FILLING)
 
         if user.is_superuser:
             query.pop('dispatcher', None)
 
         return (
             models.Order.objects.filter(**query)
-            .select_related('client', 'loading', 'unloading')
+            .select_related('client', 'loading', 'unloading', 'dispatcher')
             .only(
                 'id', 'code', 'date', 'comment', 'payment_type', 'created_at', 'loading__name',
-                'unloading__name', 'client__name', 'total_amount', 'car_number', 'driver_phone', 'status'
+                'unloading__name', 'client__name', 'total_amount', 'car_number', 'driver_phone', 'status',
+                'dispatcher__first_name', 'dispatcher__last_name'
             )
             .annotate(extra_amount=ArrayAgg(
                 Func(
