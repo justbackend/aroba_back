@@ -43,6 +43,7 @@ services:
     environment:
       - DJANGO_SETTINGS_MODULE=core.settings.production
       - DB_HOST=aroba_db
+      - IMB_DB_HOST=host.docker.internal
       - REDIS_URL=redis://redis:6379/0
       - CELERY_BROKER_URL=redis://redis:6379
       - REDIS_HOST=redis
