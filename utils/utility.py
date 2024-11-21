@@ -86,6 +86,18 @@ class CheckoutManager:
     model: Type[Model]
     balance_field: str = 'balance'
 
+    def __add__(self, other):
+        return self.add(other)
+
+    def __radd__(self, other):
+        return self.add(other)
+
+    def __sub__(self, other):
+        return self.add(-other)
+
+    def __rsub__(self, other):
+        raise NotImplementedError("Subtraction with reversed operands is not supported.")
+
     @property
     def __checkout(self):
         # Get the first object, or return None if no objects exist
@@ -106,5 +118,3 @@ class CheckoutManager:
             checkout.save()
         else:
             raise ValueError("No checkout instance found. Cannot add balance.")
-
-
