@@ -51,6 +51,7 @@ class FillingOrdersListSerializer(serializers.ModelSerializer):
             'driver_phone',
             'total_amount',
             'extra_amount',
+            'status',
         )
 
 

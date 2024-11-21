@@ -60,7 +60,7 @@ class FillingOrdersListView(generics.ListAPIView):
             .select_related('client', 'loading', 'unloading')
             .only(
                 'id', 'code', 'date', 'comment', 'payment_type', 'created_at', 'loading__name',
-                'unloading__name', 'client__name', 'total_amount', 'car_number', 'driver_phone',
+                'unloading__name', 'client__name', 'total_amount', 'car_number', 'driver_phone', 'status'
             )
             .annotate(extra_amount=ArrayAgg(
                 Func(
