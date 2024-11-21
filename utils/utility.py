@@ -114,7 +114,9 @@ class CheckoutManager:
         checkout = self.__checkout
         if checkout:
             current_balance = getattr(checkout, self.balance_field)
-            setattr(checkout, self.balance_field, current_balance + amount)
+            new_balance = current_balance + amount
+            setattr(checkout, self.balance_field, new_balance)
             checkout.save()
+            return new_balance
         else:
             raise ValueError("No checkout instance found. Cannot add balance.")
