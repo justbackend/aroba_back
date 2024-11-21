@@ -6,6 +6,10 @@ class IMBCheckout(models.Model):
     balance = models.DecimalField(max_digits=14, decimal_places=2)
     objects = managers.IMBDatabaseManager()
 
+    @classmethod
+    def db(cls):
+        return cls.objects.using('imb')
+
     class Meta:
         verbose_name = 'IMB Checkout'
         verbose_name_plural = 'IMB Checkout'
@@ -18,5 +22,3 @@ class IMBCheckout(models.Model):
         """
         kwargs['using'] = 'imb'
         super().save(*args, **kwargs)
-
-
