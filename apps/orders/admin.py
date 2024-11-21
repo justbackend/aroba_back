@@ -16,9 +16,9 @@ class OrderAdmin(u_admin.ModelAdmin):
     list_display = (
         'id', 'code',
         'date', 'status',
-        'total_amount', 'car_number',
+        'total_amount', 'income', 'car_number',
         'payment_type', 'client',
-        'car_number', 'driver_phone'
+        'car_number', 'driver_phone',
     )
     list_display_links = ('id', 'code',)
     list_filter = ('date', 'status', 'total_amount', 'car_number', 'payment_type', 'client')
