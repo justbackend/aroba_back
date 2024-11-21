@@ -17,3 +17,4 @@ channels
 channels-redis
 daphne
 pytest-django
+pytz
