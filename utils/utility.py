@@ -106,3 +106,5 @@ class CheckoutManager:
             checkout.save()
         else:
             raise ValueError("No checkout instance found. Cannot add balance.")
+
+

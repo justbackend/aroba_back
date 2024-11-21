@@ -1,4 +1,6 @@
 from django.db import models
+
+from utils import CheckoutManager
 from . import managers
 
 
@@ -22,3 +24,6 @@ class IMBCheckout(models.Model):
         """
         kwargs['using'] = 'imb'
         super().save(*args, **kwargs)
+
+
+CheckoutIMB = CheckoutManager(model=IMBCheckout, balance_field='balance')
