@@ -6,3 +6,8 @@ from . import models
 @admin.register(models.IMBCheckout)
 class IMBCheckoutAdmin(u_admin.ModelAdmin):
     list_display = ('id', 'balance',)
+
+
+@admin.register(models.IMBTransaction)
+class IMBTransactionAdmin(u_admin.ModelAdmin):
+    list_display = ('id', 'amount', 'comment', 'type')
