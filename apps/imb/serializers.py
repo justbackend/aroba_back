@@ -1,9 +1,9 @@
 from rest_framework import serializers
 
-from utils.choices import TransactionStatuses
+from utils.choices import TransactionStatuses, IMBTransactionTypes
 from apps.checkout import models as checkout_models
 from apps.checkout.models import MainCheckout
-from .models import CheckoutIMB
+from .models import CheckoutIMB, IMBCheckout
 
 
 class IMBTransactionSerializer(serializers.ModelSerializer):
@@ -52,6 +52,12 @@ class IMBUpdateTransactionSerializer(serializers.ModelSerializer):
     def approved(instance):
         MainCheckout.add(-instance.amount)
         CheckoutIMB.add(instance.amount)
+
+        IMBCheckout.create_transaction(
+            amount=instance.amount,
+            _type=IMBTransactionTypes.AGENT_INCOME,
+            comment=f"Arobadan kirim"
+        )
 
     @staticmethod
     def cancelled(instance):
