@@ -1,7 +1,12 @@
+from typing import Type
+
 import requests
 from django.core.cache import cache
-from django.db.models import Q
+from django.db.models import Q, Model
 from django.http import Http404
+from dataclasses import dataclass, field
+
+from utils import BaseModel
 
 
 def get_object(
@@ -76,3 +81,30 @@ def clear_user_profile_data(users):
             cache.delete(f"user_profile_{user}")
         else:
             cache.delete(f"user_profile_{user.id}")
+
+
+@dataclass
+class MainCheckout:
+    model: Type[Model]
+    balance_field: str = 'balance'
+
+    @property
+    def __checkout(self):
+        # Get the first object, or return None if no objects exist
+        return self.model.objects.first()
+
+    @property
+    def balance(self):
+        checkout = self.__checkout
+        if checkout:
+            return getattr(checkout, self.balance_field)
+        raise ValueError("No checkout instance found.")
+
+    def add(self, amount):
+        checkout = self.__checkout
+        if checkout:
+            current_balance = getattr(checkout, self.balance_field)
+            setattr(checkout, self.balance_field, current_balance + amount)
+            checkout.save()
+        else:
+            raise ValueError("No checkout instance found. Cannot add balance.")
