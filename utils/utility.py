@@ -1,12 +1,10 @@
+from dataclasses import dataclass
 from typing import Type
 
 import requests
 from django.core.cache import cache
 from django.db.models import Q, Model
 from django.http import Http404
-from dataclasses import dataclass, field
-
-from utils import BaseModel
 
 
 def get_object(
@@ -84,7 +82,7 @@ def clear_user_profile_data(users):
 
 
 @dataclass
-class MainCheckout:
+class CheckoutManager:
     model: Type[Model]
     balance_field: str = 'balance'
 

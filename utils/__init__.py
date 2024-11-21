@@ -9,6 +9,7 @@ __all__ = (
     'IMBPermission',
     'BaseModel',
     'Manager',
+    'CheckoutManager',
     'now',
     'get_object',
     'send_me',
@@ -23,7 +24,7 @@ from .base import BaseModel
 from .paginations import PageNumberPagination
 from .exceptions import APIException
 from .validators import PhoneValidator, VehicleNumberValidator
-from .utility import get_object, send_me
+from .utility import get_object, send_me, CheckoutManager
 from .creators import create_serializer
 from .managers import Manager
 from .permissions import (
