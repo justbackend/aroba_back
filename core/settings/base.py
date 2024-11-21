@@ -130,15 +130,15 @@ DATABASES = {
         "PORT": os.getenv("DB_PORT"),
         "ATOMIC_REQUESTS": True,
     },
-    # 'imb': {
-    #     'ENGINE': os.getenv("DB_ENGINE"),
-    #     'NAME': os.getenv("IMB_DB_NAME"),
-    #     'USER': os.getenv("IMB_DB_USER"),
-    #     'PASSWORD': os.getenv("IMB_DB_PASSWORD"),
-    #     'HOST': os.getenv("IMB_DB_HOST"),
-    #     'PORT': os.getenv("IMB_DB_PORT"),
-    #     'ATOMIC_REQUESTS': True,
-    # }
+    'imb': {
+        'ENGINE': os.getenv("DB_ENGINE"),
+        'NAME': os.getenv("IMB_DB_NAME"),
+        'USER': os.getenv("IMB_DB_USER"),
+        'PASSWORD': os.getenv("IMB_DB_PASSWORD"),
+        'HOST': os.getenv("IMB_DB_HOST"),
+        'PORT': os.getenv("IMB_DB_PORT"),
+        'ATOMIC_REQUESTS': True,
+    }
 }
 
 # Password validation

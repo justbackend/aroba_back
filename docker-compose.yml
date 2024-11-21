@@ -43,7 +43,7 @@ services:
     environment:
       - DJANGO_SETTINGS_MODULE=core.settings.production
       - DB_HOST=aroba_db
-#      - IMB_DB_HOST=host.docker.internal
+      - IMB_DB_HOST=host.docker.internal
       - REDIS_URL=redis://redis:6379/0
       - CELERY_BROKER_URL=redis://redis:6379
       - REDIS_HOST=redis
@@ -51,8 +51,8 @@ services:
       - aroba_db
       - redis
     restart: always
-#    extra_hosts:
-#      - "host.docker.internal:host-gateway"
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
 #  nginx:
 #    build:
 #      context: ./nginx
