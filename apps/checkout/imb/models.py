@@ -12,4 +12,11 @@ class IMBCheckout(models.Model):
         managed = False
         db_table = 'KassaApp_kassa'
 
+    def save(self, *args, **kwargs):
+        """
+        Override save method to always use the 'imb' database.
+        """
+        kwargs['using'] = 'imb'
+        super().save(*args, **kwargs)
+
 

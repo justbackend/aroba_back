@@ -2,6 +2,7 @@ from django.contrib import admin
 from unfold import admin as u_admin
 
 from . import models
+from .imb.models import IMBCheckout
 
 
 @admin.register(models.Checkout)
@@ -18,4 +19,6 @@ class TransactionAdmin(u_admin.ModelAdmin):
     list_display = ('id', 'amount', 'type', 'status', 'created_at', 'updated_at')
 
 
-
+@admin.register(IMBCheckout)
+class IMBCheckoutAdmin(u_admin.ModelAdmin):
+    list_display = ('id', 'balance',)
