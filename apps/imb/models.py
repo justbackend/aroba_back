@@ -1,10 +1,19 @@
 from django.db import models
 
 from utils import CheckoutManager
+from utils.choices import IMBTransactionTypes, IMBTransactionStatuses
 from . import managers
 
 
-class IMBCheckout(models.Model):
+class Model(models.Model):
+    objects = managers.IMBDatabaseManager()
+
+    @classmethod
+    def db(cls):
+        return cls.objects.using('imb')
+
+
+class IMBCheckout(Model):
     balance = models.DecimalField(max_digits=14, decimal_places=2)
     objects = managers.IMBDatabaseManager()
 
@@ -24,6 +33,19 @@ class IMBCheckout(models.Model):
         """
         kwargs['using'] = 'imb'
         super().save(*args, **kwargs)
+
+
+class Transactions(Model):
+    amount = models.DecimalField(max_digits=14, decimal_places=2)
+    comment = models.CharField(max_length=250)
+    type = models.IntegerField(choices=IMBTransactionTypes.choices, db_index=True)
+    timestamp = models.DateTimeField(auto_now_add=True)
+    check_url = models.URLField(max_length=50, null=True, blank=True, verbose_name="Check")
+    status = models.CharField(
+        max_length=50, verbose_name="Status",
+        choices=IMBTransactionStatuses.choices,
+        default=IMBTransactionStatuses.APPROVED
+    )
 
 
 CheckoutIMB = CheckoutManager(model=IMBCheckout, balance_field='balance')

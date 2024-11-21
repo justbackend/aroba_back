@@ -79,3 +79,15 @@ class InvoiceStatuses(models.TextChoices):
     PENDING = 'pending', 'Pending'
     APPROVED = 'approved', 'Approved'
     CANCELLED = 'cancelled', 'Cancelled'
+
+
+class IMBTransactionStatuses(models.TextChoices):
+    APPROVED = 'approved', 'Approved'
+    CANCELLED = 'cancelled', 'Cancelled'
+
+
+class IMBTransactionTypes(models.IntegerChoices):
+    AGENT_INCOME = 1, "Agentdan kirim"
+    MAIN_INCOME = 2, "Asosiy kirim"
+    AGENT_EXPENSE = 3, "Agentga chiqim"
+    OTHER_EXPENSE = 4, "Boshqa chiqim"
