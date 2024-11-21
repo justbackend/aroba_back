@@ -1,6 +1,7 @@
 from rest_framework import serializers
 
 import utils
+from apps.imb.models import CheckoutIMB
 from utils.choices import TransactionStatuses
 from apps.checkout import models
 from apps.orders import models as order_models
@@ -102,6 +103,7 @@ class TransactionStatusUpdateSerializer(serializers.ModelSerializer):
             {
                 TransactionStatuses.CANCELLED: self.cancelled,
                 TransactionStatuses.APPROVED: self.approved,
+                TransactionStatuses.PENDING: self.pending
             }[status](instance)
 
         obj = super().update(instance, validated_data)
@@ -110,9 +112,14 @@ class TransactionStatusUpdateSerializer(serializers.ModelSerializer):
     @staticmethod
     def approved(instance):
         MainCheckout.add(instance.amount)
+        CheckoutIMB.add(-instance.amount)
 
     @staticmethod
     def cancelled(instance):
+        pass
+
+    @staticmethod
+    def pending(instance):
         pass
 
 
