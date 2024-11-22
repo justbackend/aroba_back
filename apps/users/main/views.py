@@ -35,3 +35,18 @@ class SectionViewSet(viewsets.ModelViewSet):
     )
     serializer_class = serializers.SectionSerializer
     pagination_class = None
+
+    def get_queryset(self):
+
+        user = self.request.user
+        if user.is_superuser:
+            return self.queryset
+
+        actions = user.actions.all()
+        return (
+            models.Section.objects
+            .prefetch_related('modules', 'modules__actions', 'modules__actions__apis')
+            .filter(modules__actions__in=actions).distinct().order_by('order')
+        )
+
+
