@@ -18,6 +18,6 @@ urlpatterns = [
 
 
     # send contact to telegram
-    path('send-contact/<int:phone>/', views.SendToTelegramView.as_view(), name='send-contact'),
+    path('send-contact/<str:phone>/', views.SendToTelegramView.as_view(), name='send-contact'),
 
 ]

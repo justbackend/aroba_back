@@ -1,5 +1,11 @@
+import json
+from io import BytesIO
+
+import requests
+from asgiref.sync import async_to_sync
 from rest_framework import views, generics, viewsets
 from rest_framework.response import Response
+from telegram import InputMediaPhoto, Bot
 
 from apps.checkout import models as checkout_models
 from apps.users.external import EXTERNAL_USERS
@@ -56,18 +62,42 @@ class ContactViewSet(viewsets.ModelViewSet):
 
 
 class SendToTelegramView(views.APIView):
+    BOT_TOKEN = "7362304291:AAHsSLbhZozUvZboGh_brEXMFp22bMkwF4E"
+    CHAT_ID = "1172189473"
 
-    def get(self, request, phone, *args, **kwargs):
+    def get(self, request, phone: str, *args, **kwargs):
 
-        if phone and len(phone) != 12:
+        if phone and phone.isdigit() and len(phone) != 12:
             raise APIException('Phone number must be 12 digits')
 
         phone = phone[3::]
 
         contact = get_object(model=models.Contact, phone=phone)
 
+        self.send(contact)
+
         return Response({'phone': phone, 'contact_id': contact.id})
 
+    def send(self, contact):
+        bot = Bot(token=self.BOT_TOKEN)
+        media_group = []
+        fields = ('trailer_front', 'trailer_back', 'license_front', 'license_back', 'track_front', 'track_back')
+        caption = self.get_caption(contact)
+        for field in fields:
+            if item := getattr(contact, field):
+                media_group.append(InputMediaPhoto(item))
+
+        _last = media_group.pop()
+        media_group.append(InputMediaPhoto(_last.media, caption=caption))
+
+        async_to_sync(bot.send_media_group)(chat_id=self.CHAT_ID, media=media_group)
+
     @staticmethod
-    def send(contact):
-        pass
+    def get_caption(contact):
+        return (
+            f'Haydovchi: {contact.full_name}\n'
+            f'Moshina Raqami: {contact.truck_id}\n'
+            f'Moshina modeli: {contact.car_model}\n'
+            f'Moshina turi: {contact.car_type}\n'
+            f'Tirkama turi: {contact.trailer_type}\n'
+        )

@@ -20,3 +20,4 @@ pytest-django
 pytz
 django-storages
 boto3
+python-telegram-bot
