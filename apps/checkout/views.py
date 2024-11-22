@@ -90,6 +90,8 @@ class PayClientOrder(views.APIView):
         order.client_paid = True
         order.save()
 
+        MainCheckout + order.total_amount # noqa
+
         log_comment = (f"Klient tomonidan kirim [Naqt]\n\n"
                        f"Klient: {order.client.name}\n"
                        f"{order.car_number}\n"
