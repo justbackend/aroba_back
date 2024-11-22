@@ -136,7 +136,7 @@ class CashSummarySerializer(serializers.Serializer):
     car_number = serializers.CharField(read_only=True)
     loading = serializers.CharField(read_only=True, source='loading.name')
     unloading = serializers.CharField(read_only=True, source='unloading.name')
-    client = utils.ClientNameSerializer(read_only=True)
+    client = serializers.CharField(read_only=True, source='client.name')
     total_amount = serializers.IntegerField(read_only=True)
     income = serializers.IntegerField(read_only=True)
     payment_type = serializers.CharField(read_only=True)
