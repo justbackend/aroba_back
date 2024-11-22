@@ -10,8 +10,6 @@ urlpatterns = [
     path('rollback-paid-order/<int:order_id>/', views.RollbackPaidOrder.as_view(), name='pay-cash-order'),
     path('rollback-paid-client-order/<int:order_id>/', views.RollbackClientPaidOrder.as_view(), name='pay-cash-order'),
 
-
-
     # transactions
     path('transactions/', views.CreateTransactionAPI.as_view(), name='create-transaction'),
     path('transactions-excel/', views.TransactionsExcel.as_view(), name='create-transaction'),
