@@ -52,4 +52,5 @@ class ContactViewSet(viewsets.ModelViewSet):
     serializer_class = serializers.IMBContactSerializer
     queryset = models.Contact.objects.all().order_by('-updated_at')
     http_method_names = ('get', 'post', 'patch', 'delete')
+    search_fields = ('full_name', 'phone', 'truck_id')
 

@@ -9,6 +9,7 @@ from utils.choices import *
 from . import serializers
 from .. import models
 from ..utils import SocketSendOrders
+from apps.imb.models import Contact
 
 
 class NewOrdersListView(generics.ListAPIView):
@@ -88,3 +89,9 @@ class FillingOrderView(generics.UpdateAPIView):
         # SocketSendOrders.ws_filling_orders(order=serializer.instance, action='d')
         # SocketSendOrders.ws_status_orders(order=serializer.instance, action='c')
         SocketSendOrders.ws_status_orders(order=serializer.instance, action='d')
+
+
+class FillingContactsListView(generics.ListAPIView):
+    serializer_class = serializers.FillingContactsListSerializer
+    queryset = Contact.objects.all()
+    search_fields = ('phone', 'truck_id', 'full_name')

@@ -12,5 +12,11 @@ urlpatterns = [
     path('filling-orders/', views.FillingOrdersListView.as_view(), name='filling-orders'),
     path('fill-order/<int:order_id>/', views.FillingOrderView.as_view(), name='filling-orders'),
 
+    # fill contacts
+
+    path('fill-contacts/', views.FillingContactsListView.as_view(), name='filling-contacts'),
+
+
+
 ]
 

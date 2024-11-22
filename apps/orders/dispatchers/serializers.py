@@ -95,3 +95,11 @@ class FillOrderSerializer(serializers.ModelSerializer):
             comment=log_comment, action=OrderLogActions.FILLED, user=self.context['request'].user
         )
         return instance
+
+
+class FillingContactsListSerializer(serializers.Serializer):
+    id = serializers.IntegerField()
+    phone = serializers.CharField()
+    truck_id = serializers.CharField()
+
+
