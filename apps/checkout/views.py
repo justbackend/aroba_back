@@ -113,6 +113,7 @@ class RollbackClientPaidOrder(generics.GenericAPIView):
         order = utils.get_object(order_models.Order, client_paid=True, id=order_id, select_related=['client'])
         order.client_paid = False
         order.save()
+        MainCheckout - order.total_amount  # noqa
 
         log_comment = (f"Kirim bo'lgan buyurtma puli qaytarildi\n\n"
                        f"Klient: {order.client.name}\n"
