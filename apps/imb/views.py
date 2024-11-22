@@ -57,8 +57,7 @@ class ContactViewSet(viewsets.ModelViewSet):
 
 class SendToTelegramView(views.APIView):
 
-    def get(self, request, *args, **kwargs):
-        phone = request.query_params.get('phone')
+    def get(self, request, phone, *args, **kwargs):
 
         if phone and len(phone) != 12:
             raise APIException('Phone number must be 12 digits')
@@ -68,3 +67,7 @@ class SendToTelegramView(views.APIView):
         contact = get_object(model=models.Contact, phone=phone)
 
         return Response({'phone': phone, 'contact_id': contact.id})
+
+    @staticmethod
+    def send(phone):
+        pass
