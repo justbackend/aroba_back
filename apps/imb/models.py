@@ -11,8 +11,8 @@ class IMBCheckout(models.Model):
     objects = managers.IMBDatabaseManager()
 
     class Meta:
-        verbose_name = 'IMB Checkout'
-        verbose_name_plural = 'IMB Checkout'
+        verbose_name = 'Checkout'
+        verbose_name_plural = 'Checkout'
         managed = False
         db_table = 'KassaApp_kassa'
 
@@ -52,8 +52,8 @@ class IMBTransaction(models.Model):
     objects = managers.IMBDatabaseManager()
 
     class Meta:
-        verbose_name = 'IMB Transaction'
-        verbose_name_plural = 'IMB Transactions'
+        verbose_name = 'Transaction'
+        verbose_name_plural = 'Transactions'
         managed = False
         db_table = 'KassaApp_transactions'
 
