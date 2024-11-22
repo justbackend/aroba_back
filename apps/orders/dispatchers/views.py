@@ -95,3 +95,4 @@ class FillingContactsListView(generics.ListAPIView):
     serializer_class = serializers.FillingContactsListSerializer
     queryset = Contact.objects.all()
     search_fields = ('phone', 'truck_id', 'full_name')
+    pagination_class = None
