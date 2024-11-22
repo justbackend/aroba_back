@@ -16,4 +16,8 @@ urlpatterns = [
     path('contacts/', contact_lc, name='contacts-imb'),
     path('contacts/<int:pk>/', contact_udd, name='contacts-imb'),
 
+
+    # send contact to telegram
+    path('send-contact/', views.SendToTelegramView.as_view(), name='send-contact'),
+
 ]
