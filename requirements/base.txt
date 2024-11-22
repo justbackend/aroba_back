@@ -18,3 +18,5 @@ channels-redis
 daphne
 pytest-django
 pytz
+django-storages
+boto3

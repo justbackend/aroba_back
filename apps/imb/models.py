@@ -1,6 +1,7 @@
 from django.db import models
 
 from utils import CheckoutManager, BaseModel
+from utils.customs import PublicStorage
 from utils.choices import IMBTransactionTypes, IMBTransactionStatuses
 from . import managers
 
@@ -81,37 +82,37 @@ class Contact(BaseModel):
         null=True, blank=True,
         upload_to='contact_images/',
         verbose_name='Trailer front',
-        # storage=PublicStorage
+        storage=PublicStorage
     )
     trailer_back = models.ImageField(
         null=True, blank=True,
         upload_to='contact_images/',
         verbose_name='Trailer back',
-        # storage=PublicStorage
+        storage=PublicStorage
     )
     license_front = models.ImageField(
         null=True, blank=True,
         upload_to='contact_images/',
         verbose_name='License front',
-        # storage=PublicStorage
+        storage=PublicStorage
     )
     license_back = models.ImageField(
         null=True, blank=True,
         upload_to='contact_images/',
         verbose_name='License back',
-        # storage=PublicStorage
+        storage=PublicStorage
     )
     track_front = models.ImageField(
         null=True, blank=True,
         upload_to='contact_images/',
         verbose_name='Track front',
-        # storage=PublicStorage
+        storage=PublicStorage
     )
     track_back = models.ImageField(
         null=True, blank=True,
         upload_to='contact_images/',
         verbose_name='Track back',
-        # storage=PublicStorage
+        storage=PublicStorage
     )
 
     objects = managers.IMBDatabaseManager()
