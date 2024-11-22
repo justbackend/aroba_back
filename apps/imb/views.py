@@ -1,4 +1,4 @@
-from rest_framework import views, generics
+from rest_framework import views, generics, viewsets
 from rest_framework.response import Response
 
 from apps.checkout import models as checkout_models
@@ -48,6 +48,8 @@ class UpdateTransactionView(generics.UpdateAPIView):
         serializer.save(receiver=EXTERNAL_USERS.imb_user)
 
 
-class ContactsViewList(generics.ListAPIView):
+class ContactViewSet(viewsets.ModelViewSet):
     serializer_class = serializers.IMBContactSerializer
     queryset = models.Contact.objects.all().order_by('-id')
+    http_method_names = ('get', 'post', 'patch', 'delete')
+
