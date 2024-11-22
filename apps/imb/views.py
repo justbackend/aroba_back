@@ -54,3 +54,13 @@ class ContactViewSet(viewsets.ModelViewSet):
     http_method_names = ('get', 'post', 'patch', 'delete')
     search_fields = ('full_name', 'phone', 'truck_id')
 
+
+class SendToTelegramView(views.APIView):
+
+    def get(self, request, *args, **kwargs):
+        phone = request.GET.get('phone')
+
+        contact = get_object(model=models.Contact, phone=phone)
+
+        return Response({'phone': phone, 'contact_id': contact.id})
+
