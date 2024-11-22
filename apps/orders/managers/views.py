@@ -81,7 +81,7 @@ class UpdateOrderStatusView(generics.UpdateAPIView):
     statuses = dict(OrderStatus.choices)
 
     def get_object(self):
-        return get_object(models.Order, id=self.kwargs['pk'])
+        return get_object(models.Order, id=self.kwargs['pk'], status__gte=OrderStatus.STARTED)
 
     def perform_update(self, serializer):
         old_status = self.statuses[serializer.instance.status]
