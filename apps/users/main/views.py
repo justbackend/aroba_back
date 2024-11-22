@@ -43,6 +43,6 @@ class SectionViewSet(viewsets.ModelViewSet):
             return self.queryset
 
         actions = user.actions.all()
-        return self.queryset.filter(modules__actions__in=actions).distinct().order_by('order')
+        return self.queryset.filter(modules__actions__in=actions).distinct()
 
 
