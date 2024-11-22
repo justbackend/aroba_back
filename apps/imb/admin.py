@@ -30,3 +30,8 @@ class IMBCheckoutAdmin(u_admin.ModelAdmin):
 @admin.register(models.IMBTransaction)
 class IMBTransactionAdmin(u_admin.ModelAdmin):
     list_display = ('id', 'amount', 'comment', 'type')
+
+
+@admin.register(models.Contact)
+class ContactAdmin(u_admin.ModelAdmin):
+    list_display = ('id', 'full_name', 'truck_id', 'phone', 'car_type')
