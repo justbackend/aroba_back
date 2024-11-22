@@ -13,7 +13,7 @@ urlpatterns = [
     path('transactions/<int:pk>/', views.UpdateTransactionView.as_view(), name='transactions-imb'),
 
     # imb contacts
-    path('contacs/', contact_lc, name='contacts-imb'),
-    path('contacs/<int:id>/', contact_udd, name='contacts-imb'),
+    path('contacts/', contact_lc, name='contacts-imb'),
+    path('contacts/<int:id>/', contact_udd, name='contacts-imb'),
 
 ]
