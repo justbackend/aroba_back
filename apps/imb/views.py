@@ -50,6 +50,6 @@ class UpdateTransactionView(generics.UpdateAPIView):
 
 class ContactViewSet(viewsets.ModelViewSet):
     serializer_class = serializers.IMBContactSerializer
-    queryset = models.Contact.objects.all().order_by('-id')
+    queryset = models.Contact.objects.all().order_by('-updated_at')
     http_method_names = ('get', 'post', 'patch', 'delete')
 
