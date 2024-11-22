@@ -56,12 +56,6 @@ urlpatterns = [
     ),
 
     path(
-        'contacts/',
-        include('apps.contacts.urls'),
-        name='contacts',
-    ),
-
-    path(
         'accountant/',
         include('apps.accountant.urls'),
         name='accountant',

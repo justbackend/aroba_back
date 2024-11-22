@@ -59,7 +59,6 @@ CUSTOM_APPS = [
     'apps.clients',
     'apps.orders',
     'apps.checkout',
-    'apps.contacts',
     'apps.accountant',
     'apps.imb',
 ]
