@@ -3,7 +3,8 @@ from rest_framework import serializers
 from utils.choices import TransactionStatuses, IMBTransactionTypes
 from apps.checkout import models as checkout_models
 from apps.checkout.models import MainCheckout
-from .models import CheckoutIMB, IMBCheckout
+from .models import CheckoutIMB
+from . import models
 
 
 class IMBTransactionSerializer(serializers.ModelSerializer):
@@ -50,10 +51,10 @@ class IMBUpdateTransactionSerializer(serializers.ModelSerializer):
 
     @staticmethod
     def approved(instance):
-        MainCheckout - instance.amount # noqa
-        CheckoutIMB + instance.amount # noqa
+        MainCheckout - instance.amount  # noqa
+        CheckoutIMB + instance.amount  # noqa
 
-        IMBCheckout.create_transaction(
+        models.IMBCheckout.create_transaction(
             amount=instance.amount,
             _type=IMBTransactionTypes.AGENT_INCOME,
             comment=f"Arobadan kirim"
@@ -66,3 +67,24 @@ class IMBUpdateTransactionSerializer(serializers.ModelSerializer):
     @staticmethod
     def pending(instance):
         pass
+
+
+class IMBContactSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.Contact
+        fields = (
+            'id',
+            'full_name',
+            'truck_id',
+            'phone',
+            'car_type',
+            'car_model',
+            'trailer_type',
+            'is_contacted',
+            'track_front',
+            'track_back',
+            'trailer_front',
+            'trailer_back',
+            'license_front',
+            'license_back',
+        )

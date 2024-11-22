@@ -6,7 +6,7 @@ from apps.users.external import EXTERNAL_USERS
 from utils import IMBPermission, get_object
 from utils.choices import TransactionTypes
 from utils.customs import IMBAuthentication
-from . import serializers
+from . import serializers, models
 
 
 class CheckoutBalanceView(views.APIView):
@@ -46,3 +46,8 @@ class UpdateTransactionView(generics.UpdateAPIView):
 
     def perform_update(self, serializer):
         serializer.save(receiver=EXTERNAL_USERS.imb_user)
+
+
+class ContactsViewList(generics.ListAPIView):
+    serializer_class = serializers.IMBContactSerializer
+    queryset = models.Contact.objects.all().order_by('-id')
