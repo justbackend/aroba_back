@@ -58,7 +58,7 @@ class ContactViewSet(viewsets.ModelViewSet):
 class SendToTelegramView(views.APIView):
 
     def get(self, request, *args, **kwargs):
-        phone = request.GET.get('phone')
+        phone = request.GET.get('phone')[3::]
 
         contact = get_object(model=models.Contact, phone=phone)
 
