@@ -79,7 +79,7 @@ class RollbackPaidOrder(generics.GenericAPIView):
                        f"Komentariya: {comment}")
         order.create_log(comment=log_comment, action=OrderLogActions.ROLLBACK_PAID, user=request.user)
 
-        MainCheckout.add(order.total_amount)
+        MainCheckout + order.total_amount # noqa
 
         return Response(data={'order_id': order_id, 'client_id': order.client_id})
 
