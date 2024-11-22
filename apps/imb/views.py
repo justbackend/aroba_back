@@ -3,7 +3,7 @@ from rest_framework.response import Response
 
 from apps.checkout import models as checkout_models
 from apps.users.external import EXTERNAL_USERS
-from utils import IMBPermission, get_object
+from utils import IMBPermission, get_object, APIException
 from utils.choices import TransactionTypes
 from utils.customs import IMBAuthentication
 from . import serializers, models
@@ -58,9 +58,13 @@ class ContactViewSet(viewsets.ModelViewSet):
 class SendToTelegramView(views.APIView):
 
     def get(self, request, *args, **kwargs):
-        phone = request.GET.get('phone')[3::]
+        phone = request.query_params.get('phone')
+
+        if phone and len(phone) != 12:
+            raise APIException('Phone number must be 12 digits')
+
+        phone = phone[3::]
 
         contact = get_object(model=models.Contact, phone=phone)
 
         return Response({'phone': phone, 'contact_id': contact.id})
-
