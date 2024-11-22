@@ -69,5 +69,5 @@ class SendToTelegramView(views.APIView):
         return Response({'phone': phone, 'contact_id': contact.id})
 
     @staticmethod
-    def send(phone):
+    def send(contact):
         pass
