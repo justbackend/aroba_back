@@ -14,6 +14,6 @@ urlpatterns = [
 
     # imb contacts
     path('contacts/', contact_lc, name='contacts-imb'),
-    path('contacts/<int:id>/', contact_udd, name='contacts-imb'),
+    path('contacts/<int:pk>/', contact_udd, name='contacts-imb'),
 
 ]
