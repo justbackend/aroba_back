@@ -1,7 +1,4 @@
-import json
-from io import BytesIO
-
-import requests
+from django.conf import settings
 from asgiref.sync import async_to_sync
 from rest_framework import views, generics, viewsets
 from rest_framework.response import Response
@@ -62,8 +59,8 @@ class ContactViewSet(viewsets.ModelViewSet):
 
 
 class SendToTelegramView(views.APIView):
-    BOT_TOKEN = "7362304291:AAHsSLbhZozUvZboGh_brEXMFp22bMkwF4E"
-    CHAT_ID = "1172189473"
+    BOT_TOKEN = settings.DUMP_BOT_TOKEN
+    CHAT_ID = settings.DRIVER_CONTACTS
 
     def get(self, request, phone: str, *args, **kwargs):
 

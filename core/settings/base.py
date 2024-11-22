@@ -40,6 +40,8 @@ ALLOWED_HOSTS = ["*"]
 DUMP_CHAT_ID = os.getenv("DUMP_CHAT_ID")
 DUMP_BOT_TOKEN = os.getenv("DUMP_BOT_TOKEN")
 
+DRIVER_CONTACTS = os.getenv("DRIVER_CONTACTS")
+
 # Application definition
 DJANGO_APPS = [
     "unfold",  # before django.contrib.admin
