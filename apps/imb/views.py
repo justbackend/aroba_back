@@ -1,7 +1,9 @@
-from django.conf import settings
 from asgiref.sync import async_to_sync
-from django.db.models import Count, When, Case, IntegerField, ExpressionWrapper, Q, F
+from django.conf import settings
+from django.db.models import When, Case, IntegerField
+from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import views, generics, viewsets
+from rest_framework.filters import SearchFilter, OrderingFilter
 from rest_framework.response import Response
 from telegram import InputMediaPhoto, Bot
 
@@ -54,23 +56,40 @@ class UpdateTransactionView(generics.UpdateAPIView):
 
 class ContactViewSet(viewsets.ModelViewSet):
     serializer_class = serializers.IMBContactSerializer
+    filter_backends = (DjangoFilterBackend, SearchFilter, OrderingFilter)
     http_method_names = ('get', 'post', 'patch', 'delete')
     search_fields = ('full_name', 'phone', 'truck_id')
-    query = """
-        SELECT *,
-               (CASE WHEN trailer_front IS NOT NULL AND trailer_front != '' THEN 1 ELSE 0 END +
-                CASE WHEN trailer_back IS NOT NULL AND trailer_back != '' THEN 1 ELSE 0 END +
-                CASE WHEN license_front IS NOT NULL AND license_front != '' THEN 1 ELSE 0 END +
-                CASE WHEN license_back IS NOT NULL AND license_back != '' THEN 1 ELSE 0 END +
-                CASE WHEN track_front IS NOT NULL AND track_front != '' THEN 1 ELSE 0 END +
-                CASE WHEN track_back IS NOT NULL AND track_back != '' THEN 1 ELSE 0 END
-               ) AS image_count
-        FROM contacts
-        ORDER BY image_count DESC
-    """
+    ordering_fields = ('image_count',)
 
     def get_queryset(self):
-        qs = models.Contact.objects.using('imb').raw(self.query)
+        qs = models.Contact.objects.annotate(
+            image_count=(
+                    Case(
+                        When(trailer_front__isnull=False, trailer_front__gt='', then=1),
+                        default=0, output_field=IntegerField()
+                    ) +
+                    Case(
+                        When(trailer_back__isnull=False, trailer_back__gt='', then=1),
+                        default=0, output_field=IntegerField()
+                    ) +
+                    Case(
+                        When(license_front__isnull=False, license_front__gt='', then=1),
+                        default=0, output_field=IntegerField()
+                    ) +
+                    Case(
+                        When(license_back__isnull=False, license_back__gt='', then=1),
+                        default=0, output_field=IntegerField()
+                    ) +
+                    Case(
+                        When(track_front__isnull=False, track_front__gt='', then=1),
+                        default=0, output_field=IntegerField()
+                    ) +
+                    Case(
+                        When(track_back__isnull=False, track_back__gt='', then=1),
+                        default=0, output_field=IntegerField()
+                    )
+            )
+        ).order_by('image_count')
         return qs
 
 
