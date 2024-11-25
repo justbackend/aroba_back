@@ -23,7 +23,10 @@ class ProfileView(views.APIView):
     permission_classes = (PayloadPermission,)
 
     def get(self, request):
-        profile_data = models.User.profile_data(request.auth['user_id'])
+        if not (user_id := request.auth.get('user_id')):
+            return Response(status=status.HTTP_401_UNAUTHORIZED)
+
+        profile_data = models.User.profile_data(user_id)
         if profile_data.get("photo"):
             profile_data["photo"] = request.build_absolute_uri(profile_data["photo"])
         return Response(profile_data)
