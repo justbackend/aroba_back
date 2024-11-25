@@ -6,12 +6,16 @@ import utils
 
 
 class RegionViewSet(viewsets.ModelViewSet):
+    authentication_classes = ()
+    permission_classes = ()
     serializer_class = serializers.RegionSerializer
     queryset = models.Region.objects.all()
     pagination_class = None
 
 
 class PointViewSet(viewsets.ModelViewSet):
+    authentication_classes = ()
+    permission_classes = ()
     serializer_class = serializers.PointSerializer
     queryset = models.Point.active_objects.all()
     pagination_class = None
