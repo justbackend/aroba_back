@@ -56,12 +56,11 @@ class UpdateTransactionView(generics.UpdateAPIView):
 
 class ContactViewSet(viewsets.ModelViewSet):
     serializer_class = serializers.IMBContactSerializer
-    filter_backends = (DjangoFilterBackend, SearchFilter, OrderingFilter)
     http_method_names = ('get', 'post', 'patch', 'delete')
     search_fields = ('full_name', 'phone', 'truck_id')
-    ordering_fields = ('image_count',)
 
     def get_queryset(self):
+        order = self.request.query_params.get('order', 'image_count')
         qs = models.Contact.objects.annotate(
             image_count=(
                     Case(
@@ -89,7 +88,7 @@ class ContactViewSet(viewsets.ModelViewSet):
                         default=0, output_field=IntegerField()
                     )
             )
-        ).order_by('image_count')
+        ).order_by(order)
         return qs
 
 
