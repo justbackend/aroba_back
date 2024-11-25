@@ -26,6 +26,10 @@ class UserViewSet(viewsets.ModelViewSet):
     def get_object(self):
         return models.User.objects.filter(id=self.kwargs['pk']).first()
 
+    def perform_destroy(self, instance):
+        instance.is_active = False
+        instance.save()
+
 
 class SectionViewSet(viewsets.ModelViewSet):
     queryset = (
@@ -37,12 +41,9 @@ class SectionViewSet(viewsets.ModelViewSet):
     pagination_class = None
 
     def get_queryset(self):
-
         user = self.request.user
         if user.is_superuser:
             return self.queryset
 
         actions = user.actions.all()
         return self.queryset.filter(modules__actions__in=actions).distinct()
-
-
