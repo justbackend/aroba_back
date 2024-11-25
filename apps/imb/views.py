@@ -1,5 +1,6 @@
 from django.conf import settings
 from asgiref.sync import async_to_sync
+from django.db.models import Count, When, Case, IntegerField, ExpressionWrapper, Q, F
 from rest_framework import views, generics, viewsets
 from rest_framework.response import Response
 from telegram import InputMediaPhoto, Bot
@@ -53,9 +54,24 @@ class UpdateTransactionView(generics.UpdateAPIView):
 
 class ContactViewSet(viewsets.ModelViewSet):
     serializer_class = serializers.IMBContactSerializer
-    queryset = models.Contact.objects.all().order_by('-updated_at')
     http_method_names = ('get', 'post', 'patch', 'delete')
     search_fields = ('full_name', 'phone', 'truck_id')
+    query = """
+        SELECT *,
+               (CASE WHEN trailer_front IS NOT NULL AND trailer_front != '' THEN 1 ELSE 0 END +
+                CASE WHEN trailer_back IS NOT NULL AND trailer_back != '' THEN 1 ELSE 0 END +
+                CASE WHEN license_front IS NOT NULL AND license_front != '' THEN 1 ELSE 0 END +
+                CASE WHEN license_back IS NOT NULL AND license_back != '' THEN 1 ELSE 0 END +
+                CASE WHEN track_front IS NOT NULL AND track_front != '' THEN 1 ELSE 0 END +
+                CASE WHEN track_back IS NOT NULL AND track_back != '' THEN 1 ELSE 0 END
+               ) AS image_count
+        FROM contacts
+        ORDER BY image_count DESC
+    """
+
+    def get_queryset(self):
+        qs = models.Contact.objects.using('imb').raw(self.query)
+        return qs
 
 
 class SendToTelegramView(views.APIView):
