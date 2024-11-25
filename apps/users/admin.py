@@ -9,34 +9,34 @@ from unfold.admin import ModelAdmin
 from unfold import admin as u_admin
 
 # admin.site.unregister(models.User)
-admin.site.unregister(Group)
+# admin.site.unregister(Group)
 
 
-@admin.register(models.User)
-class UserAdmin(BaseUserAdmin, ModelAdmin):
-    list_display = ("username", "first_name", "last_name", "is_staff")
-    fieldsets = (
-        (None, {"fields": ("username", "password")}),
-        (_("Personal info"), {"fields": ("first_name", "last_name")}),
-        (
-            _("Permissions"),
-            {
-                "fields": (
-                    "is_active",
-                    "is_staff",
-                    "is_superuser",
-                    "groups",
-                    "user_permissions",
-                ),
-            },
-        ),
-        (_("Important dates"), {"fields": ("last_login", "date_joined")}),
-    )
-
-
-@admin.register(Group)
-class GroupAdmin(BaseGroupAdmin, ModelAdmin):
-    pass
+# @admin.register(models.User)
+# class UserAdmin(BaseUserAdmin, ModelAdmin):
+#     list_display = ("username", "first_name", "last_name", "is_staff")
+#     fieldsets = (
+#         (None, {"fields": ("username", "password")}),
+#         (_("Personal info"), {"fields": ("first_name", "last_name")}),
+#         (
+#             _("Permissions"),
+#             {
+#                 "fields": (
+#                     "is_active",
+#                     "is_staff",
+#                     "is_superuser",
+#                     "groups",
+#                     "user_permissions",
+#                 ),
+#             },
+#         ),
+#         (_("Important dates"), {"fields": ("last_login", "date_joined")}),
+#     )
+#
+#
+# @admin.register(Group)
+# class GroupAdmin(BaseGroupAdmin, ModelAdmin):
+#     pass
 
 
 @admin.register(models.Role)
@@ -44,10 +44,10 @@ class RoleAdmin(u_admin.ModelAdmin):
     list_display = ('id', 'name')
 
 
-# @admin.register(models.User)
-# class UserAdmin(u_admin.ModelAdmin):
-#     list_display = ('id', 'username',)
-#     readonly_fields = ('actions',)
+@admin.register(models.User)
+class UserAdmin(u_admin.ModelAdmin):
+    list_display = ('id', 'username',)
+    readonly_fields = ('actions',)
 
 
 @admin.register(models.Action)
