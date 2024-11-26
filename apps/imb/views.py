@@ -122,6 +122,8 @@ class SendToTelegramView(views.APIView):
             _last = media_group.pop()
             media_group.append(InputMediaPhoto(_last.media, caption=caption))
             async_to_sync(bot.send_media_group)(chat_id=self.CHAT_ID, media=media_group)
+        else:
+            async_to_sync(bot.send_message)(chat_id=self.CHAT_ID, text=caption)
 
     @staticmethod
     def get_caption(contact):
