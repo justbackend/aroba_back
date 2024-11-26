@@ -118,8 +118,9 @@ class SendToTelegramView(views.APIView):
             if item := getattr(contact, field):
                 media_group.append(InputMediaPhoto(item))
 
-        _last = media_group.pop()
-        media_group.append(InputMediaPhoto(_last.media, caption=caption))
+        if media_group:
+            _last = media_group.pop()
+            media_group.append(InputMediaPhoto(_last.media, caption=caption))
 
         async_to_sync(bot.send_media_group)(chat_id=self.CHAT_ID, media=media_group)
 
