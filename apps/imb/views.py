@@ -1,9 +1,7 @@
 from asgiref.sync import async_to_sync
 from django.conf import settings
 from django.db.models import When, Case, IntegerField
-from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import views, generics, viewsets
-from rest_framework.filters import SearchFilter, OrderingFilter
 from rest_framework.response import Response
 from telegram import InputMediaPhoto, Bot
 
