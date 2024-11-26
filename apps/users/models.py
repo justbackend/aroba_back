@@ -47,6 +47,7 @@ class User(AbstractBaseUser, PermissionsMixin, BaseModel):
     date_joined = models.DateTimeField(_("date joined"), default=timezone.now)
     roles = models.ManyToManyField('Role', blank=True, related_name='users')
     actions = models.ManyToManyField('Action', blank=True, related_name='users', verbose_name=_('Actions'))
+    chat_id = models.CharField(null=True, blank=True, verbose_name='Telegram chat ID')
     is_staff = models.BooleanField(
         _("staff status"),
         default=False,
