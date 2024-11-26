@@ -10,7 +10,7 @@ from openpyxl.styles import Alignment, Side, PatternFill, Border, Font
 from openpyxl.workbook import Workbook
 from rest_framework.views import APIView
 
-T = TypeVar('T')
+T = TypeVar('T', bound='Model')
 
 
 class WriteWorkBook(object):
