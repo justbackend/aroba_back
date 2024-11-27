@@ -5,6 +5,7 @@ from utils.customs.authentication import PayloadAuthentication
 from . import serializers
 from .. import models, utils
 from utils.permissions import PayloadPermission
+from utils import APIException
 
 
 class LoginView(generics.GenericAPIView):
@@ -16,6 +17,18 @@ class LoginView(generics.GenericAPIView):
         serializer = self.serializer_class(data=request.data)
         serializer.is_valid(raise_exception=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
+
+
+class UpdateUserView(generics.UpdateAPIView):
+    authentication_classes = (PayloadAuthentication,)
+    permission_classes = (PayloadPermission,)
+    http_method_names = ['patch', ]
+    serializer_class = serializers.UpdateUserSerializer
+
+    def get_object(self):
+        if not (user_id := self.request.auth.get('user_id')):
+            return APIException('User id dont determined')
+        return models.User.objects.get(id=user_id)
 
 
 class ProfileView(views.APIView):

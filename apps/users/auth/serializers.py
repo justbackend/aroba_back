@@ -1,5 +1,6 @@
 from django.contrib.auth import authenticate
 from rest_framework import serializers
+from ..models import User
 import utils
 
 
@@ -20,3 +21,17 @@ class LoginSerializer(serializers.Serializer):
 
     def to_representation(self, instance):
         return dict(user_id=self.validated_data['user'].id, **self.validated_data['user'].tokens())
+
+
+class UpdateUserSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = User
+        fields = (
+            'id',
+            'phone',
+            'phone',
+            'chat_id',
+        )
+
+
