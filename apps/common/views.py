@@ -25,8 +25,3 @@ class PointViewSet(viewsets.ModelViewSet):
         instance.save()
 
 
-class TestApiViewSet(views.APIView):
-
-    def post(self, request):
-        utils.send_me(request.data)
-        return Response(data=request.data)
