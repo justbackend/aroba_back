@@ -19,10 +19,10 @@ class LoginView(generics.GenericAPIView):
         return Response(serializer.data, status=status.HTTP_200_OK)
 
 
-class UpdateUserView(generics.UpdateAPIView):
+class UpdateUserView(generics.RetrieveUpdateAPIView):
     authentication_classes = (PayloadAuthentication,)
     permission_classes = (PayloadPermission,)
-    http_method_names = ['patch', ]
+    http_method_names = ['patch', 'get',]
     serializer_class = serializers.UpdateUserSerializer
 
     def get_object(self):

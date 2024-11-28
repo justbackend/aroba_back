@@ -30,7 +30,6 @@ class UpdateUserSerializer(serializers.ModelSerializer):
         fields = (
             'id',
             'phone',
-            'phone',
             'chat_id',
         )
 
