@@ -216,7 +216,7 @@
               {
                 "id": 64,
                 "route": "/api/v1/imb/",
-                "name": "send-contact/$/",
+                "name": "send-contact/$/$/",
                 "dynamic": true,
                 "method": "GET"
               },
