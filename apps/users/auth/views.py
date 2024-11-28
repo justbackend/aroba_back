@@ -34,7 +34,7 @@ class UpdateUserView(generics.RetrieveUpdateAPIView):
     def perform_update(self, serializer):
         serializer.save()
         obj = serializer.instance
-        clear_user_profile_data(users=(obj))
+        clear_user_profile_data(users=(obj,))
 
 
 class ProfileView(views.APIView):
