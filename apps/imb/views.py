@@ -92,7 +92,7 @@ class ContactViewSet(viewsets.ModelViewSet):
 
 
 class SendToTelegramView(views.APIView):
-    BOT_TOKEN = settings.DUMP_BOT_TOKEN
+    BOT_TOKEN = settings.AROBA_BOT_TOKEN
 
     def get(self, request, phone: str, order_id: int, *args, **kwargs):
 
