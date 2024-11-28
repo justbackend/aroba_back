@@ -138,7 +138,7 @@ class SendToTelegramView(views.APIView):
             f'Moshina Raqami: {contact.truck_id}\n'
             f'Moshina modeli: {contact.car_model}\n'
             f'Moshina turi: {contact.car_type}\n'
-            f'Tirkama turi: {contact.trailer_type}\n'
+            f'Tirkama turi: {contact.trailer_type}\n\n'
             f'Buyurtma: {order.code}\n'
             f'Sana: {order.date}\n'
             f"Yo'nalish: {order.loading.name} -> {order.unloading.name}\n"
