@@ -116,13 +116,19 @@ class SendToTelegramView(views.APIView):
         for field in fields:
             if item := getattr(contact, field):
                 media_group.append(InputMediaPhoto(item))
-        chat_id = self.request.user.chat_id
-        if media_group:
-            _last = media_group.pop()
-            media_group.append(InputMediaPhoto(_last.media, caption=caption))
-            async_to_sync(bot.send_media_group)(chat_id=chat_id, media=media_group)
-        else:
-            async_to_sync(bot.send_message)(chat_id=chat_id, text=caption)
+
+        if not (chat_id := self.request.user.chat_id):
+            raise APIException("Telegram ID kiritilmagan !!!")
+
+        try:
+            if media_group:
+                _last = media_group.pop()
+                media_group.append(InputMediaPhoto(_last.media, caption=caption))
+                async_to_sync(bot.send_media_group)(chat_id=chat_id, media=media_group)
+            else:
+                async_to_sync(bot.send_message)(chat_id=chat_id, text=caption)
+        except Exception as e:
+            raise APIException(f"Telegram botga start bosmagansiz yoki telegram ID xato")
 
     @staticmethod
     def get_caption(contact, order):
