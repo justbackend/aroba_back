@@ -4,11 +4,11 @@
     "name": "Kontaklar",
     "modules": [
       {
-        "id": 13,
+        "id": 1,
         "name": "kontaklar",
         "actions": [
           {
-            "id": 29,
+            "id": 1,
             "name": "ko'rish",
             "apis": [
               {
@@ -21,7 +21,7 @@
             ]
           },
           {
-            "id": 30,
+            "id": 2,
             "name": "boshqarish",
             "apis": [
               {
@@ -56,11 +56,11 @@
     "name": "Dispetcher",
     "modules": [
       {
-        "id": 1,
+        "id": 2,
         "name": "Buyurtmalar",
         "actions": [
           {
-            "id": 1,
+            "id": 3,
             "name": "ko'rish",
             "apis": [
               {
@@ -73,7 +73,7 @@
             ]
           },
           {
-            "id": 2,
+            "id": 4,
             "name": "band qilish",
             "apis": [
               {
@@ -86,7 +86,7 @@
             ]
           },
           {
-            "id": 3,
+            "id": 5,
             "name": "qo'shish",
             "apis": [
               {
@@ -113,7 +113,7 @@
             ]
           },
           {
-            "id": 4,
+            "id": 6,
             "name": "o'chirish",
             "apis": [
               {
@@ -128,7 +128,52 @@
         ]
       },
       {
-        "id": 2,
+        "id": 4,
+        "name": "Statusi",
+        "actions": [
+          {
+            "id": 10,
+            "name": "ko'rish",
+            "apis": [
+              {
+                "id": 22,
+                "route": "/api/v1/managers/",
+                "name": "status-orders/",
+                "dynamic": false,
+                "method": "GET"
+              }
+            ]
+          },
+          {
+            "id": 11,
+            "name": "statusini o'zgartirish",
+            "apis": [
+              {
+                "id": 23,
+                "route": "/api/v1/managers/",
+                "name": "status-orders/$/",
+                "dynamic": true,
+                "method": "PATCH"
+              }
+            ]
+          },
+          {
+            "id": 12,
+            "name": "qaytarish",
+            "apis": [
+              {
+                "id": 25,
+                "route": "/api/v1/managers/",
+                "name": "rollback-order/$/",
+                "dynamic": true,
+                "method": "PATCH"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": 3,
         "name": "To'ldirish",
         "actions": [
           {
@@ -158,7 +203,7 @@
             ]
           },
           {
-            "id": 5,
+            "id": 9,
             "name": "ko'rish",
             "apis": [
               {
@@ -167,51 +212,20 @@
                 "name": "filling-orders/",
                 "dynamic": false,
                 "method": "GET"
-              }
-            ]
-          }
-        ]
-      },
-      {
-        "id": 3,
-        "name": "Statusi",
-        "actions": [
-          {
-            "id": 9,
-            "name": "ko'rish",
-            "apis": [
+              },
               {
-                "id": 22,
-                "route": "/api/v1/managers/",
-                "name": "status-orders/",
+                "id": 64,
+                "route": "/api/v1/imb/",
+                "name": "send-contact/$/",
+                "dynamic": true,
+                "method": "GET"
+              },
+              {
+                "id": 20,
+                "route": "/api/v1/dispatchers/",
+                "name": "fill-contacts/",
                 "dynamic": false,
                 "method": "GET"
-              }
-            ]
-          },
-          {
-            "id": 10,
-            "name": "statusini o'zgartirish",
-            "apis": [
-              {
-                "id": 23,
-                "route": "/api/v1/managers/",
-                "name": "status-orders/$/",
-                "dynamic": true,
-                "method": "PATCH"
-              }
-            ]
-          },
-          {
-            "id": 11,
-            "name": "qaytarish",
-            "apis": [
-              {
-                "id": 25,
-                "route": "/api/v1/managers/",
-                "name": "rollback-order/$/",
-                "dynamic": true,
-                "method": "PATCH"
               }
             ]
           }
@@ -224,11 +238,11 @@
     "name": "Menejer",
     "modules": [
       {
-        "id": 4,
+        "id": 5,
         "name": "Buyurtmachi",
         "actions": [
           {
-            "id": 12,
+            "id": 13,
             "name": "ko'rish",
             "apis": [
               {
@@ -241,7 +255,7 @@
             ]
           },
           {
-            "id": 13,
+            "id": 14,
             "name": "qo'shish",
             "apis": [
               {
@@ -267,7 +281,7 @@
         "name": "Kassa",
         "actions": [
           {
-            "id": 16,
+            "id": 15,
             "name": "korish",
             "apis": [
               {
@@ -294,7 +308,7 @@
             ]
           },
           {
-            "id": 17,
+            "id": 16,
             "name": "chiqim qo'shish",
             "apis": [
               {
@@ -307,7 +321,7 @@
             ]
           },
           {
-            "id": 18,
+            "id": 17,
             "name": "tasdiqlash",
             "apis": [
               {
@@ -322,11 +336,11 @@
         ]
       },
       {
-        "id": 5,
+        "id": 7,
         "name": "Hisobot",
         "actions": [
           {
-            "id": 14,
+            "id": 18,
             "name": "ko'rish",
             "apis": [
               {
@@ -346,7 +360,7 @@
             ]
           },
           {
-            "id": 15,
+            "id": 19,
             "name": "tasdiqlash",
             "apis": [
               {
@@ -366,7 +380,7 @@
             ]
           },
           {
-            "id": 28,
+            "id": 20,
             "name": "reyestr",
             "apis": [
               {
@@ -415,11 +429,11 @@
     "name": "Buxgalteriya",
     "modules": [
       {
-        "id": 7,
+        "id": 8,
         "name": "Shartnoma",
         "actions": [
           {
-            "id": 19,
+            "id": 21,
             "name": "ko'rish",
             "apis": [
               {
@@ -439,7 +453,7 @@
             ]
           },
           {
-            "id": 20,
+            "id": 22,
             "name": "tasdiqlash",
             "apis": [
               {
@@ -454,11 +468,11 @@
         ]
       },
       {
-        "id": 8,
+        "id": 9,
         "name": "Faktura",
         "actions": [
           {
-            "id": 21,
+            "id": 23,
             "name": "ko'rish",
             "apis": [
               {
@@ -471,7 +485,7 @@
             ]
           },
           {
-            "id": 22,
+            "id": 24,
             "name": "boshqarish",
             "apis": [
               {
@@ -493,11 +507,11 @@
         ]
       },
       {
-        "id": 9,
+        "id": 10,
         "name": "Reyestr",
         "actions": [
           {
-            "id": 23,
+            "id": 25,
             "name": "ko'rish",
             "apis": [
               {
@@ -525,11 +539,11 @@
     "name": "Admin",
     "modules": [
       {
-        "id": 10,
+        "id": 11,
         "name": "Foydalanuvchilar",
         "actions": [
           {
-            "id": 24,
+            "id": 26,
             "name": "ko'rish",
             "apis": [
               {
@@ -542,7 +556,7 @@
             ]
           },
           {
-            "id": 25,
+            "id": 27,
             "name": "boshqarish",
             "apis": [
               {
@@ -571,11 +585,11 @@
         ]
       },
       {
-        "id": 11,
+        "id": 12,
         "name": "Rollar",
         "actions": [
           {
-            "id": 26,
+            "id": 28,
             "name": "boshqarish",
             "apis": [
               {
