@@ -11,6 +11,7 @@ from utils import IMBPermission, get_object, APIException
 from utils.choices import TransactionTypes
 from utils.customs import IMBAuthentication
 from . import serializers, models
+from apps.orders.models import Order
 
 
 class CheckoutBalanceView(views.APIView):
@@ -94,7 +95,7 @@ class SendToTelegramView(views.APIView):
     BOT_TOKEN = settings.DUMP_BOT_TOKEN
     CHAT_ID = settings.DRIVER_CONTACTS
 
-    def get(self, request, phone: str, *args, **kwargs):
+    def get(self, request, phone: str, order_id: int, *args, **kwargs):
 
         if phone and phone.isdigit() and len(phone) != 12:
             raise APIException('Phone number must be 12 digits')
@@ -102,29 +103,29 @@ class SendToTelegramView(views.APIView):
         phone = phone[3::]
 
         contact = get_object(model=models.Contact, phone=phone)
+        order = get_object(model=Order, id=order_id, select_related=['loading', 'unloading'])
 
-        self.send(contact)
+        self.send(contact, caption=self.get_caption(contact, order=order))
 
         return Response({'phone': phone, 'contact_id': contact.id})
 
-    def send(self, contact):
+    def send(self, contact, caption: str):
         bot = Bot(token=self.BOT_TOKEN)
         media_group = []
         fields = ('trailer_front', 'trailer_back', 'license_front', 'license_back', 'track_front', 'track_back')
-        caption = self.get_caption(contact)
         for field in fields:
             if item := getattr(contact, field):
                 media_group.append(InputMediaPhoto(item))
-
+        chat_id = self.request.user.chat_id
         if media_group:
             _last = media_group.pop()
             media_group.append(InputMediaPhoto(_last.media, caption=caption))
-            async_to_sync(bot.send_media_group)(chat_id=self.CHAT_ID, media=media_group)
+            async_to_sync(bot.send_media_group)(chat_id=chat_id, media=media_group)
         else:
-            async_to_sync(bot.send_message)(chat_id=self.CHAT_ID, text=caption)
+            async_to_sync(bot.send_message)(chat_id=chat_id, text=caption)
 
     @staticmethod
-    def get_caption(contact):
+    def get_caption(contact, order):
         return (
             f'Haydovchi: {contact.full_name}\n'
             f'Telefon raqami: {contact.phone}\n'
