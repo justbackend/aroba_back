@@ -39,8 +39,7 @@ ALLOWED_HOSTS = ["*"]
 # the dump secrets
 DUMP_CHAT_ID = os.getenv("DUMP_CHAT_ID")
 DUMP_BOT_TOKEN = os.getenv("DUMP_BOT_TOKEN")
-
-DRIVER_CONTACTS = os.getenv("DRIVER_CONTACTS")
+AROBA_BOT_TOKEN = os.getenv("AROBA_BOT_TOKEN")
 
 # Application definition
 DJANGO_APPS = [

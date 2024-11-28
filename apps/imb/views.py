@@ -93,7 +93,6 @@ class ContactViewSet(viewsets.ModelViewSet):
 
 class SendToTelegramView(views.APIView):
     BOT_TOKEN = settings.DUMP_BOT_TOKEN
-    CHAT_ID = settings.DRIVER_CONTACTS
 
     def get(self, request, phone: str, order_id: int, *args, **kwargs):
 
