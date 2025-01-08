@@ -29,7 +29,7 @@ class AdditionalAmountSerializer(serializers.Serializer):
 
         self.payment = instance.create_payment(_type=PaymentTypes.EXTRA, amount=amount, **validated_data)
 
-        log_comment = (f"Summa qo'shib berildi: {validated_data['amount']}  \n"
+        log_comment = (f"Summa qo'shib berildi: {amount}  \n"
                        f"Komentariya: {validated_data.get('comment')}")
 
         instance.create_log(user, OrderLogActions.ADDITIONAL_AMOUNT, comment=log_comment)
