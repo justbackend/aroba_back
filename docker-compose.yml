@@ -36,7 +36,7 @@ services:
       - ./static:/aroba/static
       - ./media:/aroba/media
     ports:
-      - "8001:8001"
+      - "8003:8003"
       - "8002:8002"
     env_file:
       - .env
@@ -53,21 +53,6 @@ services:
     restart: always
     extra_hosts:
       - "host.docker.internal:host-gateway"
-#  nginx:
-#    build:
-#      context: ./nginx
-#      dockerfile: ./Dockerfile
-#    container_name: aroba_nginx
-#    env_file:
-#      - .env
-#    volumes:
-#      - ./static:/aroba/static
-#      - ./media:/aroba/media
-#    ports:
-#      - "${NGINX_EXTERNAL_PORT}:80"
-#    depends_on:
-#      - aroba_web
-
 
 
 volumes:
