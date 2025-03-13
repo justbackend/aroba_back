@@ -15,6 +15,6 @@ if not User.objects.filter(username='a').exists():
     User.objects.create_superuser('a', 'a', first_name='Ahmad', last_name='Abdurahimov')
 EOF
 
-exec gunicorn core.wsgi:application --bind 0.0.0.0:8003 --workers 2
+exec gunicorn -c gunicorn.py core.wsgi:application
 
 
