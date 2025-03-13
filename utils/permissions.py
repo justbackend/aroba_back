@@ -1,11 +1,11 @@
 import re
 
+from django.conf import settings
+from django.core.cache import cache
 from rest_framework import permissions
 
 from apps.users.utils import get_user_perms
-from .choices import APIRoutes
-from django.core.cache import cache
-from django.conf import settings
+from utils.choices import APIRoutes
 
 
 class RolePermission(permissions.BasePermission):
@@ -21,13 +21,10 @@ class RolePermission(permissions.BasePermission):
             if self.has_perm(request):
                 return True
 
-            perms, route = self.get_filtered_perms_and_route(request)
+            perms, route, path = self.get_filtered_perms_and_route(request)
 
             if not route:
                 return False
-            route_len = len(route)
-
-            path = request.path[route_len:]
 
             for perm in perms:
 
@@ -40,14 +37,15 @@ class RolePermission(permissions.BasePermission):
                     if perm['name'] == path:
                         self.set_has_perm(request, True)
                         return True
-
         return False
+
 
     @classmethod
     def get_filtered_perms_and_route(cls, request):
-        data = get_user_perms(request.user.id)
         route = cls.get_route(request)
-        return tuple(filter(lambda perm: perm['method'] == request.method and perm['route'] == route, data)), route
+        path = request.path[len(route):]
+        perms = get_user_perms(request, route=route, path=path)
+        return perms, route, path
 
     @staticmethod
     def get_route(request):
@@ -57,11 +55,11 @@ class RolePermission(permissions.BasePermission):
                 return route[0]
 
     @staticmethod
-    def has_perm(request) -> bool:
+    def has_perm(request) -> bool | None:
         user = request.user
         has_perms = cache.get(f'has_perms_{user.id}')
         if isinstance(has_perms, dict):
-            return has_perms.get(request.path)
+            return bool(has_perms.get(request.path))
 
     @staticmethod
     def set_has_perm(request, _type: bool):
@@ -70,10 +68,11 @@ class RolePermission(permissions.BasePermission):
 
         if isinstance(has_perms, dict):
             has_perms[request.path] = _type
-            cache.set(f'has_perms_{user.id}', has_perms)
+            cache.set(f'has_perms_{user.id}', has_perms, 3600)
             return
 
-        cache.set(f'has_perms_{user.id}', {request.path: _type})
+        cache.set(f'has_perms_{user.id}', {request.path: _type}, 3600)
+
 
 
 class IsActive(permissions.BasePermission):
