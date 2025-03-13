@@ -1,10 +1,10 @@
-from apps.users.models import APIRoute
+from apps.users import models
 
 
 def get_user_perms(request, route: str, path: str) -> list:
     user_id = request.user.id
     first_part = path.split('/')[0]
-    apis = APIRoute.objects.filter(
+    apis = models.APIRoute.objects.filter(
         actions__roles__users__id=user_id,
         route=route,
         method=request.method,
