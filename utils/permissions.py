@@ -18,9 +18,8 @@ class RolePermission(permissions.BasePermission):
             if user.is_superuser:
                 return True
 
-            perm = self.has_perm(request)
-            if perm is not None:
-                return perm
+            if self.has_perm(request):
+                return True
 
             perms, route = self.get_filtered_perms_and_route(request)
 
@@ -35,7 +34,6 @@ class RolePermission(permissions.BasePermission):
                 if perm['dynamic']:
                     pattern = f"^{perm['name'].replace('$', '[^/]+')}$"
                     if re.match(pattern, path):
-                        self.set_has_perm(request, True)
                         return True
                 else:
                     perm['name'] = perm['name'] or ''
@@ -43,7 +41,6 @@ class RolePermission(permissions.BasePermission):
                         self.set_has_perm(request, True)
                         return True
 
-        self.set_has_perm(request, False)
         return False
 
     @classmethod
