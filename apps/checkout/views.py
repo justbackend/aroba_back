@@ -3,8 +3,8 @@ from rest_framework import generics, views
 from rest_framework.response import Response
 
 import utils
-from apps.checkout import models, serializers
-from apps.checkout.models import MainCheckout
+from apps.checkout import serializers
+from apps.checkout.models import MainCheckout, Transaction
 from apps.clients import models as client_models
 from apps.orders import models as order_models
 from utils.choices import *
@@ -128,7 +128,7 @@ class RollbackClientPaidOrder(generics.GenericAPIView):
 
 
 class CreateTransactionAPI(generics.ListCreateAPIView):
-    queryset = models.Transaction.objects.all().order_by('-id')
+    queryset = Transaction.objects.all().order_by('-id')
     filterset_fields = ('type', 'status')
 
     serializer_classes = {
@@ -144,7 +144,7 @@ class CreateTransactionAPI(generics.ListCreateAPIView):
 
 
 class TransactionsExcel(ExcelListView):
-    data = models.Transaction.objects.all().order_by('-id')
+    data = Transaction.objects.all().order_by('-id')
     filename = 'transactions'
     fields = ['id', 'amount', 'status', 'type', 'comment', 'created_at']
     filters = ['type', ]
@@ -155,7 +155,7 @@ class UpdateTransactionAPI(generics.UpdateAPIView):
     http_method_names = 'put',
 
     def get_object(self):
-        return utils.get_object(model=models.Transaction, id=self.kwargs['pk'], type=TransactionTypes.INCOME)
+        return utils.get_object(model=Transaction, id=self.kwargs['pk'], type=TransactionTypes.INCOME)
 
     def perform_update(self, serializer):
         serializer.save(receiver=self.request.user)
