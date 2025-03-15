@@ -7,6 +7,7 @@ from . import serializers
 from .. import models, utils
 from utils.permissions import PayloadPermission
 from utils import APIException
+from ..models import APIRoute
 
 
 class LoginView(generics.GenericAPIView):
@@ -56,4 +57,8 @@ class MyPermissionsListAPI(views.APIView):
     permission_classes = (PayloadPermission,)
 
     def get(self, request, *args, **kwargs):
-        return Response(utils.get_user_perms(request.auth['user_id']))
+        user_id = request.auth['user_id']
+
+        return Response(
+            APIRoute.objects.filter(actions__users__id=user_id).values('route', 'name', 'dynamic', 'method')
+        )
