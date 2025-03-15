@@ -1,9 +1,9 @@
 from django.db import models
 
+import utils
+from utils import choices
 from utils.base import BaseModel
 from . import managers
-from utils import choices
-import utils
 
 
 class Client(BaseModel):

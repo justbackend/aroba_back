@@ -1,8 +1,8 @@
 from rest_framework import serializers
 
 import utils
-from utils.choices import *
 from apps.clients import models as client_models
+from utils.choices import *
 from . import models
 
 

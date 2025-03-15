@@ -1,4 +1,5 @@
 from django.urls import path
+
 from . import views
 
 urlpatterns = [
@@ -15,7 +16,4 @@ urlpatterns = [
     # fill contacts
     path('fill-contacts/', views.FillingContactsListView.as_view(), name='filling-contacts'),
 
-
-
 ]
-

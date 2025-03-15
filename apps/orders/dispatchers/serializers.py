@@ -1,4 +1,5 @@
 from rest_framework import serializers
+
 import utils
 from utils.choices import *
 from .. import models
@@ -101,5 +102,3 @@ class FillingContactsListSerializer(serializers.Serializer):
     id = serializers.IntegerField()
     phone = serializers.CharField()
     truck_id = serializers.CharField()
-
-

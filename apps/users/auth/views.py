@@ -1,12 +1,12 @@
 from rest_framework import generics, status, views
 from rest_framework.response import Response
 
+from utils import APIException
 from utils.customs.authentication import PayloadAuthentication
+from utils.permissions import PayloadPermission
 from utils.utility import clear_user_profile_data
 from . import serializers
-from .. import models, utils
-from utils.permissions import PayloadPermission
-from utils import APIException
+from .. import models
 from ..models import APIRoute
 
 

@@ -1,11 +1,11 @@
 from rest_framework import serializers
 
 import utils
-from apps.imb.models import CheckoutIMB, IMBCheckout
-from utils.choices import TransactionStatuses, IMBTransactionTypes
 from apps.checkout import models
-from apps.orders import models as order_models
 from apps.checkout.models import MainCheckout
+from apps.imb.models import CheckoutIMB, IMBCheckout
+from apps.orders import models as order_models
+from utils.choices import TransactionStatuses, IMBTransactionTypes
 
 
 class ReportOrdersSerializer(serializers.Serializer):
@@ -111,8 +111,8 @@ class TransactionStatusUpdateSerializer(serializers.ModelSerializer):
 
     @staticmethod
     def approved(instance):
-        MainCheckout + instance.amount # noqa
-        CheckoutIMB - instance.amount # noqa
+        MainCheckout + instance.amount  # noqa
+        CheckoutIMB - instance.amount  # noqa
 
         IMBCheckout.create_transaction(
             amount=instance.amount,

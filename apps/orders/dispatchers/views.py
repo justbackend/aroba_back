@@ -4,12 +4,12 @@ from django.db.models.functions import Concat
 from rest_framework import generics, views
 from rest_framework.response import Response
 
+from apps.imb.models import Contact
 from utils import *
 from utils.choices import *
 from . import serializers
 from .. import models
 from ..utils import SocketSendOrders
-from apps.imb.models import Contact
 
 
 class NewOrdersListView(generics.ListAPIView):

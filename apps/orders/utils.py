@@ -29,7 +29,6 @@ class SocketSendOrders:
 
     @classmethod
     def ws_filling_orders(cls, order, action='c'):
-
         send_socket_data(
             channel='filling_group',
             data=cls.get_order_data(order, action, serializer=FillingOrdersListSerializer),

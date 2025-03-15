@@ -1,6 +1,8 @@
-from django.core.management import BaseCommand
-from apps.users.models import Action, Module, Section, APIRoute
 import json
+
+from django.core.management import BaseCommand
+
+from apps.users.models import Action, Module, Section, APIRoute
 
 SECTIONS = json.loads(open('perms.json').read())
 
@@ -27,4 +29,3 @@ class Command(BaseCommand):
 
                         if ap_obj:
                             ac_obj.apis.add(ap_obj)
-

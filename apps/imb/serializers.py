@@ -1,10 +1,10 @@
 from rest_framework import serializers
 
-from utils.choices import TransactionStatuses, IMBTransactionTypes
 from apps.checkout import models as checkout_models
 from apps.checkout.models import MainCheckout
-from .models import CheckoutIMB
+from utils.choices import TransactionStatuses, IMBTransactionTypes
 from . import models
+from .models import CheckoutIMB
 
 
 class IMBTransactionSerializer(serializers.ModelSerializer):

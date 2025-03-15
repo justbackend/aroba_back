@@ -16,4 +16,3 @@ urlpatterns = [
     path('rollback-order/<int:order_id>/', views.RollbackOrderView.as_view(), name='status-orders'),
 
 ]
-

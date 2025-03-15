@@ -43,5 +43,3 @@ class IMBDatabaseManager(models.Manager):
         Override update_or_create to use 'imb' database.
         """
         return super().using('imb').update_or_create(defaults=defaults, **kwargs)
-
-

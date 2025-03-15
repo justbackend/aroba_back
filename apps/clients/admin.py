@@ -1,5 +1,6 @@
 from django.contrib import admin
 from unfold import admin as u_admin
+
 from . import models
 
 

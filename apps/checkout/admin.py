@@ -16,4 +16,3 @@ class CheckoutAdmin(u_admin.ModelAdmin):
 @admin.register(models.Transaction)
 class TransactionAdmin(u_admin.ModelAdmin):
     list_display = ('id', 'amount', 'type', 'status', 'created_at', 'updated_at')
-

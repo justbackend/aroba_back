@@ -1,9 +1,9 @@
 from rest_framework import serializers
 
 import utils
+from apps.common.models import Point
 from utils.choices import *
 from . import models
-from apps.common.models import Point
 
 
 class RouteListSerializer(serializers.Serializer):

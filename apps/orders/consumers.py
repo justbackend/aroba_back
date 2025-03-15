@@ -1,4 +1,5 @@
 import json
+
 from channels.generic.websocket import AsyncWebsocketConsumer
 
 
@@ -42,5 +43,3 @@ class StatusOrdersConsumer(AsyncWebsocketConsumer):
     async def send_status_orders(self, event):
         data = json.dumps(event['data'])
         await self.send(data)
-
-

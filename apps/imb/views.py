@@ -6,12 +6,12 @@ from rest_framework.response import Response
 from telegram import InputMediaPhoto, Bot
 
 from apps.checkout import models as checkout_models
+from apps.orders.models import Order
 from apps.users.external import EXTERNAL_USERS
 from utils import IMBPermission, get_object, APIException
 from utils.choices import TransactionTypes
 from utils.customs import IMBAuthentication
 from . import serializers, models
-from apps.orders.models import Order
 
 
 class CheckoutBalanceView(views.APIView):

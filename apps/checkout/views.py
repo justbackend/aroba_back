@@ -3,12 +3,12 @@ from rest_framework import generics, views
 from rest_framework.response import Response
 
 import utils
+from apps.checkout import models, serializers
+from apps.checkout.models import MainCheckout
 from apps.clients import models as client_models
 from apps.orders import models as order_models
 from utils.choices import *
 from utils.excel import *
-from apps.checkout import models, serializers
-from apps.checkout.models import MainCheckout
 
 
 class ReportOrdersListAPI(generics.ListAPIView):
@@ -55,7 +55,7 @@ class PayOrder(views.APIView):
                        f"Summa: {order.total_amount}")
         order.create_log(comment=log_comment, action=OrderLogActions.PAID, user=request.user)
 
-        MainCheckout - order.total_amount # noqa
+        MainCheckout - order.total_amount  # noqa
 
         return Response(data={'order_id': order_id, 'client_id': order.client_id})
 
@@ -79,7 +79,7 @@ class RollbackPaidOrder(generics.GenericAPIView):
                        f"Komentariya: {comment}")
         order.create_log(comment=log_comment, action=OrderLogActions.ROLLBACK_PAID, user=request.user)
 
-        MainCheckout + order.total_amount # noqa
+        MainCheckout + order.total_amount  # noqa
 
         return Response(data={'order_id': order_id, 'client_id': order.client_id})
 
@@ -90,7 +90,7 @@ class PayClientOrder(views.APIView):
         order.client_paid = True
         order.save()
 
-        MainCheckout + order.income # noqa
+        MainCheckout + order.income  # noqa
 
         log_comment = (f"Klient tomonidan kirim [Naqt]\n\n"
                        f"Klient: {order.client.name}\n"

@@ -1,8 +1,8 @@
 from django.db import models
 
 from utils import CheckoutManager, BaseModel
-from utils.customs import PublicStorage
 from utils.choices import IMBTransactionTypes, IMBTransactionStatuses
+from utils.customs import PublicStorage
 from . import managers
 
 
