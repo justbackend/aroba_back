@@ -13,6 +13,7 @@ from . import serializers, models
 class TransClientsViewList(generics.ListAPIView):
     serializer_class = serializers.TransClientSerializer
 
+
     def get_queryset(self):
         return (
             client_models.Client.objects
