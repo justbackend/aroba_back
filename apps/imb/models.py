@@ -121,7 +121,6 @@ class Contact(BaseModel):
         db_table = 'contacts'
         verbose_name = 'Contact'
         verbose_name_plural = 'Contacts'
-        managed = False
 
     @classmethod
     def db(cls):

@@ -130,7 +130,6 @@ class Migration(migrations.Migration):
                 "verbose_name": "Contact",
                 "verbose_name_plural": "Contacts",
                 "db_table": "contacts",
-                "managed": False,
             },
         ),
         migrations.CreateModel(

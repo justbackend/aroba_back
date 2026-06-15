@@ -33,6 +33,9 @@ class DefaultDatabaseRouter:
 
     def allow_migrate(self, db, app_label, model_name=None, **hints):
         """
-        Allow migrations only on the 'default' database for apps other than 'imb'.
+        Allow migrations on the 'imb' database for the 'imb' app,
+        and on the 'default' database for apps other than 'imb'.
         """
-        return db == 'default' and app_label != 'imb'
+        if app_label == 'imb':
+            return db == 'imb'
+        return db == 'default'
