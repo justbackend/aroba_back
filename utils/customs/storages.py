@@ -1,11 +1,9 @@
-from storages.backends.s3boto3 import S3Boto3Storage
+from django.core.files.storage import FileSystemStorage
 
 
-class MediaStorage(S3Boto3Storage):
-    location = 'media/'
-    default_acl = None
-    file_overwrite = False
+class MediaStorage(FileSystemStorage):
+    pass
 
 
-class PublicStorage(MediaStorage):
-    querystring_auth = False
+class PublicStorage(FileSystemStorage):
+    pass
