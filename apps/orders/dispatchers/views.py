@@ -99,5 +99,5 @@ class FillingContactsListView(generics.ListAPIView):
 
     def get_queryset(self):
         if 'search' in self.request.query_params:
-            return self.queryset
-        return self.queryset.none()
+            return super().get_queryset()
+        return Contact.objects.none()
