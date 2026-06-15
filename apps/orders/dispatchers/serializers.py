@@ -3,6 +3,7 @@ from rest_framework import serializers
 import utils
 from utils.choices import *
 from .. import models
+from apps.imb.models import Contact
 
 
 class NewOrdersListSerializer(serializers.ModelSerializer):
@@ -98,7 +99,7 @@ class FillOrderSerializer(serializers.ModelSerializer):
         return instance
 
 
-class FillingContactsListSerializer(serializers.Serializer):
-    id = serializers.IntegerField()
-    phone = serializers.CharField()
-    truck_id = serializers.CharField()
+class FillingContactsListSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Contact
+        fields = ('id', 'phone', 'truck_id', 'full_name')

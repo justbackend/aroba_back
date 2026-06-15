@@ -98,6 +98,6 @@ class FillingContactsListView(generics.ListAPIView):
     pagination_class = None
 
     def get_queryset(self):
-        if self.request.query_params.get('search'):
+        if 'search' in self.request.query_params:
             return self.queryset
-        return Contact.objects.none()
+        return self.queryset.none()
