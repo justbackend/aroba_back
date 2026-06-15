@@ -115,25 +115,21 @@ class Contact(BaseModel):
         storage=PublicStorage
     )
 
-    objects = managers.IMBDatabaseManager()
-
     class Meta:
         db_table = 'contacts'
         verbose_name = 'Contact'
         verbose_name_plural = 'Contacts'
 
-    @classmethod
-    def db(cls):
-        return cls.objects.using('imb')
-
     def __str__(self):
         return f'{self.full_name} - {self.truck_id}'
 
     def save(self, *args, **kwargs):
-        self.full_name = str(self.full_name).upper()
-        self.truck_id = str(self.truck_id).upper()
-        self.car_type = str(self.car_type).upper()
-        kwargs['using'] = 'imb'
+        if self.full_name:
+            self.full_name = str(self.full_name).upper()
+        if self.truck_id:
+            self.truck_id = str(self.truck_id).upper()
+        if self.car_type:
+            self.car_type = str(self.car_type).upper()
         super().save(*args, **kwargs)
 
 

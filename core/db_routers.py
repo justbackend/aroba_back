@@ -37,5 +37,7 @@ class DefaultDatabaseRouter:
         and on the 'default' database for apps other than 'imb'.
         """
         if app_label == 'imb':
-            return db == 'imb'
+            if model_name == 'contact':
+                return db == 'default'
+            return False
         return db == 'default'
